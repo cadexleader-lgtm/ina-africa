@@ -53,8 +53,9 @@ export const PROVISIONAL_IMAGES = {
  * Illustration provisoire d'un domaine (par adresse du domaine), utilisée
  * seulement si l'administration n'a pas encore choisi de photo.
  */
+// Une photo provisoire n'apparaît qu'UNE fois sur l'accueil : celle du hero
+// (formationTechnique) et celle de la section impact (atelierCouture) ne sont
+// donc pas reprises ici. À compléter avec les prochaines photos reçues.
 export const PROVISIONAL_AREA_IMAGES: Partial<Record<string, ProvisionalImage>> = {
   education: PROVISIONAL_IMAGES.salleDeClasse,
-  "autonomisation-des-femmes": PROVISIONAL_IMAGES.atelierCouture,
-  "jeunesse-et-adolescents": PROVISIONAL_IMAGES.formationTechnique,
 };

@@ -1,0 +1,285 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   INA-AFRICA — jetons du design system (SOURCE UNIQUE)
+   --------------------------------------------------------------------------
+   Toutes les couleurs, polices, tailles, espacements, rayons, ombres, durées
+   et largeurs du site sont définis ICI. Les composants n'utilisent que les
+   classes générées (bg-brand, text-h2, py-section, rounded-card…) : jamais de
+   valeur en dur.
+
+   Les palettes et échelles par défaut de Tailwind sont retirées (`initial`) :
+   seules les valeurs ci-dessous existent, ce qui évite les écarts.
+
+   Contrastes (WCAG AA, texte ≥ 4,5:1) — calculés :
+     brand #17465A : 10,2 sur blanc, 9,5 sur ivoire       → titres, boutons
+     link  #0679A1 : 4,9 sur blanc, 4,6 sur ivoire        → liens, actions
+     ink   #22343C : 12,9 sur blanc                       → texte courant
+     muted #5F6B72 : 5,5 sur blanc, 5,1 sur ivoire        → texte secondaire
+     brand sur gold #D9A500 : 4,5                         → bouton de don
+     muted-inverse #C7D6DD sur brand : 6,8                → texte secondaire sur fond sombre
+     line-strong #8A96A0 : 3,0 sur blanc                  → bordure des champs (≥ 3:1)
+   Interdits : brand-2 #079FD2 en texte courant (3,0), or en texte sur fond
+   clair (2,25), texte blanc sur or.
+   ========================================================================== */
+
+@theme static {
+  /* --- Couleurs ---------------------------------------------------------- */
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-ivory: #f7f7f4;
+
+  --color-brand: #17465a; /* titres, boutons principaux, en-tête, pied de page */
+  --color-brand-strong: #0f3442; /* survol des boutons principaux */
+  --color-brand-50: #eaf1f4; /* fonds de tuiles (texte brand dessus : 8,9) */
+
+  --color-brand-2: #079fd2; /* ACCENTS seulement : icônes, traits, grands éléments */
+  --color-brand-2-light: #5bc4e8; /* accent sur fond sombre */
+
+  --color-link: #0679a1; /* liens et textes d'action */
+  --color-link-strong: #055f80; /* survol des liens (7,1) */
+
+  --color-gold: #d9a500; /* traits d'accent + bouton « Faire un don » (texte brand) */
+  --color-gold-light: #e6b72a; /* survol du bouton de don (texte brand : 5,4) */
+  --color-gold-50: #fbf3dc; /* fond des messages « attention » */
+
+  --color-ink: #22343c; /* texte courant */
+  --color-muted: #5f6b72; /* texte secondaire */
+  --color-muted-inverse: #c7d6dd; /* texte secondaire sur fond brand */
+
+  --color-line: #e9ecef; /* séparateurs, bordures de cartes */
+  --color-line-strong: #8a96a0; /* bordures des champs de formulaire */
+
+  /* États (messages, formulaires) — utilisés avec parcimonie */
+  --color-info-50: #e8f4f9;
+  --color-success: #1e7145;
+  --color-success-50: #ebf5ef;
+  --color-danger: #b42318;
+  --color-danger-50: #fdedec;
+
+  /* --- Polices (familles : voir @theme inline plus bas) ------------------- */
+  --font-*: initial;
+
+  /* --- Échelle typographique fluide -------------------------------------- */
+  --text-*: initial;
+  /* H1 : 36 → 56 px, Manrope 800 */
+  --text-h1: clamp(2.25rem, 1.66rem + 2.5vw, 3.5rem);
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h1--font-weight: 800;
+  /* H2 : 28 → 40 px, Manrope 700 */
+  --text-h2: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+  --text-h2--line-height: 1.15;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h2--font-weight: 700;
+  /* H3 : 20 → 24 px, Manrope 700 */
+  --text-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h3--font-weight: 700;
+  /* H4 : 18 px */
+  --text-h4: 1.125rem;
+  --text-h4--line-height: 1.4;
+  --text-h4--font-weight: 700;
+  /* Chapeau / introduction : 18 → 20 px */
+  --text-lead: clamp(1.125rem, 1.02rem + 0.45vw, 1.25rem);
+  --text-lead--line-height: 1.6;
+  /* Texte courant : 17 px */
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.65;
+  /* Petit : 14 px — JAMAIS moins pour du texte */
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+  /* Liens de l'en-tête : 15 px */
+  --text-nav: 0.9375rem;
+  --text-nav--line-height: 1.4;
+  /* Logo texte provisoire (remplacé par le SVG officiel) */
+  --text-logo: 1.375rem;
+  --text-logo--line-height: 1;
+  --text-logo--letter-spacing: -0.01em;
+  --text-logo-tagline: 0.75rem;
+  --text-logo-tagline--line-height: 1.2;
+
+  /* --- Espacements (grille de 4 px : --spacing par défaut = 0.25rem) ----- */
+  --spacing-section: clamp(4rem, 2.6rem + 5.6vw, 7rem); /* sections : 64 → 112 px */
+  --spacing-section-sm: clamp(3rem, 2.3rem + 2.8vw, 4.5rem); /* sections compactes : 48 → 72 px */
+  --spacing-gutter: clamp(1.25rem, 0.75rem + 2vw, 2.5rem); /* marges latérales : 20 → 40 px */
+  --spacing-header: 4.5rem; /* hauteur de l'en-tête (72 px) */
+
+  /* --- Largeurs ------------------------------------------------------------ */
+  --container-site: 75rem; /* 1200 px : conteneur du site */
+  --container-reading: 42.5rem; /* 680 px : largeur de lecture */
+  --container-measure: 65ch; /* ≤ 65 caractères par ligne */
+
+  /* --- Rayons ---------------------------------------------------------------- */
+  --radius-*: initial;
+  --radius-field: 0.5rem; /* 8 px : champs */
+  --radius-card: 1rem; /* 16 px : cartes, images */
+  --radius-panel: 1.5rem; /* 24 px : grands panneaux (appel à l'action) */
+  /* boutons : rounded-full (pilule) */
+
+  /* --- Ombres : 2 niveaux seulement ----------------------------------------- */
+  --shadow-*: initial;
+  --shadow-card: 0 1px 2px rgb(23 70 90 / 0.06), 0 12px 28px -16px rgb(23 70 90 / 0.28);
+  --shadow-overlay: 0 24px 56px -20px rgb(15 52 66 / 0.45);
+
+  /* --- Mouvement ------------------------------------------------------------ */
+  --ease-*: initial;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Familles de polices : variables fournies par next/font (src/app/layout.tsx). */
+@theme inline {
+  --font-heading: var(--font-manrope), ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+}
+
+/* Durées (utilisation : duration-(--duration-fast), etc.) */
+:root {
+  --duration-fast: 150ms; /* survol */
+  --duration-base: 250ms; /* transitions (menus, dialogues) */
+  --duration-reveal: 500ms; /* apparition des sections */
+  --reveal-distance: 12px;
+  --focus-ring-color: var(--color-link);
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    /* Les ancres ne passent pas sous l'en-tête collant. */
+    scroll-padding-top: calc(var(--spacing-header) + 1rem);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--color-white);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    color: var(--color-brand);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Focus visible net : anneau 2 px avec décalage (blanc sur fond sombre). */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring-color);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: var(--color-white);
+  }
+
+  /* Pas de défilement de la page derrière un dialogue ouvert. */
+  html:has(dialog[open]:modal) {
+    overflow: hidden;
+  }
+
+  dialog::backdrop {
+    background-color: rgb(15 52 66 / 0.6);
+  }
+}
+
+/* Section sur fond sombre (brand) : texte blanc, titres blancs, focus blanc. */
+@utility on-dark {
+  --focus-ring-color: var(--color-white);
+  color: var(--color-white);
+
+  & :where(h1, h2, h3, h4) {
+    color: var(--color-white);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Apparition des sections (composant Reveal) : fondu + 12 px, 500 ms.
+   Sans JavaScript, l'attribut n'est jamais posé : tout reste visible.
+   -------------------------------------------------------------------------- */
+[data-reveal="hidden"] {
+  opacity: 0;
+  translate: 0 var(--reveal-distance);
+}
+
+[data-reveal="shown"] {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity var(--duration-reveal) var(--ease-out),
+    translate var(--duration-reveal) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Ouverture des dialogues et du menu mobile (250 ms). */
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+    scale: 0.98;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    translate: 24px 0;
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+dialog[open]::backdrop {
+  animation: backdrop-in var(--duration-base) var(--ease-out);
+}
+
+/* Mouvement réduit : TOUT est coupé. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}
+
+@media print {
+  [data-reveal] {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}

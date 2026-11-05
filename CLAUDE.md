@@ -28,6 +28,8 @@ fonctionnalité hors périmètre sans accord.
 | Types des contenus publics | `src/lib/types/content.ts` |
 | Contenu riche (liste fermée) | `src/lib/validation/rich-text.ts` — toujours enregistrer le résultat de `parse()`, jamais l'entrée brute |
 | Adresses d'images | `src/lib/media.ts` (`<nom>.webp` + `<nom>-sm.webp`) |
+| Design system | jetons `src/styles/globals.css` (palettes Tailwind par défaut retirées), composants `src/components/ui/` et `src/components/site/`, démonstration `/styleguide` (dev seulement). `className` s'ajoute sans fusion : ne jamais contredire le composant |
+| Textes d'interface | `src/content/fr/*.ts` (un fichier par zone) |
 | Tests de la base | `tests/db/*.sql`, lancés par `npm run test:db` (Postgres local, `tests/db/supabase-shim.sql`) |
 | Variables d'environnement | `.env.example`, `src/lib/public-env.ts`, `src/server/env.ts` |
 | Clients Supabase | `src/server/supabase/server.ts` (session, RLS), `public.ts` (visiteur), `admin.ts` (clé secrète, usage restreint) |

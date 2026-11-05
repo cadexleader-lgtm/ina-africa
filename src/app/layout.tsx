@@ -1,16 +1,48 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Inter, Manrope } from "next/font/google";
+
+import { DevPreviewBanner } from "@/components/site/DevPreviewBanner";
+import { ORG } from "@/content/fr/site";
+
+import "@/styles/globals.css";
+
+// Polices auto-hébergées par next/font (aucune requête vers Google côté visiteur).
+const manrope = Manrope({ subsets: ["latin"], display: "swap", variable: "--font-manrope" });
+const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
+
+function siteUrl(): URL | undefined {
+  const value = process.env.NEXT_PUBLIC_SITE_URL;
+  if (!value) return undefined;
+  try {
+    return new URL(value);
+  } catch {
+    return undefined;
+  }
+}
 
 export const metadata: Metadata = {
-  title: "INA-AFRICA — Initiative pour un Nouvel Avenir en Afrique",
-  description: "Site de l'ONG INA-AFRICA, en cours de construction.",
+  metadataBase: siteUrl(),
+  title: {
+    default: `${ORG.name} — ${ORG.fullName}`,
+    template: `%s — ${ORG.name}`,
+  },
+  description: `Site de l'ONG ${ORG.name} (${ORG.fullName}), au Bénin.`,
+  applicationName: ORG.name,
   // Site en construction : rien ne doit être indexé par Google avant la mise en ligne.
   robots: { index: false, follow: false },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#17465a", // = jeton brand (src/styles/globals.css) : la balise meta ne lit pas les variables CSS
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr">
-      <body>{children}</body>
+    <html lang="fr" className={`${manrope.variable} ${inter.variable}`}>
+      <body>
+        <DevPreviewBanner />
+        {children}
+      </body>
     </html>
   );
 }
