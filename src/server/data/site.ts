@@ -12,6 +12,7 @@ import type {
   TeamMember,
 } from "@/lib/types/content";
 import { richTextDocSchema, type RichTextDoc } from "@/lib/validation/rich-text";
+import { DEV_PREVIEW_AREAS, DEV_PREVIEW_SETTINGS, isDevPreview } from "@/server/data/dev-preview";
 import { emptyPage, getReader, logReadError, pageRange, paginated, toImage } from "@/server/data/reader";
 import { TAGS } from "@/server/data/tags";
 
@@ -76,7 +77,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   cacheTag(TAGS.settings);
 
   const db = getReader();
-  if (!db) return EMPTY_SETTINGS;
+  if (!db) return isDevPreview() ? { ...EMPTY_SETTINGS, ...DEV_PREVIEW_SETTINGS } : EMPTY_SETTINGS;
 
   const { data, error } = await db
     .from("site_settings")
@@ -162,7 +163,7 @@ export async function listActionAreas(): Promise<ActionArea[]> {
   cacheTag(TAGS.areas);
 
   const db = getReader();
-  if (!db) return [];
+  if (!db) return isDevPreview() ? DEV_PREVIEW_AREAS : [];
   const { data, error } = await db.from("action_areas").select(AREA_COLUMNS).order("display_order");
   if (error) {
     logReadError("action_areas", error);
@@ -177,7 +178,7 @@ export async function getActionArea(slug: string): Promise<ActionArea | null> {
   cacheTag(TAGS.areas);
 
   const db = getReader();
-  if (!db) return null;
+  if (!db) return isDevPreview() ? (DEV_PREVIEW_AREAS.find((area) => area.slug === slug) ?? null) : null;
   const { data, error } = await db.from("action_areas").select(AREA_COLUMNS).eq("slug", slug).maybeSingle();
   if (error) logReadError("action_areas", error);
   return data ? toArea(data as AreaRow) : null;
