@@ -1,0 +1,28 @@
+erDiagram
+  AUTH_USERS ||--|| PROFILES : "1 compte = 1 profil"
+  PROFILES ||--o| USER_ROLES : "role"
+  PROFILES |o--o{ ARTICLES : "auteur"
+  ARTICLE_CATEGORIES |o--o{ ARTICLES : "categorie"
+  DONATION_CAMPAIGNS |o--o{ DONATIONS : "appel aux dons"
+  DONATIONS ||--o{ PAYMENT_TRANSACTIONS : "tentatives de paiement en ligne"
+  PROFILES |o--o{ DONATIONS : "saisi par (dons hors ligne)"
+  PROFILES |o--o{ MEDIA : "envoye par"
+  PROFILES |o--o{ AUDIT_LOGS : "auteur de l'action"
+
+  PROFILES { uuid id PK text full_name citext email }
+  USER_ROLES { uuid user_id FK "unique" enum role "super_admin admin editor" }
+  ARTICLE_CATEGORIES { uuid id PK text slug "unique" }
+  ARTICLES { uuid id PK text slug "unique" jsonb content enum status "draft in_review published archived" uuid category_id FK }
+  DONATION_CAMPAIGNS { uuid id PK text slug "unique" text share_message bigint goal_amount bool is_active }
+  DONATIONS { uuid id PK text reference "unique" enum channel "online offline" bigint amount enum payment_status text utm_source }
+  PAYMENT_TRANSACTIONS { uuid id PK text merchant_reference "unique" text provider_transaction_id "unique" enum status timestamptz verified_at }
+  MEDIA { uuid id PK text storage_path "unique" text alt_text }
+  AUDIT_LOGS { bigint id PK text action text entity_type }
+  PROJECTS { uuid id PK text slug "unique" enum status bool is_published }
+  ACTION_AREAS { uuid id PK text slug "unique" bool is_active }
+  PARTNERS { uuid id PK enum kind "partner sponsor" bool is_active }
+  TEAM_MEMBERS { uuid id PK text full_name text position }
+  GALLERY_ITEMS { uuid id PK enum type "photo video" text video_url bool is_published }
+  CONTACT_REQUESTS { uuid id PK enum type "contact volunteer membership sponsorship" enum status }
+  NEWSLETTER_SUBSCRIBERS { uuid id PK citext email "unique" enum status }
+  SITE_SETTINGS { smallint id PK "ligne unique" text mission text vision }
