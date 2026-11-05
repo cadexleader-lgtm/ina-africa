@@ -11,7 +11,6 @@ export function JsonLd({ data }: { data: Record<string, unknown> | Record<string
   return (
     <script
       type="application/ld+json"
-      // eslint-disable-next-line react/no-danger -- voir le commentaire ci-dessus
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
     />
   );
