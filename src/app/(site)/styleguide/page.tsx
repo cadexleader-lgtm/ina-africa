@@ -235,9 +235,9 @@ export default function StyleguidePage() {
           </p>
           <p className="text-small text-muted">Petit texte (14 px, jamais moins) : mentions, dates, aides.</p>
           <div className="flex flex-wrap items-end gap-10">
-            <Logo link={false} tagline="always" />
+            <Logo link={false} size="lg" />
             <div className="rounded-card bg-brand p-4">
-              <Logo link={false} inverse tagline="always" />
+              <Logo link={false} inverse size="lg" />
             </div>
           </div>
         </div>

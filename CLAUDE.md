@@ -30,6 +30,7 @@ fonctionnalité hors périmètre sans accord.
 | Adresses d'images | `src/lib/media.ts` (`<nom>.webp` + `<nom>-sm.webp`) |
 | Design system | jetons `src/styles/globals.css` (palettes Tailwind par défaut retirées), composants `src/components/ui/` et `src/components/site/`, démonstration `/styleguide` (dev seulement). `className` s'ajoute sans fusion : ne jamais contredire le composant |
 | Textes d'interface | `src/content/fr/*.ts` (un fichier par zone) |
+| Logo officiel | `public/brand/ina-africa-logo(.webp|-sm.webp|.png)` (fond rendu transparent, **jamais recoloré** : sur fond sombre → plaque blanche, `Logo inverse`), icônes `src/app/icon.png`, `apple-icon.png`, image de partage par défaut `src/app/opengraph-image.png` |
 | Tests de la base | `tests/db/*.sql`, lancés par `npm run test:db` (Postgres local, `tests/db/supabase-shim.sql`) |
 | Variables d'environnement | `.env.example`, `src/lib/public-env.ts`, `src/server/env.ts` |
 | Clients Supabase | `src/server/supabase/server.ts` (session, RLS), `public.ts` (visiteur), `admin.ts` (clé secrète, usage restreint) |

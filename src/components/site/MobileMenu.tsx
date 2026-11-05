@@ -70,7 +70,7 @@ export function MobileMenu({ items, donate, pathname = null }: MobileMenuProps) 
             <h2 id={titleId} className="sr-only">
               {T.a11y.menuTitle}
             </h2>
-            <Logo tagline="never" link={false} />
+            <Logo size="sm" link={false} />
             <button
               type="button"
               onClick={close}

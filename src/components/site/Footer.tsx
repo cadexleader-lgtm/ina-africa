@@ -115,7 +115,7 @@ export async function Footer({ newsletter }: FooterProps) {
 
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
           <div className="sm:col-span-2 lg:col-span-4">
-            <Logo inverse tagline="always" />
+            <Logo inverse size="lg" />
             {settings.heroText && <p className="mt-6 max-w-sm text-body text-muted-inverse">{settings.heroText}</p>}
 
             <FooterContacts

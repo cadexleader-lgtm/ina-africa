@@ -93,12 +93,6 @@
   /* Liens de l'en-tête : 15 px */
   --text-nav: 0.9375rem;
   --text-nav--line-height: 1.4;
-  /* Logo texte provisoire (remplacé par le SVG officiel) */
-  --text-logo: 1.375rem;
-  --text-logo--line-height: 1;
-  --text-logo--letter-spacing: -0.01em;
-  --text-logo-tagline: 0.75rem;
-  --text-logo-tagline--line-height: 1.2;
 
   /* --- Espacements (grille de 4 px : --spacing par défaut = 0.25rem) ----- */
   --spacing-section: clamp(4rem, 2.6rem + 5.6vw, 7rem); /* sections : 64 → 112 px */
