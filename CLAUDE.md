@@ -2,7 +2,7 @@
 
 @AGENTS.md
 
-> Lire ce fichier en premier. Détails : `docs/architecture.md` et `docs/database.md`.
+> Lire ce fichier en premier. Détails : `docs/architecture.md`, `docs/database.md`, `docs/frontend-plan.md` (plan frontend validé : design system, pages, composants).
 
 ## Le projet en une phrase
 Site **vitrine** de l'ONG INA-AFRICA (Bénin) : présenter l'ONG, recevoir des dons
@@ -13,16 +13,21 @@ fonctionnalité hors périmètre sans accord.
 
 ## Règles non négociables
 - **Aucune image générée par IA**, aucune photo de banque d'images présentée comme une action de l'ONG. Uniquement les vraies photos fournies par l'ONG.
+- **Photos provisoires** (`public/images/provisoires/`, `src/content/provisional-images.ts`) : origine inconnue, fournies par l'utilisateur pour le développement. Illustration seulement, toujours avec « Photo d'illustration », jamais dans un projet, un article ou la galerie, **à remplacer avant la mise en ligne**. Les photos de la maquette (générées par IA) ne sont jamais utilisées.
 - **Aucun faux contenu** : pas de faux partenaires, chiffres, témoignages, réalisations. Les textes viennent de l'ONG.
 - **Aucune clé inventée**, aucun paiement simulé présenté comme réel. Aucun prestataire activé avant validation du compte marchand.
 - **Pas de migration appliquée sur Supabase sans accord explicite** de l'utilisateur.
-- Avancer **par phases**, présenter le résultat avant de passer à la suivante (Phase 1 faite ; prochaine : Phase 2 auth).
-- Pas de frontend tant que le backend n'est pas validé (Phase 6, selon la maquette validée).
+- Avancer **par étapes**, présenter le résultat avant de passer à la suivante. Phase 1 (base) faite ; frontend en cours selon `docs/frontend-plan.md` (validé) ; Phase 2 (connexion admin) avant le dashboard.
+- La maquette sert de référence de **mise en page** uniquement : ses logos de partenaires, chiffres, valeurs et articles ne sont pas des contenus réels.
 
 ## Où est quoi
 | Sujet | Fichier |
 |---|---|
-| Schéma, règles RLS, fonctions | `supabase/migrations/*.sql` (9 fichiers, ordre chronologique) |
+| Schéma, règles RLS, fonctions | `supabase/migrations/*.sql` (ordre chronologique) |
+| Lectures publiques (cache) | `src/server/data/*.ts` (`TAGS` dans `tags.ts`) — sans Supabase configuré : listes vides → états vides |
+| Types des contenus publics | `src/lib/types/content.ts` |
+| Contenu riche (liste fermée) | `src/lib/validation/rich-text.ts` — toujours enregistrer le résultat de `parse()`, jamais l'entrée brute |
+| Adresses d'images | `src/lib/media.ts` (`<nom>.webp` + `<nom>-sm.webp`) |
 | Tests de la base | `tests/db/*.sql`, lancés par `npm run test:db` (Postgres local, `tests/db/supabase-shim.sql`) |
 | Variables d'environnement | `.env.example`, `src/lib/public-env.ts`, `src/server/env.ts` |
 | Clients Supabase | `src/server/supabase/server.ts` (session, RLS), `public.ts` (visiteur), `admin.ts` (clé secrète, usage restreint) |
@@ -39,6 +44,7 @@ fonctionnalité hors périmètre sans accord.
 - Nouvelle migration : nouveau fichier ; RLS + `revoke all … from anon, authenticated` + droits explicites + `grant all … to service_role` ; `set search_path = ''` ; erreurs `hint = 'ina-africa'` ; tests dans `tests/db/`.
 - Next.js 16 avec **Cache Components** : lecture de `cookies()` uniquement sous `<Suspense>` ; lire `node_modules/next/dist/docs/` avant d'écrire du code Next.
 - UI et messages en français ; code en anglais.
+- Couleurs : `#079FD2` jamais pour du texte courant (liens = `#0679A1`) ; or `#D9A500` jamais en texte sur fond clair (traits d'accent, bouton de don avec texte `#17465A`).
 
 ## Avant de pousser
 `npm run check` (types, lint, unitaires, base) puis `npm run build`.

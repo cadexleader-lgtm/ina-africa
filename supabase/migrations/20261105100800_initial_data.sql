@@ -8,13 +8,15 @@
 insert into public.site_settings (id) values (1)
 on conflict (id) do nothing;
 
--- Les domaines d'intervention cités par l'ONG, en brouillon (inactifs) et
--- SANS description : les textes seront rédigés par l'ONG.
+-- Les 7 domaines d'intervention confirmés par l'organisation (cahier des
+-- charges frontend du 05/11/2026), en brouillon (inactifs) et SANS
+-- description : les textes seront rédigés par l'ONG.
 insert into public.action_areas (title, slug, display_order) values
   ('Éducation', 'education', 1),
-  ('Santé et droits sexuels et reproductifs', 'sante-droits-sexuels-reproductifs', 2),
+  ('Santé et droits en santé sexuelle et reproductive', 'sante-sexuelle-et-reproductive', 2),
   ('Autonomisation des femmes', 'autonomisation-des-femmes', 3),
-  ('Inclusion sociale', 'inclusion-sociale', 4),
-  ('Bien-être des enfants et des jeunes', 'bien-etre-enfants-jeunes', 5),
-  ('Développement communautaire', 'developpement-communautaire', 6)
+  ('Jeunesse et adolescents', 'jeunesse-et-adolescents', 4),
+  ('Inclusion et égalité de genre', 'inclusion-et-egalite-de-genre', 5),
+  ('Développement local durable et inclusif', 'developpement-local-durable', 6),
+  ('Innovation sociale', 'innovation-sociale', 7)
 on conflict (slug) do nothing;

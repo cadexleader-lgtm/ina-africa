@@ -33,6 +33,19 @@ export function getPublicEnv(): PublicEnv {
   return cached;
 }
 
+/**
+ * Vrai si Supabase est configuré. Tant que le projet n'existe pas, le site
+ * se construit quand même et affiche ses états vides (jamais de faux contenu).
+ */
+export function hasPublicSupabaseEnv(): boolean {
+  return publicEnvSchema
+    .pick({ NEXT_PUBLIC_SUPABASE_URL: true, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: true })
+    .safeParse({
+      NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+    }).success;
+}
+
 export function formatEnvError(kind: string, error: z.ZodError): string {
   const missing = error.issues.map((issue) => issue.path.join(".")).join(", ");
   return `Variables d'environnement ${kind} manquantes ou invalides : ${missing}. Voir .env.example.`;
