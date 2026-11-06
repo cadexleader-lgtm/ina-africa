@@ -16,7 +16,8 @@ export function hasContacts(contacts: OrgContacts): boolean {
   return Boolean(contacts.email || contacts.phone || (contacts.whatsapp && whatsappHref(contacts.whatsapp)));
 }
 
-const LINK = "font-medium text-link underline decoration-1 underline-offset-4 hover:text-link-strong";
+// Bleu foncé : ces liens peuvent être affichés dans un encadré jaune (contraste ≥ 4,5:1).
+const LINK = "font-medium text-link-strong underline decoration-1 underline-offset-4 hover:text-brand";
 
 /**
  * Coordonnées RÉELLEMENT renseignées, en liste de liens (utilisable côté

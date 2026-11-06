@@ -13,7 +13,7 @@ import type {
 } from "@/lib/types/content";
 import { DEFAULT_TEAM_GROUP, isTeamGroup } from "@/lib/team";
 import { richTextDocSchema, type RichTextDoc } from "@/lib/validation/rich-text";
-import { APPROACH, AREAS, EXPERIENCE, HERO, HISTORY, MISSIONS, OBJECTIVES, TEAM, VISION } from "@/content/fr/ina-africa";
+import { APPROACH, AREAS, CONTACTS, DIRECT_DONATIONS, EXPERIENCE, HERO, HISTORY, MISSIONS, OBJECTIVES, PARTNERS, TEAM, VISION } from "@/content/fr/ina-africa";
 import { emptyPage, getReader, logReadError, pageRange, paginated, toImage } from "@/server/data/reader";
 import { TAGS } from "@/server/data/tags";
 
@@ -64,7 +64,24 @@ const OFFICIAL_SETTINGS: SiteSettings = {
   heroText: HERO.text,
   impactTitle: EXPERIENCE.title,
   impactText: EXPERIENCE.intro,
+  contactEmail: CONTACTS.email,
+  contactPhone: CONTACTS.phone,
+  whatsappNumber: CONTACTS.whatsapp,
+  socialLinks: CONTACTS.social,
+  donationMinAmount: DIRECT_DONATIONS.minAmount,
+  donationSuggestedAmounts: DIRECT_DONATIONS.suggestedAmounts,
+  offlineDonationInstructions: DIRECT_DONATIONS.instructions,
 };
+
+/** Liste de la base si elle n'est pas vide, sinon la liste officielle. */
+function nonEmpty<T>(value: T[], official: T[]): T[] {
+  return value.length > 0 ? value : official;
+}
+
+/** Réseaux de la base s'il y en a, sinon les réseaux officiels. */
+function withOfficial(value: Record<string, string>, official: Record<string, string>): Record<string, string> {
+  return Object.keys(value).length > 0 ? value : official;
+}
 
 /** Valeur saisie dans la base, sinon le texte officiel. */
 function orOfficial(value: string | null | undefined, official: string | null): string | null {
@@ -131,14 +148,17 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     impactTitle: orOfficial(data.impact_title, OFFICIAL_SETTINGS.impactTitle),
     impactText: orOfficial(data.impact_text, OFFICIAL_SETTINGS.impactText),
     impactImage: toImage(data.impact_image_path, data.impact_image_alt),
-    contactEmail: data.contact_email,
-    contactPhone: data.contact_phone,
-    whatsappNumber: data.whatsapp_number,
+    contactEmail: orOfficial(data.contact_email, OFFICIAL_SETTINGS.contactEmail),
+    contactPhone: orOfficial(data.contact_phone, OFFICIAL_SETTINGS.contactPhone),
+    whatsappNumber: orOfficial(data.whatsapp_number, OFFICIAL_SETTINGS.whatsappNumber),
     address: data.address,
-    socialLinks: safeSocialLinks(data.social_links),
-    donationMinAmount: data.donation_min_amount,
-    donationSuggestedAmounts: (data.donation_suggested_amounts ?? []).map(Number),
-    offlineDonationInstructions: safeInstructions(data.offline_donation_instructions),
+    socialLinks: withOfficial(safeSocialLinks(data.social_links), OFFICIAL_SETTINGS.socialLinks),
+    donationMinAmount: data.donation_min_amount ?? OFFICIAL_SETTINGS.donationMinAmount,
+    donationSuggestedAmounts: nonEmpty((data.donation_suggested_amounts ?? []).map(Number), OFFICIAL_SETTINGS.donationSuggestedAmounts),
+    offlineDonationInstructions: nonEmpty(
+      safeInstructions(data.offline_donation_instructions),
+      OFFICIAL_SETTINGS.offlineDonationInstructions,
+    ),
     legalNotice: safeDoc(data.legal_notice),
     privacyPolicy: safeDoc(data.privacy_policy),
   };
@@ -263,13 +283,23 @@ export async function listTeamMembers(): Promise<TeamMember[]> {
   }));
 }
 
+/** Partenaires et sponsors transmis par l'ONG, affichés tant qu'aucun n'est publié dans l'administration. */
+const OFFICIAL_PARTNERS: Partner[] = PARTNERS.map((name, index) => ({
+  id: `officiel-${index + 1}`,
+  name,
+  kind: "partner",
+  description: null,
+  logo: null,
+  websiteUrl: null,
+}));
+
 export async function listPartners(): Promise<Partner[]> {
   "use cache";
   cacheLife("hours");
   cacheTag(TAGS.partners);
 
   const db = getReader();
-  if (!db) return [];
+  if (!db) return OFFICIAL_PARTNERS;
   const { data, error } = await db
     .from("partners")
     .select("id, name, kind, description, logo_path, website_url")
@@ -277,8 +307,9 @@ export async function listPartners(): Promise<Partner[]> {
     .order("display_order");
   if (error) {
     logReadError("partners", error);
-    return [];
+    return OFFICIAL_PARTNERS;
   }
+  if (data.length === 0) return OFFICIAL_PARTNERS;
   return data.map((row) => ({
     id: row.id,
     name: row.name,

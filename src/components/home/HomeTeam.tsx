@@ -26,7 +26,7 @@ export function HomeTeam({ members }: { members: TeamMember[] }) {
             id="accueil-equipe"
             label="Les personnes"
             title="Une équipe engagée"
-            intro={`${members.length} membres répartis entre le conseil d'administration, le conseil de surveillance et leurs adjoints font vivre INA-AFRICA.`}
+            intro={`${members.length} membres, répartis entre le conseil d'administration, le conseil de surveillance, les adjoints et les conseillers, font vivre INA-AFRICA.`}
             action={
               <LinkButton href="/a-propos#equipe" variant="link" iconRight={<ArrowRight aria-hidden="true" />}>
                 Découvrir toute l&apos;équipe

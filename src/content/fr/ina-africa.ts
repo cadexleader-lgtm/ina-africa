@@ -88,12 +88,45 @@ export const WOMEN_PROGRAM = {
 export type Achievement = {
   title: string;
   text: string;
-  audience: string;
-  place: string;
-  areaSlug: string;
+  /** Date de l'action (AAAA-MM-JJ), quand l'ONG l'a donnée. */
+  date?: string;
+  audience?: string;
+  place?: string;
+  areaSlug?: string;
 };
 
 export const ACHIEVEMENTS: Achievement[] = [
+  // Projets et réalisations datés (transmis par l'ONG le 06/11/2026), du plus récent au plus ancien.
+  {
+    date: "2026-03-21",
+    title: "Distribution de kits vestimentaires à Tanmey",
+    text: "Distribution de kits vestimentaires à Tanmey, dans l'arrondissement de Zinvié.",
+    place: "Tanmey (arrondissement de Zinvié)",
+  },
+  {
+    date: "2026-03-08",
+    title: "Journée internationale de la femme",
+    text: "INA-AFRICA a marqué la Journée internationale de la femme, le 8 mars 2026.",
+    audience: "Les femmes",
+    areaSlug: "autonomisation-des-femmes",
+  },
+  {
+    date: "2025-09-26",
+    title: "Distribution de kits scolaires dans trois écoles",
+    text: "Distribution de kits scolaires au complexe scolaire Amour de Dieu à Abomey-Calavi, à l'EPP Tori Gare (quartier Sèmè-Aïfa) et à l'EPP de Zinvié.",
+    audience: "Élèves de trois écoles",
+    place: "Abomey-Calavi, Sèmè-Aïfa et Zinvié",
+    areaSlug: "education",
+  },
+  {
+    date: "2023-08-26",
+    title: "Lancement officiel des activités de l'ONG",
+    text: "Lancement officiel des activités d'INA-AFRICA, suivi d'une distribution de vivres et d'enveloppes aux femmes vulnérables.",
+    audience: "Femmes vulnérables",
+    place: "Zinvié et Djidjè (Cotonou)",
+    areaSlug: "autonomisation-des-femmes",
+  },
+  // Réalisations du document de présentation (non datées).
   {
     title: "Sensibilisation des artisans aux droits et à la santé sexuels et reproductifs",
     text: "Des activités de sensibilisation sur les droits et la santé sexuels et reproductifs, organisées à l'endroit des artisans.",
@@ -322,7 +355,7 @@ export const TEAM: OfficialTeamMember[] = [
   {
     fullName: "TOFFA Clotilde Kinvemi",
     position: "Secrétaire générale",
-    bio: "Assure le secrétariat de l'Assemblée générale et du Conseil d'administration : conçoit les actes administratifs, rédige les procès-verbaux, comptes rendus, rapports de séance et convocations. Traite, affecte et classe les courriers, met en œuvre le plan de communication de l'ONG, constitue et archive sa mémoire.",
+    bio: "Assure le secrétariat de l'Assemblée générale et du conseil d'administration (convocations, procès-verbaux, rapports). Gère le courrier, archive la mémoire de l'ONG et met en œuvre son plan de communication.",
     group: "conseil_administration",
   },
   {
@@ -380,9 +413,22 @@ export const TEAM: OfficialTeamMember[] = [
     group: "conseil_surveillance",
   },
   {
+    fullName: "HOUNDO Koffi Zacharie",
+    // Intitulé à confirmer par l'ONG (seule la mission a été transmise).
+    position: "Information et porte-parole",
+    bio: "Pilote la stratégie d'information de l'ONG, conçoit les contenus d'impact et incarne officiellement sa voix auprès des médias, des institutions et du public.",
+    group: "conseil_surveillance",
+  },
+  {
     fullName: "OLYMPIO Maxylle Emmanuella",
     position: "Chargée des affaires féminines adjointe",
     bio: "Assiste la chargée des affaires féminines dans ses actions et missions.",
+    group: "adjoints",
+  },
+  {
+    fullName: "SENOU Fréjus",
+    position: "Chargé des affaires juvéniles adjoint",
+    bio: "Assiste le chargé des affaires juvéniles dans ses actions et missions.",
     group: "adjoints",
   },
   {
@@ -390,6 +436,12 @@ export const TEAM: OfficialTeamMember[] = [
     position: "Chargée des affaires culturelles adjointe",
     bio: "Assiste la chargée des affaires culturelles dans ses actions et missions.",
     group: "adjoints",
+  },
+  {
+    fullName: "QUENUM Eric Brunnel",
+    position: "Conseiller technique et stratégique",
+    bio: "Apporte à l'ONG un appui technique et stratégique.",
+    group: "conseillers",
   },
 ];
 
@@ -572,3 +624,39 @@ export const HERO_SLIDES = [
     text: "Œuvrer à l'inclusion et à la participation active des femmes, des jeunes et des personnes en situation de handicap dans les initiatives de développement durable.",
   },
 ] as const;
+
+// ---------------------------------------------------------------------------
+// Coordonnées publiques, dons directs, partenaires (transmis le 06/11/2026)
+// ---------------------------------------------------------------------------
+
+export const CONTACTS = {
+  email: "inaafrica1@gmail.com",
+  phone: "+229 01 94 34 04 55",
+  /** Format international sans espace (lien wa.me). */
+  whatsapp: "+2290194340455",
+  social: {
+    facebook: "https://www.facebook.com/ong.ina.africa.2025",
+    tiktok: "https://www.tiktok.com/@ina_africa",
+  } as Record<string, string>,
+};
+
+/** Dons directs par Mobile Money, montant minimum et montants proposés (FCFA). */
+export const DIRECT_DONATIONS = {
+  minAmount: 2000,
+  suggestedAmounts: [2000, 5000, 10000],
+  instructions: [
+    { method: "mobile_money" as const, label: "Moov Money", number: "01 94 84 04 55" },
+    { method: "mobile_money" as const, label: "MTN Mobile Money", number: "01 90 00 32 74" },
+  ],
+};
+
+/** Partenaires et sponsors (noms transmis par l'ONG ; logos et liens à venir). */
+export const PARTNERS = [
+  "EREVAN",
+  "DOS COMPANY",
+  "RACINES SYNERGIE",
+  "L'ENVOL DE L'AIGLE CORPORATE",
+  "SIGNATURE DIVINE",
+  "LE VRAI BONHEUR",
+  "CHG INTER SARL",
+];

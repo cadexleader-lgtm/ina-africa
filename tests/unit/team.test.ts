@@ -6,8 +6,13 @@ import { teamMemberInputSchema } from "@/lib/validation/admin/content";
 const base = { fullName: "DJOSSOU Wilfried", position: "Président", displayOrder: 10 };
 
 describe("instances de l'équipe", () => {
-  it("connaît les trois instances, dans l'ordre d'affichage", () => {
-    expect(TEAM_GROUPS.map((group) => group.value)).toEqual(["conseil_administration", "conseil_surveillance", "adjoints"]);
+  it("connaît les quatre instances, dans l'ordre d'affichage", () => {
+    expect(TEAM_GROUPS.map((group) => group.value)).toEqual([
+      "conseil_administration",
+      "conseil_surveillance",
+      "adjoints",
+      "conseillers",
+    ]);
     expect(isTeamGroup("conseil_surveillance")).toBe(true);
     expect(isTeamGroup("bureau")).toBe(false);
   });

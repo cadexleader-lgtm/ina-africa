@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowRight, Check, FileCheck2, MapPin, Users } from "lucide-react";
+import { ArrowRight, Check, Users } from "lucide-react";
 
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -9,6 +9,7 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { AreaVisual } from "@/components/pages/areas/AreaVisual";
+import { AchievementCard } from "@/components/site/AchievementCard";
 import { OtherAreas } from "@/components/pages/areas/OtherAreas";
 import { BackLink } from "@/components/pages/BackLink";
 import { PageCallToAction } from "@/components/pages/PageCallToAction";
@@ -186,18 +187,7 @@ export default async function AreaPage({ params }: PageProps<"/domaines/[slug]">
               <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {achievements.map((achievement) => (
                   <li key={achievement.title} className="flex">
-                    <article className="flex w-full flex-col rounded-card bg-white p-6 shadow-card">
-                      <p className="inline-flex items-center gap-1.5 self-start rounded-full bg-success-50 px-3 py-1 text-small font-semibold text-success">
-                        <FileCheck2 aria-hidden="true" className="size-4" />
-                        Action documentée
-                      </p>
-                      <h3 className="mt-4 text-h4">{achievement.title}</h3>
-                      <p className="mt-2 text-small text-muted">{achievement.text}</p>
-                      <p className="mt-4 flex items-center gap-2 border-t border-line pt-4 text-small text-ink">
-                        <MapPin aria-hidden="true" className="size-4 shrink-0 text-brand-2" />
-                        {achievement.place} · {achievement.audience}
-                      </p>
-                    </article>
+                    <AchievementCard achievement={achievement} showArea={false} />
                   </li>
                 ))}
               </ul>

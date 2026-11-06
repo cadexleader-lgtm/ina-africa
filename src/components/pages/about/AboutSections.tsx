@@ -6,12 +6,21 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section, type SectionTone } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { splitTerm } from "@/components/pages/page-helpers";
-import { AUDIENCES, EXPERIENCE, GOVERNANCE } from "@/content/fr/ina-africa";
+import { formatAchievementDate } from "@/components/site/AchievementCard";
+import { ACHIEVEMENTS, AUDIENCES, EXPERIENCE, GOVERNANCE } from "@/content/fr/ina-africa";
 import { FOUNDING_YEAR, PAGES } from "@/content/fr/pages";
 import type { ProvisionalImage } from "@/content/provisional-images";
 import { cn } from "@/lib/cn";
 
 const T = PAGES.about;
+
+/** Repères chronologiques : la création, puis les actions datées (de la plus ancienne à la plus récente). */
+const TIMELINE = [
+  { when: String(FOUNDING_YEAR), what: "Création de l'ONG INA-AFRICA" },
+  ...ACHIEVEMENTS.filter((item) => item.date)
+    .sort((a, b) => (a.date! < b.date! ? -1 : 1))
+    .map((item) => ({ when: formatAchievementDate(item.date!), what: item.title })),
+];
 
 /** Libellé + titre h2 d'une section de la page À propos. */
 function Heading({ id, label, title, inverse = false }: { id: string; label: string; title: string; inverse?: boolean }) {
@@ -84,6 +93,16 @@ export function AboutHistory({
                   {paragraph}
                 </p>
               ))}
+              <h3 className="mt-8 text-h4">Quelques repères</h3>
+              <ol className="mt-4 border-l-2 border-gold/60 pl-6">
+                {TIMELINE.map((item) => (
+                  <li key={item.when + item.what} className="relative pb-4 last:pb-0">
+                    <span aria-hidden="true" className="absolute top-1.5 -left-[1.95rem] size-3 rounded-full border-2 border-white bg-gold" />
+                    <span className="block text-small font-semibold text-brand">{item.when}</span>
+                    <span className="text-body text-ink">{item.what}</span>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </Reveal>

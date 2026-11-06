@@ -121,7 +121,7 @@ reset role;
 set local role anon;
 select tests.ok((select count(*) from public.projects) = 1 and (select count(*) from public.gallery_items) = 1,
   'Les visiteurs voient le projet et la vidéo publiés');
-select tests.ok((select count(*) from public.partners) = 0,
+select tests.ok((select count(*) from public.partners where name = 'Sponsor en attente d''autorisation') = 0,
   'Un partenaire non activé reste invisible des visiteurs');
 reset role;
 

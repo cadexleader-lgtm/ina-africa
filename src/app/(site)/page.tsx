@@ -61,7 +61,7 @@ export default async function HomePage() {
       <HomeVision settings={settings} />
       <HomeAreas areas={areas} />
       <HomeObjectives />
-      <HomeAchievements settings={settings} />
+      <HomeAchievements settings={settings} limit={6} />
       {projects.length > 0 && <HomeProjects projects={projects} />}
       <HomeTeam members={team} />
       <HomeJoin />

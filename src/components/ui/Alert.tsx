@@ -39,7 +39,7 @@ export function Alert({ tone = "info", title, children, role, action, className 
       <Icon aria-hidden="true" className={cn("mt-0.5 size-5 shrink-0", icon)} />
       <div className="flex min-w-0 flex-col gap-1">
         {title && <p className="font-semibold text-brand">{title}</p>}
-        {children && <div className="text-body [&_a]:text-link [&_a]:underline">{children}</div>}
+        {children && <div className="text-body [&_a]:text-link-strong [&_a]:underline">{children}</div>}
         {action && <div className="mt-2">{action}</div>}
       </div>
     </div>

@@ -19,6 +19,11 @@ export const TEAM_GROUPS = [
     label: "Adjoints aux membres de l'administration",
     description: "Ils assistent les responsables dans leurs actions et missions.",
   },
+  {
+    value: "conseillers",
+    label: "Conseillers",
+    description: "Ils apportent à l'ONG un appui technique et stratégique.",
+  },
 ] as const;
 
 export type TeamGroup = (typeof TEAM_GROUPS)[number]["value"];

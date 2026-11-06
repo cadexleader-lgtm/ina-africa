@@ -176,7 +176,7 @@ export const T = {
       partner: "Devenir partenaire",
     },
     partners: {
-      label: "Partenaires et soutiens",
+      label: "Partenaires et sponsors",
       title: "Ils accompagnent INA-AFRICA",
     },
   },
