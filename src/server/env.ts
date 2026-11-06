@@ -43,6 +43,15 @@ const serverEnvSchema = z.object({
   // Services branchés plus tard
   TURNSTILE_SECRET_KEY: optionalSecret,
   RESEND_API_KEY: optionalSecret,
+  // Expéditeur des emails (adresse d'un domaine vérifié chez Resend),
+  // ex. « INA-AFRICA <contact@ina-africa.org> ». Facultatif : sans lui, aucun email n'est envoyé.
+  EMAIL_FROM: z
+    .string()
+    .trim()
+    .max(200)
+    .regex(/^([^<>\r\n]{1,100} <)?[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+>?$/)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
   KKIAPAY_PRIVATE_KEY: optionalSecret,
   KKIAPAY_SECRET: optionalSecret,
   CINETPAY_API_KEY: optionalSecret,

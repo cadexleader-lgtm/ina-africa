@@ -46,6 +46,16 @@ export function hasPublicSupabaseEnv(): boolean {
     }).success;
 }
 
+/**
+ * Clé PUBLIQUE de Cloudflare Turnstile (anti-robot), facultative. Le
+ * contrôle n'est appliqué que si cette clé ET la clé secrète
+ * (TURNSTILE_SECRET_KEY, serveur) sont configurées.
+ */
+export function getTurnstileSiteKey(): string | null {
+  const value = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim();
+  return value && /^[A-Za-z0-9_-]{8,100}$/.test(value) ? value : null;
+}
+
 export function formatEnvError(kind: string, error: z.ZodError): string {
   const missing = error.issues.map((issue) => issue.path.join(".")).join(", ");
   return `Variables d'environnement ${kind} manquantes ou invalides : ${missing}. Voir .env.example.`;
