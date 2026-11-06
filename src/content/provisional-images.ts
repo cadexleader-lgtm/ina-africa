@@ -47,6 +47,30 @@ export const PROVISIONAL_IMAGES = {
     hasSmall: false,
     provisional: true,
   },
+  eleveEnClasse: {
+    path: "/images/provisoires/eleve-en-classe.webp",
+    alt: "Une élève en uniforme bleu écrit dans son cahier en classe.",
+    width: 817,
+    height: 464,
+    hasSmall: true,
+    provisional: true,
+  },
+  groupeDeFemmes: {
+    path: "/images/provisoires/groupe-de-femmes.webp",
+    alt: "Un groupe de femmes réunies en plein air applaudit.",
+    width: 1290,
+    height: 860,
+    hasSmall: true,
+    provisional: true,
+  },
+  enfantsFauteuil: {
+    path: "/images/provisoires/enfants-fauteuil.webp",
+    alt: "Des enfants accompagnent une camarade en fauteuil roulant devant une école.",
+    width: 1147,
+    height: 860,
+    hasSmall: true,
+    provisional: true,
+  },
 } as const satisfies Record<string, ProvisionalImage>;
 
 /**
@@ -55,7 +79,10 @@ export const PROVISIONAL_IMAGES = {
  */
 // Une photo provisoire n'apparaît qu'UNE fois sur l'accueil : celle du hero
 // (formationTechnique) et celle de la section impact (atelierCouture) ne sont
-// donc pas reprises ici. À compléter avec les prochaines photos reçues.
+// donc pas reprises ici. Les autres domaines gardent leur tuile-icône.
 export const PROVISIONAL_AREA_IMAGES: Partial<Record<string, ProvisionalImage>> = {
-  education: PROVISIONAL_IMAGES.salleDeClasse,
+  education: PROVISIONAL_IMAGES.eleveEnClasse,
+  "autonomisation-des-femmes": PROVISIONAL_IMAGES.groupeDeFemmes,
+  "jeunesse-et-adolescents": PROVISIONAL_IMAGES.salleDeClasse,
+  "inclusion-et-egalite-de-genre": PROVISIONAL_IMAGES.enfantsFauteuil,
 };

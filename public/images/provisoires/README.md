@@ -16,3 +16,6 @@ sous licence vérifiée), puis supprimer ce dossier.
 | `atelier-couture.webp` (+ `-sm`) | 1200 × 1201 | couturière à sa machine |
 | `formation-technique.webp` (+ `-sm`) | 1200 × 800 | jeunes en atelier technique |
 | `salle-de-classe.webp` | 565 × 377 | trop petite pour un grand format ; tableau en anglais (pas le Bénin) |
+| `eleve-en-classe.webp` (+ `-sm`) | 817 × 464 | élève en uniforme bleu |
+| `groupe-de-femmes.webp` (+ `-sm`) | 1290 × 860 | groupe de femmes en plein air |
+| `enfants-fauteuil.webp` (+ `-sm`) | 1147 × 860 | enfants et camarade en fauteuil roulant |
