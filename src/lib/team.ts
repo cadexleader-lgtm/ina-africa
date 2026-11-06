@@ -13,6 +13,11 @@ export type TeamGroup = (typeof TEAM_GROUPS)[number]["value"];
 
 export const TEAM_GROUP_VALUES = TEAM_GROUPS.map((group) => group.value) as [TeamGroup, ...TeamGroup[]];
 
+export const TEAM_GROUP_LABELS = Object.fromEntries(TEAM_GROUPS.map((group) => [group.value, group.label])) as Record<
+  TeamGroup,
+  string
+>;
+
 export const DEFAULT_TEAM_GROUP: TeamGroup = "conseil_administration";
 
 export function isTeamGroup(value: unknown): value is TeamGroup {

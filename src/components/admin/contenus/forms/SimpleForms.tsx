@@ -11,6 +11,7 @@ import {
   updatePartner,
   updateTeamMember,
 } from "@/server/actions/admin/content";
+import { DEFAULT_TEAM_GROUP, TEAM_GROUPS, type TeamGroup } from "@/lib/team";
 import type { AdminActionArea, AdminPartner, AdminTeamMember } from "@/server/data/admin/types";
 
 import { ImageField } from "../../media/ImageField";
@@ -212,6 +213,7 @@ export function TeamForm({ member, nextOrder }: { member: AdminTeamMember | null
   const f = useSaver("/admin/equipe", member === null, {
     fullName: member?.fullName ?? "",
     position: member?.position ?? "",
+    teamGroup: member?.teamGroup ?? DEFAULT_TEAM_GROUP,
     bio: member?.bio ?? "",
     photoPath: member?.photoPath ?? "",
     displayOrder: member?.displayOrder ?? nextOrder,
@@ -225,7 +227,7 @@ export function TeamForm({ member, nextOrder }: { member: AdminTeamMember | null
       }
       feedback={f.feedback}
       feedbackRef={f.feedbackRef}
-      extraErrors={unmatchedErrors(f.errors, ["id", "fullName", "position", "bio", "photoPath", "displayOrder"])}
+      extraErrors={unmatchedErrors(f.errors, ["id", "fullName", "position", "teamGroup", "bio", "photoPath", "displayOrder"])}
       pending={f.pending}
       dirty={f.dirty}
       submitLabel={member ? "Enregistrer" : "Créer la fiche"}
@@ -249,6 +251,15 @@ export function TeamForm({ member, nextOrder }: { member: AdminTeamMember | null
           value={f.values.position}
           error={e("position")}
           onChange={(value) => f.set("position", value)}
+        />
+        <SelectField
+          id="equipe-group"
+          label="Instance"
+          required
+          options={TEAM_GROUPS.map(({ value, label }) => ({ value, label }))}
+          value={f.values.teamGroup}
+          error={e("teamGroup")}
+          onChange={(value) => f.set("teamGroup", value as TeamGroup)}
         />
         <TextAreaField
           id="equipe-bio"

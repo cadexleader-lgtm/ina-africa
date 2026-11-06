@@ -5,6 +5,7 @@ import { Pencil } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
 import { formatDate } from "@/lib/format";
 import { formatFcfa } from "@/lib/money";
+import { TEAM_GROUP_LABELS } from "@/lib/team";
 import { deleteCampaign, setCampaignActive } from "@/server/actions/admin/campaigns";
 import {
   deleteActionArea,
@@ -297,7 +298,7 @@ export function TeamTable({ members }: { members: AdminTeamMember[] }) {
   const ids = members.map((member) => member.id);
   return (
     <DataTable
-      caption="Membres de l'équipe, dans l'ordre d'affichage"
+      caption="Membres de l'équipe, par instance puis dans l'ordre d'affichage"
       rows={members}
       rowKey={(member) => member.id}
       rowHeader={1}
@@ -312,6 +313,7 @@ export function TeamTable({ members }: { members: AdminTeamMember[] }) {
         },
         { header: "Nom", cell: (member) => <RowLink href={`/admin/equipe/${member.id}`}>{member.fullName}</RowLink> },
         { header: "Fonction", cell: (member) => member.position, hideOnMobile: true },
+        { header: "Instance", cell: (member) => TEAM_GROUP_LABELS[member.teamGroup], hideOnMobile: true },
         { header: "Site", cell: (member) => <VisibilityBadge on={member.isActive} labels={{ on: "Actif", off: "Inactif" }} /> },
         { header: "Ordre", cell: (member, index) => <MoveButtons ids={ids} index={index} name={member.fullName} action={reorderTeamMembers} /> },
         {
