@@ -3,6 +3,7 @@ import { Inter, Manrope } from "next/font/google";
 
 import { DevPreviewBanner } from "@/components/site/DevPreviewBanner";
 import { ORG } from "@/content/fr/site";
+import { pageRobots } from "@/lib/seo/indexing";
 
 import "@/styles/globals.css";
 
@@ -28,8 +29,8 @@ export const metadata: Metadata = {
   },
   description: `Site de l'ONG ${ORG.name} (${ORG.fullName}), au Bénin.`,
   applicationName: ORG.name,
-  // Site en construction : rien ne doit être indexé par Google avant la mise en ligne.
-  robots: { index: false, follow: false },
+  // Indexation pilotée par SITE_INDEXABLE (src/lib/seo/indexing.ts) : noindex tant que le site n'est pas en ligne.
+  robots: pageRobots(),
 };
 
 export const viewport: Viewport = {

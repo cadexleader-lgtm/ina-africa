@@ -124,7 +124,7 @@ export const PAGES = {
 
   project: {
     /** Libellés des états (paramètre d'adresse ?statut=). */
-    status: { planned: "Prévu", ongoing: "En cours", completed: "Terminé" },
+    status: { planned: "À venir", ongoing: "En cours", completed: "Terminé" },
     factsTitle: "Le projet en bref",
     area: "Domaine",
     status_: "État",

@@ -90,8 +90,8 @@ describe("liens de la liste des projets", () => {
 });
 
 describe("libellés et période des projets", () => {
-  it("états : Prévu, En cours, Terminé ; archivé → aucun libellé", () => {
-    expect(projectStatusLabel("planned")).toBe("Prévu");
+  it("états : À venir, En cours, Terminé ; archivé → aucun libellé", () => {
+    expect(projectStatusLabel("planned")).toBe("À venir");
     expect(projectStatusLabel("ongoing")).toBe("En cours");
     expect(projectStatusLabel("completed")).toBe("Terminé");
     expect(projectStatusLabel("archived")).toBeNull();
