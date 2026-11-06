@@ -33,11 +33,12 @@ export function AdminUserBadge({ user }: { user: ShellUser | null }) {
 }
 
 /**
- * Coquille de l'espace d'administration : en-tête (logo, navigation, nom,
- * rôle, déconnexion) et zone de contenu. Le contenu de chaque page est placé
- * DANS <main id="contenu"> (ne pas remettre de <main>).
+ * Coquille de l'espace d'administration : en-tête (logo, nom, rôle,
+ * déconnexion), menu (`nav`, colonne sur grand écran, bouton « Menu » sur
+ * téléphone) et zone de contenu. Le contenu de chaque page est placé DANS
+ * <main id="contenu"> (ne pas remettre de <main>).
  */
-export function AdminShell({ user, children }: { user: ReactNode; children: ReactNode }) {
+export function AdminShell({ user, nav, children }: { user: ReactNode; nav?: ReactNode; children: ReactNode }) {
   return (
     <div className="flex min-h-dvh flex-col bg-ivory">
       <SkipLink />
@@ -49,32 +50,43 @@ export function AdminShell({ user, children }: { user: ReactNode; children: Reac
           </div>
           {user}
         </div>
-        <nav aria-label={T.mainNav} className="border-t border-line">
-          <ul className="mx-auto box-content flex max-w-site flex-wrap gap-1 px-gutter py-1">
-            <li>
-              <Link href="/admin" className={NAV_LINK}>
-                <LayoutDashboard aria-hidden="true" />
-                {T.dashboard}
-              </Link>
-            </li>
-            <li>
-              <Link href="/admin/securite/double-authentification" className={NAV_LINK}>
-                <ShieldCheck aria-hidden="true" />
-                {T.security}
-              </Link>
-            </li>
-            <li>
-              <Link href="/" className={NAV_LINK}>
-                <ExternalLink aria-hidden="true" />
-                {T.viewSite}
-              </Link>
-            </li>
-          </ul>
-        </nav>
       </header>
-      <main id="contenu" tabIndex={-1} className="flex-1 focus:outline-none">
-        <div className="mx-auto box-content max-w-site px-gutter py-10">{children}</div>
-      </main>
+      <div className="flex-1">
+        <div className="mx-auto box-content flex max-w-site flex-col gap-6 px-gutter py-6 lg:flex-row lg:gap-10 lg:py-10">
+          {nav ?? <DefaultNav />}
+          <main id="contenu" tabIndex={-1} className="min-w-0 flex-1 focus:outline-none">
+            {children}
+          </main>
+        </div>
+      </div>
     </div>
+  );
+}
+
+/** Menu minimal (avant la lecture du rôle). */
+function DefaultNav() {
+  return (
+    <nav aria-label={T.mainNav} className="lg:w-60 lg:shrink-0">
+      <ul className="flex flex-wrap gap-1 lg:flex-col">
+        <li>
+          <Link href="/admin" className={NAV_LINK}>
+            <LayoutDashboard aria-hidden="true" />
+            {T.dashboard}
+          </Link>
+        </li>
+        <li>
+          <Link href="/admin/securite/double-authentification" className={NAV_LINK}>
+            <ShieldCheck aria-hidden="true" />
+            {T.security}
+          </Link>
+        </li>
+        <li>
+          <Link href="/" className={NAV_LINK}>
+            <ExternalLink aria-hidden="true" />
+            {T.viewSite}
+          </Link>
+        </li>
+      </ul>
+    </nav>
   );
 }
