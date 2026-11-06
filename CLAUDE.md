@@ -16,7 +16,7 @@ fonctionnalité hors périmètre sans accord.
 - **Photos provisoires** (`public/images/provisoires/`, `src/content/provisional-images.ts`) : origine inconnue, fournies par l'utilisateur pour le développement. Illustration seulement, toujours avec « Photo d'illustration », jamais dans un projet, un article ou la galerie, **à remplacer avant la mise en ligne**. Les photos de la maquette (générées par IA) ne sont jamais utilisées.
 - **Aucun faux contenu** : pas de faux partenaires, chiffres, témoignages, réalisations. Les textes viennent de l'ONG.
 - **Aucune clé inventée**, aucun paiement simulé présenté comme réel. Aucun prestataire activé avant validation du compte marchand.
-- **Pas de migration appliquée sur Supabase sans accord explicite** de l'utilisateur.
+- **Pas de migration appliquée sur Supabase sans accord explicite** de l'utilisateur. Projet Supabase : `vzmkyegczqlzjtuntmvz` (ina-africa) ; les 12 migrations actuelles y sont appliquées (voir `docs/database.md` §5).
 - Avancer **par étapes**, présenter le résultat avant de passer à la suivante. Phase 1 (base) faite ; frontend en cours selon `docs/frontend-plan.md` (validé) ; Phase 2 (connexion admin) avant le dashboard.
 - La maquette sert de référence de **mise en page** uniquement : ses logos de partenaires, chiffres, valeurs et articles ne sont pas des contenus réels.
 

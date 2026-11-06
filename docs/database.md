@@ -116,7 +116,10 @@ Dans `supabase/migrations/`, à appliquer dans l'ordre :
 6. `…100500_contact_requests_and_newsletter` — formulaires publics
 7. `…100600_donations` — appels aux dons, dons, transactions, fonctions de paiement
 8. `…100700_admin_dashboard` — chiffres du tableau de bord
-9. `…100800_initial_data` — ligne de paramètres + 6 domaines en brouillon (sans texte inventé)
+9. `…100800_initial_data` — ligne de paramètres + 7 domaines confirmés, inactifs (sans texte inventé)
+10. `…090000_frontend_content_fields` — champs utilisés par le site public (accueil, domaines, projets, pages légales)
+11. `…090100_official_texts` — textes officiels des statuts (vision, missions, objectifs, approche, historique)
+12. `…100000_foreign_key_indexes` — index de 3 clés étrangères (signalés par l'outil de performance)
 
 Règles pour toute nouvelle migration :
 - ne jamais modifier une migration déjà appliquée : en créer une nouvelle ;
@@ -137,10 +140,26 @@ Démarre un Postgres jetable, applique une reproduction minimale de Supabase
 `tests/db/` (chaque fichier dans une transaction annulée). Nécessite les
 binaires Postgres 16 (`PGBIN=/chemin/vers/bin` si besoin).
 
-### Appliquer sur le projet Supabase (uniquement avec accord)
+### Projet Supabase de production
+
+- Projet **ina-africa**, référence `vzmkyegczqlzjtuntmvz`, région Paris (eu-west-3),
+  adresse `https://vzmkyegczqlzjtuntmvz.supabase.co`.
+- **Les 12 migrations sont appliquées** (06/11/2026). Les numéros enregistrés
+  dans `supabase_migrations.schema_migrations` sont ceux des fichiers, donc
+  `supabase db push` n'appliquera que les nouvelles migrations.
+- Vérification faite après application : empreinte du schéma (colonnes,
+  contraintes, index, règles RLS, triggers, fonctions, droits, données de
+  départ, espaces de stockage) **identique** à celle de la base testée en local.
+- Outil de sécurité Supabase : seuls avertissements, voulus — `campaign_progress`
+  est appelable par les visiteurs (elle ne montre que les appels actifs dont la
+  progression est publique) ; `admin_dashboard_stats`, `record_offline_donation`
+  et `cancel_offline_donation` sont appelables par un compte connecté mais
+  revérifient le rôle elles-mêmes.
+
+### Appliquer une nouvelle migration (uniquement avec accord)
 
 ```bash
-npx supabase link --project-ref <ref-du-projet>
+npx supabase link --project-ref vzmkyegczqlzjtuntmvz
 npx supabase db push
 ```
 

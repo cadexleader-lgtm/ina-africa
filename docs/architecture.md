@@ -65,7 +65,7 @@ navigateur : aucun secret. La clé secrète Supabase n'est lue que par
 | Phase | Contenu | État |
 |---|---|---|
 | 0 | Audit et plan | ✅ |
-| 1 | Base de données : tables, RLS, fonctions, tests locaux | ✅ (non appliquée sur Supabase) |
+| 1 | Base de données : tables, RLS, fonctions, tests locaux | ✅ (appliquée sur Supabase le 06/11/2026, projet `vzmkyegczqlzjtuntmvz`) |
 | 2 | Authentification admin, double authentification, protection des routes | à faire |
 | 3 | Opérations backend (contenus, formulaires, dons hors ligne, médias) | à faire |
 | 4 | Paiement en ligne (après validation du compte marchand) | à faire |
