@@ -39,6 +39,20 @@ export function getFormsBackend(): FormsBackend | null {
   return { db: createPrivilegedClient(), env };
 }
 
+/**
+ * Raison pour laquelle les formulaires sont inactifs (noms de variables
+ * uniquement, jamais de valeur), ou null s'ils sont prêts. Sert au journal.
+ */
+export function formsConfigProblem(): string | null {
+  if (!hasPublicSupabaseEnv()) return "variables publiques Supabase absentes à l'exécution";
+  try {
+    getServerEnv();
+    return null;
+  } catch (error) {
+    return error instanceof Error ? error.message : "configuration serveur incomplète";
+  }
+}
+
 /** Secret de signature des horodatages, seulement si les formulaires peuvent être enregistrés. */
 export function getFormSecret(): string | null {
   if (!hasPublicSupabaseEnv()) return null;

@@ -6,7 +6,7 @@ import type { OrgContacts } from "@/components/forms/ContactAlternatives";
 import { SPAM_FIELDS } from "@/lib/validation/forms";
 import { isEmailConfigured } from "@/server/email";
 import { issueFormToken } from "@/server/security/form-token";
-import { getFormSecret } from "@/server/security/forms-backend";
+import { formsConfigProblem, getFormSecret } from "@/server/security/forms-backend";
 
 /**
  * Partie de formulaire calculée À CHAQUE VISITE (composant serveur sous
@@ -30,7 +30,14 @@ type FormGuardProps = {
 async function GuardContent({ formKey, formId, contacts, requireEmail = false }: FormGuardProps) {
   await connection();
   const secret = getFormSecret();
-  if (!secret || (requireEmail && !isEmailConfigured())) return <UnavailableNotice contacts={contacts} />;
+  if (!secret || (requireEmail && !isEmailConfigured())) {
+    // Diagnostic (noms de variables seulement) : visible dans les journaux de l'hébergeur.
+    console.warn(
+      `[ina-africa] formulaire « ${formKey} » indisponible :`,
+      !secret ? formsConfigProblem() : "envoi d'emails non configuré (RESEND_API_KEY, EMAIL_FROM)",
+    );
+    return <UnavailableNotice contacts={contacts} />;
+  }
   return <input type="hidden" name={SPAM_FIELDS.token} value={issueFormToken(formKey, secret)} form={formId} />;
 }
 
