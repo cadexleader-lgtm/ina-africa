@@ -359,3 +359,107 @@ export const KEY_FACTS = [
   { value: String(TEAM.length), label: "Membres dans ses instances" },
   { value: IDENTITY.country, label: "Pays d'intervention" },
 ];
+
+/**
+ * Pourquoi rejoindre ou soutenir INA-AFRICA. Chaque raison s'appuie sur les
+ * documents : fonctions des instances (trésorerie, conseil de surveillance),
+ * approche participative (expériences), moyens d'action (statuts).
+ */
+export const JOIN_REASONS = [
+  {
+    title: "Une gestion transparente",
+    text: "La trésorerie tient une comptabilité régulière, transparente et sincère, et un conseil de surveillance veille à la bonne gouvernance de l'ONG.",
+  },
+  {
+    title: "Une action de proximité",
+    text: "Une approche participative, au plus près des communautés du Bénin, centrée sur l'impact à long terme.",
+  },
+  {
+    title: "Plusieurs façons d'agir",
+    text: "Faire un don, devenir bénévole, adhérer à l'ONG ou devenir partenaire : chacun peut contribuer à sa mesure.",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Textes éditoriaux de l'accueil et de « À propos ». Reformulations des
+// documents ci-dessus (historique, statuts, expériences) : rien d'ajouté.
+// ---------------------------------------------------------------------------
+
+/** Présentation de l'organisation (accueil, section 2). */
+export const ORGANISATION_INTRO = [
+  "INA-AFRICA, Initiative pour un Nouvel Avenir en Afrique, est une organisation non gouvernementale née au Bénin en 2017. Elle agit là où les besoins humanitaires et sociaux l'exigent, avec une conviction : les communautés africaines peuvent construire elles-mêmes un avenir plus juste et plus durable, à condition que chacun y trouve sa place.",
+  "L'ONG est née face aux défis socio-économiques persistants que rencontrent les communautés, notamment dans l'éducation, la santé, l'autonomisation des femmes et l'inclusion genre. Elle promeut des initiatives locales, durables et inclusives, avec une approche participative et centrée sur l'impact à long terme.",
+];
+
+/** Ce que la vision cherche à changer (reformulation de la vision et des missions). */
+export const VISION_EXPLAINED =
+  "INA-AFRICA veut que les femmes, les jeunes et les personnes en situation de handicap ne restent pas en marge du développement, mais en deviennent des acteurs : en améliorant leurs conditions de vie, en renforçant la place des femmes dans les décisions et en bâtissant, pour les populations défavorisées, des conditions de vie plus durables.";
+
+/** Titres courts des trois missions (statuts, art. 9), dans l'ordre de MISSIONS. */
+export const MISSION_TITLES = [
+  "Améliorer les conditions de vie",
+  "Faire progresser l'égalité",
+  "Bâtir un avenir durable",
+];
+
+/**
+ * Objectifs (statuts, art. 10) présentés en six thèmes : le premier objectif
+ * statutaire couvre à la fois les femmes et les jeunes, d'où deux cartes.
+ */
+export const OBJECTIVE_THEMES = [
+  {
+    key: "femmes",
+    title: "L'autonomisation économique des femmes",
+    text: "Contribuer à l'autonomisation économique des femmes et à leur bien-être social, pour qu'elles gagnent en indépendance.",
+  },
+  {
+    key: "jeunes",
+    title: "L'insertion professionnelle des jeunes",
+    text: "Favoriser l'accès des jeunes à un travail décent, notamment à travers le « Programme Jeune Professionnel » (PJP).",
+  },
+  {
+    key: "genre",
+    title: "L'égalité entre les femmes et les hommes",
+    text: "Réduire les inégalités entre les sexes et promouvoir l'approche genre dans les pays en voie de développement.",
+  },
+  {
+    key: "culture",
+    title: "Le patrimoine culturel béninois et africain",
+    text: "Promouvoir la culture béninoise et africaine par des projets structurants de valorisation du patrimoine culturel.",
+  },
+  {
+    key: "climat",
+    title: "La gestion durable des écosystèmes",
+    text: "Participer à la lutte contre le réchauffement climatique et à une gestion participative et durable des écosystèmes.",
+  },
+  {
+    key: "sante",
+    title: "La santé et le bien-être des populations",
+    text: "Fournir aux populations les informations essentielles pour leur santé et contribuer à l'atteinte des objectifs de développement durable.",
+  },
+] as const;
+
+/** Les trois façons de s'engager (accueil, À propos, Nous rejoindre). */
+export const ENGAGEMENT_OPTIONS = [
+  {
+    key: "membre",
+    title: "Devenir membre",
+    text: "Participer à la vie de l'organisation et à ses initiatives, aux côtés de ses instances.",
+    href: "/nous-rejoindre/membre",
+    action: "Demander à adhérer",
+  },
+  {
+    key: "benevole",
+    title: "Devenir bénévole",
+    text: "Apporter votre temps et vos compétences aux actions de formation, de sensibilisation et d'aide humanitaire.",
+    href: "/nous-rejoindre/benevole",
+    action: "Proposer mon aide",
+  },
+  {
+    key: "partenaire",
+    title: "Devenir partenaire",
+    text: "Soutenir les initiatives d'INA-AFRICA et construire des collaborations durables au service des communautés.",
+    href: "/nous-rejoindre/partenaire",
+    action: "Proposer un partenariat",
+  },
+] as const;

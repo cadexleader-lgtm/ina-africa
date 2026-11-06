@@ -95,8 +95,8 @@
   --text-nav--line-height: 1.4;
 
   /* --- Espacements (grille de 4 px : --spacing par défaut = 0.25rem) ----- */
-  --spacing-section: clamp(4rem, 2.6rem + 5.6vw, 7rem); /* sections : 64 → 112 px */
-  --spacing-section-sm: clamp(3rem, 2.3rem + 2.8vw, 4.5rem); /* sections compactes : 48 → 72 px */
+  --spacing-section: clamp(3.5rem, 2.8rem + 2.8vw, 5rem); /* sections : 56 → 80 px */
+  --spacing-section-sm: clamp(2.5rem, 2.1rem + 1.6vw, 3.5rem); /* sections compactes : 40 → 56 px */
   --spacing-gutter: clamp(1.25rem, 0.75rem + 2vw, 2.5rem); /* marges latérales : 20 → 40 px */
   --spacing-header: 4.5rem; /* hauteur de l'en-tête (72 px) */
 
@@ -254,20 +254,8 @@ dialog[open]::backdrop {
   animation: backdrop-in var(--duration-base) var(--ease-out);
 }
 
-/* Carte de l'Afrique de l'accueil : la bordure se dessine une fois (2,4 s),
-   le point du Bénin respire doucement. Coupés en mouvement réduit (ci-dessous). */
-.africa-outline {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 0;
-  animation: africa-draw 2.4s var(--ease-out) both;
-}
-
-@keyframes africa-draw {
-  from {
-    stroke-dashoffset: 1;
-  }
-}
-
+/* Point du Bénin sur la petite carte de l'accueil : respire doucement
+   (coupé en mouvement réduit, ci-dessous). */
 .benin-pulse {
   transform-box: fill-box;
   transform-origin: center;

@@ -10,6 +10,8 @@
  *    d'INA-AFRICA ; jamais dans un projet, un article ou la galerie.
  */
 
+import { ILLUSTRATIONS } from "@/content/illustrations";
+
 export type ProvisionalImage = {
   path: string;
   alt: string;
@@ -19,6 +21,13 @@ export type ProvisionalImage = {
   hasSmall: boolean;
   provisional: true;
 };
+
+/** Photo libre (src/content/illustrations.ts) présentée comme illustration. */
+export function illustrationAsProvisional(path: string): ProvisionalImage {
+  const found = ILLUSTRATIONS.find((illustration) => illustration.path === path);
+  if (!found) throw new Error(`Illustration inconnue : ${path}`);
+  return { path: found.path, alt: found.alt, width: found.width, height: found.height, hasSmall: true, provisional: true };
+}
 
 export const PROVISIONAL_LABEL = "Photo d'illustration";
 
@@ -77,12 +86,25 @@ export const PROVISIONAL_IMAGES = {
  * Illustration provisoire d'un domaine (par adresse du domaine), utilisée
  * seulement si l'administration n'a pas encore choisi de photo.
  */
-// Une photo provisoire n'apparaît qu'UNE fois sur l'accueil : celle du hero
-// (formationTechnique) et celle de la section impact (atelierCouture) ne sont
-// donc pas reprises ici. Les autres domaines gardent leur tuile-icône.
+// Chaque domaine a une illustration tant que l'administration n'a pas choisi
+// de photo : photos provisoires, ou photos libres du Bénin (Wikimedia
+// Commons, crédits sur /credits-photos). Toujours « Photo d'illustration ».
 export const PROVISIONAL_AREA_IMAGES: Partial<Record<string, ProvisionalImage>> = {
   education: PROVISIONAL_IMAGES.eleveEnClasse,
-  "autonomisation-des-femmes": PROVISIONAL_IMAGES.groupeDeFemmes,
+  "sante-sexuelle-et-reproductive": illustrationAsProvisional("/images/illustrations/femmes-cotonou.webp"),
+  "autonomisation-des-femmes": PROVISIONAL_IMAGES.atelierCouture,
   "jeunesse-et-adolescents": PROVISIONAL_IMAGES.salleDeClasse,
-  "inclusion-et-egalite-de-genre": PROVISIONAL_IMAGES.enfantsFauteuil,
+  "inclusion-et-egalite-de-genre": illustrationAsProvisional("/images/illustrations/egalite-femme-moto.webp"),
+  "developpement-local-durable": illustrationAsProvisional("/images/illustrations/alphabetisation.webp"),
+  "innovation-sociale": PROVISIONAL_IMAGES.formationTechnique,
 };
+
+/**
+ * Photos des sections de l'accueil (une photo n'apparaît qu'une fois sur la
+ * page). Remplacées par les vraies photos de l'ONG dès qu'elles arrivent.
+ */
+export const HOME_PHOTOS = {
+  hero: PROVISIONAL_IMAGES.groupeDeFemmes,
+  presentation: PROVISIONAL_IMAGES.enfantsFauteuil,
+  callToAction: illustrationAsProvisional("/images/illustrations/chemin-ecole.webp"),
+} as const;

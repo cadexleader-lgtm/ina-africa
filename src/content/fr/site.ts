@@ -118,8 +118,8 @@ export const T = {
   home: {
     metaTitle: "INA-AFRICA — Initiative pour un Nouvel Avenir en Afrique",
     hero: {
-      primary: "Découvrir notre engagement",
-      secondary: "Soutenir nos actions",
+      primary: "Découvrir notre organisation",
+      secondary: "Rejoindre INA-AFRICA",
     },
     about: {
       label: "À propos",

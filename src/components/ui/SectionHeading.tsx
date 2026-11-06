@@ -58,7 +58,7 @@ export function SectionHeading({
     <div
       className={cn(
         "flex flex-col gap-6",
-        !flush && "mb-10 md:mb-12",
+        !flush && "mb-8 md:mb-10",
         !centered && Boolean(action) && "md:flex-row md:items-end md:justify-between",
         centered && "items-center text-center",
         className,
