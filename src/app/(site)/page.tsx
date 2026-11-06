@@ -8,7 +8,9 @@ import { HomeImpact } from "@/components/home/HomeImpact";
 import { HomeNews } from "@/components/home/HomeNews";
 import { HomePartners } from "@/components/home/HomePartners";
 import { HomeProjects } from "@/components/home/HomeProjects";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { ORG, T } from "@/content/fr/site";
+import { homeJsonLd } from "@/lib/seo/structured-data";
 import { listLatestArticles } from "@/server/data/articles";
 import { listHomeProjects } from "@/server/data/projects";
 import { getSiteSettings, listActionAreas, listPartners } from "@/server/data/site";
@@ -47,6 +49,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd data={homeJsonLd(settings)} />
       <HomeHero settings={settings} />
       <HomeAbout settings={settings} />
       <HomeAreas areas={areas} />
