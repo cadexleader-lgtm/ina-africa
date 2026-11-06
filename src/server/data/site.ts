@@ -13,7 +13,7 @@ import type {
 } from "@/lib/types/content";
 import { DEFAULT_TEAM_GROUP, isTeamGroup } from "@/lib/team";
 import { richTextDocSchema, type RichTextDoc } from "@/lib/validation/rich-text";
-import { DEV_PREVIEW_AREAS, DEV_PREVIEW_SETTINGS, isDevPreview } from "@/server/data/dev-preview";
+import { APPROACH, AREAS, EXPERIENCE, HERO, HISTORY, MISSIONS, OBJECTIVES, TEAM, VISION } from "@/content/fr/ina-africa";
 import { emptyPage, getReader, logReadError, pageRange, paginated, toImage } from "@/server/data/reader";
 import { TAGS } from "@/server/data/tags";
 
@@ -47,6 +47,30 @@ const EMPTY_SETTINGS: SiteSettings = {
   privacyPolicy: null,
 };
 
+/**
+ * Textes officiels de l'ONG (src/content/fr/ina-africa.ts) : affichés tant
+ * que l'administration n'a rien saisi, ou si la base ne répond pas. Ainsi
+ * aucune page de présentation n'est vide.
+ */
+const OFFICIAL_SETTINGS: SiteSettings = {
+  ...EMPTY_SETTINGS,
+  aboutHistory: HISTORY.join("\n\n"),
+  vision: VISION,
+  mission: MISSIONS.join("\n"),
+  objectives: OBJECTIVES.join("\n"),
+  approach: APPROACH.join("\n"),
+  heroKicker: HERO.kicker,
+  heroTitle: HERO.title,
+  heroText: HERO.text,
+  impactTitle: EXPERIENCE.title,
+  impactText: EXPERIENCE.intro,
+};
+
+/** Valeur saisie dans la base, sinon le texte officiel. */
+function orOfficial(value: string | null | undefined, official: string | null): string | null {
+  return value && value.trim() ? value : official;
+}
+
 function safeDoc(value: unknown): RichTextDoc | null {
   const parsed = richTextDocSchema.safeParse(value);
   return parsed.success ? (parsed.data as RichTextDoc) : null;
@@ -78,7 +102,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   cacheTag(TAGS.settings);
 
   const db = getReader();
-  if (!db) return isDevPreview() ? { ...EMPTY_SETTINGS, ...DEV_PREVIEW_SETTINGS } : EMPTY_SETTINGS;
+  if (!db) return OFFICIAL_SETTINGS;
 
   const { data, error } = await db
     .from("site_settings")
@@ -90,22 +114,22 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 
   if (error || !data) {
     logReadError("site_settings", error);
-    return EMPTY_SETTINGS;
+    return OFFICIAL_SETTINGS;
   }
 
   return {
-    aboutHistory: data.about_history,
-    vision: data.vision,
-    mission: data.mission,
-    objectives: data.objectives,
+    aboutHistory: orOfficial(data.about_history, OFFICIAL_SETTINGS.aboutHistory),
+    vision: orOfficial(data.vision, OFFICIAL_SETTINGS.vision),
+    mission: orOfficial(data.mission, OFFICIAL_SETTINGS.mission),
+    objectives: orOfficial(data.objectives, OFFICIAL_SETTINGS.objectives),
     valuesText: data.values_text,
-    approach: data.approach,
-    heroKicker: data.hero_kicker,
-    heroTitle: data.hero_title,
-    heroText: data.hero_text,
+    approach: orOfficial(data.approach, OFFICIAL_SETTINGS.approach),
+    heroKicker: orOfficial(data.hero_kicker, OFFICIAL_SETTINGS.heroKicker),
+    heroTitle: orOfficial(data.hero_title, OFFICIAL_SETTINGS.heroTitle),
+    heroText: orOfficial(data.hero_text, OFFICIAL_SETTINGS.heroText),
     heroImage: toImage(data.hero_image_path, data.hero_image_alt),
-    impactTitle: data.impact_title,
-    impactText: data.impact_text,
+    impactTitle: orOfficial(data.impact_title, OFFICIAL_SETTINGS.impactTitle),
+    impactText: orOfficial(data.impact_text, OFFICIAL_SETTINGS.impactText),
     impactImage: toImage(data.impact_image_path, data.impact_image_alt),
     contactEmail: data.contact_email,
     contactPhone: data.contact_phone,
@@ -146,16 +170,30 @@ type AreaRow = {
 };
 
 function toArea(row: AreaRow): ActionArea {
+  const official = AREAS.find((area) => area.slug === row.slug);
   return {
     id: row.id,
     slug: row.slug,
     title: row.title,
-    summary: row.summary,
-    description: row.description,
+    summary: orOfficial(row.summary, official?.summary ?? null),
+    description: orOfficial(row.description, official?.description ?? null),
+    actions: official?.actions ?? [],
     image: toImage(row.image_path, row.image_alt, row.title),
     displayOrder: row.display_order,
   };
 }
+
+/** Les 7 domaines officiels, affichés tant qu'aucun domaine n'est activé dans l'administration. */
+const OFFICIAL_AREAS: ActionArea[] = AREAS.map((area, index) => ({
+  id: `officiel-${area.slug}`,
+  slug: area.slug,
+  title: area.title,
+  summary: area.summary,
+  description: area.description,
+  actions: area.actions,
+  image: null,
+  displayOrder: index + 1,
+}));
 
 /** Domaines ACTIFS, dans l'ordre choisi par l'administration. */
 export async function listActionAreas(): Promise<ActionArea[]> {
@@ -164,30 +202,39 @@ export async function listActionAreas(): Promise<ActionArea[]> {
   cacheTag(TAGS.areas);
 
   const db = getReader();
-  if (!db) return isDevPreview() ? DEV_PREVIEW_AREAS : [];
+  if (!db) return OFFICIAL_AREAS;
   const { data, error } = await db.from("action_areas").select(AREA_COLUMNS).order("display_order");
   if (error) {
     logReadError("action_areas", error);
-    return [];
+    return OFFICIAL_AREAS;
   }
-  return (data as AreaRow[]).map(toArea);
+  const areas = (data as AreaRow[]).map(toArea);
+  return areas.length > 0 ? areas : OFFICIAL_AREAS;
 }
 
+/** Un domaine publié (ou officiel, tant qu'aucun n'est activé), ou null. */
 export async function getActionArea(slug: string): Promise<ActionArea | null> {
   "use cache";
   cacheLife("hours");
   cacheTag(TAGS.areas);
 
-  const db = getReader();
-  if (!db) return isDevPreview() ? (DEV_PREVIEW_AREAS.find((area) => area.slug === slug) ?? null) : null;
-  const { data, error } = await db.from("action_areas").select(AREA_COLUMNS).eq("slug", slug).maybeSingle();
-  if (error) logReadError("action_areas", error);
-  return data ? toArea(data as AreaRow) : null;
+  const areas = await listActionAreas();
+  return areas.find((area) => area.slug === slug) ?? null;
 }
 
 // ---------------------------------------------------------------------------
 // Équipe et partenaires
 // ---------------------------------------------------------------------------
+
+/** Composition officielle des instances, affichée tant que l'équipe n'est pas publiée dans l'administration. */
+const OFFICIAL_TEAM: TeamMember[] = TEAM.map((member, index) => ({
+  id: `officiel-${index + 1}`,
+  fullName: member.fullName,
+  position: member.position,
+  group: member.group,
+  bio: member.bio,
+  photo: null,
+}));
 
 export async function listTeamMembers(): Promise<TeamMember[]> {
   "use cache";
@@ -195,7 +242,7 @@ export async function listTeamMembers(): Promise<TeamMember[]> {
   cacheTag(TAGS.team);
 
   const db = getReader();
-  if (!db) return [];
+  if (!db) return OFFICIAL_TEAM;
   const { data, error } = await db
     .from("team_members")
     .select("id, full_name, position, bio, photo_path, team_group")
@@ -203,8 +250,9 @@ export async function listTeamMembers(): Promise<TeamMember[]> {
     .order("full_name");
   if (error) {
     logReadError("team_members", error);
-    return [];
+    return OFFICIAL_TEAM;
   }
+  if (data.length === 0) return OFFICIAL_TEAM;
   return data.map((row) => ({
     id: row.id,
     fullName: row.full_name,

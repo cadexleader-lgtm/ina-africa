@@ -76,6 +76,7 @@ const areaWithPhoto: ActionArea = {
   summary: "Exemple de courte description d'un domaine, sur deux lignes au plus.",
   description: null,
   image: null,
+  actions: [],
   displayOrder: 1,
 };
 

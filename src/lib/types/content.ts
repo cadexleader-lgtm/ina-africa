@@ -59,6 +59,8 @@ export type ActionArea = {
   title: string;
   summary: string | null;
   description: string | null;
+  /** Actions menées ou visées dans ce domaine (contenu officiel, src/content/fr/ina-africa.ts). */
+  actions: string[];
   image: ImageRef | null;
   displayOrder: number;
 };

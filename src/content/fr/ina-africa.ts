@@ -1,0 +1,361 @@
+/**
+ * CONTENU OFFICIEL D'INA-AFRICA — source unique des textes de présentation.
+ *
+ * Tout ce fichier vient des documents transmis par l'ONG :
+ *  - « PRÉSENTATION DE L'ORGANISATION » (historique, expériences,
+ *    réalisations pertinentes) ;
+ *  - les statuts (vision, missions, objectifs, approche d'intervention :
+ *    art. 8 à 11, déjà repris par la migration 20261106090100_official_texts) ;
+ *  - la composition des instances (conseil d'administration, conseil de
+ *    surveillance, adjoints), transmise le 06/11/2026.
+ * Les textes sont reformulés pour la lecture, SANS rien ajouter : aucun
+ * chiffre, lieu, date, partenaire ou résultat qui ne figure pas dans ces
+ * documents.
+ *
+ * Utilisation : contenu PAR DÉFAUT du site. Ce que l'administration publie
+ * dans la base (paramètres, domaines actifs, équipe) le remplace ; tant que
+ * rien n'est publié, ou si la base ne répond pas, ce contenu s'affiche.
+ */
+
+import type { TeamGroup } from "@/lib/team";
+
+export const IDENTITY = {
+  name: "INA-AFRICA",
+  fullName: "Initiative pour un Nouvel Avenir en Afrique",
+  kind: "Organisation non gouvernementale (ONG)",
+  country: "Bénin",
+  foundedYear: 2017,
+  /** Communes citées dans les réalisations de l'ONG. */
+  places: ["Abomey-Calavi", "Godomey"],
+} as const;
+
+// ---------------------------------------------------------------------------
+// Accroches (accueil)
+// ---------------------------------------------------------------------------
+
+export const HERO = {
+  kicker: "ONG béninoise, depuis 2017",
+  title: "Un avenir meilleur commence par l'action.",
+  text: "INA-AFRICA, une organisation engagée pour l'autonomisation des communautés en Afrique : femmes, jeunes, enfants vulnérables et personnes en situation de handicap.",
+};
+
+/** Présentation courte, réutilisable (accueil, pied de page, partage). */
+export const SHORT_PRESENTATION =
+  "Créée en 2017, INA-AFRICA est une organisation non gouvernementale qui agit au Bénin, là où les besoins humanitaires et sociaux l'exigent. Elle promeut des initiatives locales, durables et inclusives en faveur des femmes, des jeunes, des enfants et des personnes en situation de handicap.";
+
+// ---------------------------------------------------------------------------
+// Historique et expériences (document « Présentation de l'organisation »)
+// ---------------------------------------------------------------------------
+
+export const HISTORY = [
+  "Face aux défis socio-économiques persistants que rencontrent les communautés africaines, notamment dans les domaines de l'éducation, de la santé, de l'autonomisation des femmes et de l'inclusion genre, l'ONG Initiative pour un Nouvel Avenir en Afrique (INA-AFRICA) a été créée en 2017. Elle agit au Bénin, là où les besoins humanitaires et sociaux l'exigent.",
+  "La création d'INA-AFRICA a été motivée par la volonté de promouvoir des initiatives locales, durables et inclusives, en mettant l'accent sur l'innovation sociale, le bien-être des jeunes et des adolescents qui constituent la relève de demain, et l'aide à la femme, à l'enfant et aux personnes en situation de handicap.",
+];
+
+export const EXPERIENCE = {
+  title: "Aux côtés des communautés",
+  intro:
+    "Depuis sa création, INA-AFRICA œuvre à l'autonomisation des femmes rurales, à la formation des jeunes, à la sensibilisation aux droits et à la santé sexuels et reproductifs, au soutien des enfants vulnérables et au développement rural, avec une approche participative et centrée sur l'impact à long terme.",
+  impact:
+    "L'ONG a démontré son impact au Bénin à travers des actions ciblées en faveur des femmes, des filles mères et des enfants vulnérables.",
+  /** Ce que l'ONG fait concrètement (liste courte, tirée du document). */
+  fields: [
+    "Autonomisation des femmes rurales et des filles mères",
+    "Formation des jeunes",
+    "Sensibilisation aux droits et à la santé sexuels et reproductifs",
+    "Soutien aux enfants vulnérables",
+    "Développement rural",
+  ],
+};
+
+export const WOMEN_PROGRAM = {
+  title: "Autonomiser les femmes et les filles mères",
+  text: "INA-AFRICA œuvre activement pour l'autonomisation des femmes et des filles mères, en particulier celles issues de milieux ruraux et marginalisés. Ces programmes visent à renforcer leurs compétences, leur estime de soi et leur indépendance économique.",
+  trainings: [
+    "Économie solidaire",
+    "Hygiène corporelle",
+    "Transformation de produits locaux",
+    "Entrepreneuriat social",
+    "Agro-alimentaire",
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// Réalisations pertinentes (document « Présentation de l'organisation »)
+// Pas de date ni de chiffre : le document n'en donne pas.
+// ---------------------------------------------------------------------------
+
+export type Achievement = {
+  title: string;
+  text: string;
+  audience: string;
+  place: string;
+  areaSlug: string;
+};
+
+export const ACHIEVEMENTS: Achievement[] = [
+  {
+    title: "Sensibilisation des artisans aux droits et à la santé sexuels et reproductifs",
+    text: "Des activités de sensibilisation sur les droits et la santé sexuels et reproductifs, organisées à l'endroit des artisans.",
+    audience: "Artisans",
+    place: "Commune d'Abomey-Calavi",
+    areaSlug: "sante-sexuelle-et-reproductive",
+  },
+  {
+    title: "Causerie sur les infections sexuellement transmissibles au CEG Godomey",
+    text: "À l'occasion de la Saint-Valentin, une causerie sur les maladies sexuellement transmissibles avec les élèves du collège.",
+    audience: "Élèves du CEG Godomey",
+    place: "Godomey",
+    areaSlug: "jeunesse-et-adolescents",
+  },
+  {
+    title: "Expliquer la loi 2021-12 sur la santé sexuelle et reproductive",
+    text: "Une séance d'échanges avec les chefs de quartier, les leaders d'opinion et les leaders religieux pour expliquer la loi 2021-12 sur la santé sexuelle et reproductive.",
+    audience: "Chefs de quartier, leaders d'opinion et religieux",
+    place: "Godomey",
+    areaSlug: "sante-sexuelle-et-reproductive",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Statuts : vision, missions, objectifs, approche (art. 8 à 11)
+// ---------------------------------------------------------------------------
+
+export const VISION =
+  "Œuvrer à l'inclusion et à la participation active des femmes, des jeunes et des personnes en situation de handicap dans les initiatives de développement durable.";
+
+export const MISSIONS = [
+  "Relever le niveau de vie des femmes et assurer l'inclusion sociale des personnes vulnérables.",
+  "Promouvoir la représentativité des femmes dans toutes les sphères de prise de décisions à l'échelle nationale et internationale et susciter leur participation à la mise en œuvre des Objectifs de Développement Durable (ODD), en particulier l'ODD 5 : « Parvenir à l'égalité des sexes et autonomiser toutes les femmes et les filles ».",
+  "Offrir aux couches défavorables du continent africain les meilleures conditions de vie socioéconomique et environnementale plus durables.",
+];
+
+export const OBJECTIVES = [
+  "Contribuer à l'autonomisation économique des femmes, à leur bien-être social et à l'insertion socio-professionnelle des jeunes en favorisant leur accès au travail décent à travers la mise en œuvre d'un programme ambitieux dénommé « Programme Jeune Professionnel » (PJP).",
+  "Œuvrer à la réduction des inégalités entre les sexes et promouvoir l'approche genre dans tous les pays en voie de développement.",
+  "Promouvoir la culture béninoise et africaine par la mise en œuvre des projets structurant de valorisation du patrimoine culturel national et africain.",
+  "Participer à l'effort national de lutte contre le réchauffement climatique et assurer une bonne gestion participative et durable des écosystèmes.",
+  "Contribuer à une bonne santé des populations en leur fournissant les informations essentielles pour leur bien, tout en œuvrant de façon générale à l'atteinte des objectifs du développement durable.",
+];
+
+export const APPROACH = [
+  "Les sessions de formation et de sensibilisation.",
+  "Les actions d'aide humanitaire.",
+  "Le développement de partenariats.",
+  "Les campagnes de collecte de fonds.",
+  "La mobilisation du bénévolat.",
+];
+
+/** Publics auxquels l'ONG s'adresse (vision, historique, expériences). */
+export const AUDIENCES = [
+  { title: "Les femmes et les filles mères", text: "En particulier celles issues de milieux ruraux et marginalisés." },
+  { title: "Les jeunes et les adolescents", text: "La relève de demain, à former et à accompagner vers un travail décent." },
+  { title: "Les enfants vulnérables", text: "Soutenus pour grandir et apprendre dans de meilleures conditions." },
+  { title: "Les personnes en situation de handicap", text: "Pour leur inclusion et leur participation active au développement." },
+];
+
+// ---------------------------------------------------------------------------
+// Les 7 domaines d'action (liste confirmée par l'ONG). Les textes reprennent
+// l'historique, les expériences, les statuts et les réalisations ci-dessus.
+// ---------------------------------------------------------------------------
+
+export type OfficialArea = {
+  slug: string;
+  title: string;
+  summary: string;
+  description: string;
+  /** Ce que l'ONG fait ou vise dans ce domaine (tiré des documents). */
+  actions: string[];
+};
+
+export const AREAS: OfficialArea[] = [
+  {
+    slug: "education",
+    title: "Éducation",
+    summary: "Former les jeunes et soutenir les enfants vulnérables, pour préparer la relève de demain.",
+    description:
+      "L'éducation est l'un des défis qui ont conduit à la création d'INA-AFRICA. L'ONG s'engage pour la formation des jeunes et le soutien aux enfants vulnérables, avec une approche participative et centrée sur l'impact à long terme.",
+    actions: [
+      "Formation des jeunes",
+      "Soutien aux enfants vulnérables",
+      "Sessions de formation et de sensibilisation",
+    ],
+  },
+  {
+    slug: "sante-sexuelle-et-reproductive",
+    title: "Santé et droits en santé sexuelle et reproductive",
+    summary: "Informer et sensibiliser sur les droits et la santé sexuels et reproductifs.",
+    description:
+      "INA-AFRICA contribue à une bonne santé des populations en leur fournissant les informations essentielles pour leur bien. L'ONG mène des actions de sensibilisation sur les droits et la santé sexuels et reproductifs auprès d'artisans, d'élèves et de leaders communautaires.",
+    actions: [
+      "Sensibilisation des artisans de la commune d'Abomey-Calavi",
+      "Causerie sur les maladies sexuellement transmissibles avec les élèves du CEG Godomey",
+      "Explication de la loi 2021-12 sur la santé sexuelle et reproductive aux chefs de quartier, leaders d'opinion et religieux de Godomey",
+    ],
+  },
+  {
+    slug: "autonomisation-des-femmes",
+    title: "Autonomisation des femmes",
+    summary: "Renforcer les compétences, l'estime de soi et l'indépendance économique des femmes et des filles mères.",
+    description:
+      "INA-AFRICA œuvre activement pour l'autonomisation des femmes et des filles mères, en particulier celles issues de milieux ruraux et marginalisés. Ses programmes visent à relever leur niveau de vie et à renforcer leurs compétences, leur estime de soi et leur indépendance économique.",
+    actions: [
+      "Formations en économie solidaire",
+      "Formations en hygiène corporelle",
+      "Transformation de produits locaux",
+      "Entrepreneuriat social et agro-alimentaire",
+    ],
+  },
+  {
+    slug: "jeunesse-et-adolescents",
+    title: "Jeunesse et adolescents",
+    summary: "Accompagner les jeunes, la relève de demain, vers le bien-être et le travail décent.",
+    description:
+      "Les jeunes et les adolescents constituent la relève de demain. INA-AFRICA veille à leur bien-être et favorise leur insertion socio-professionnelle et leur accès au travail décent, notamment à travers son « Programme Jeune Professionnel » (PJP).",
+    actions: [
+      "Formation des jeunes",
+      "Programme Jeune Professionnel (PJP) pour l'insertion socio-professionnelle",
+      "Sensibilisation des élèves à la santé sexuelle et reproductive",
+    ],
+  },
+  {
+    slug: "inclusion-et-egalite-de-genre",
+    title: "Inclusion et égalité de genre",
+    summary: "Réduire les inégalités entre les sexes et inclure les personnes vulnérables.",
+    description:
+      "INA-AFRICA œuvre à l'inclusion et à la participation active des femmes, des jeunes et des personnes en situation de handicap. Elle promeut la représentativité des femmes dans toutes les sphères de décision et l'atteinte de l'ODD 5 : « Parvenir à l'égalité des sexes et autonomiser toutes les femmes et les filles ».",
+    actions: [
+      "Réduction des inégalités entre les sexes et promotion de l'approche genre",
+      "Représentativité des femmes dans les sphères de décision",
+      "Aide aux personnes en situation de handicap",
+    ],
+  },
+  {
+    slug: "developpement-local-durable",
+    title: "Développement local durable et inclusif",
+    summary: "Des initiatives locales et durables pour de meilleures conditions de vie.",
+    description:
+      "INA-AFRICA promeut des initiatives locales, durables et inclusives pour offrir aux couches défavorisées de meilleures conditions de vie socio-économiques et environnementales. L'ONG agit pour le développement rural, la lutte contre le réchauffement climatique et la valorisation du patrimoine culturel béninois et africain.",
+    actions: [
+      "Développement rural",
+      "Gestion participative et durable des écosystèmes",
+      "Lutte contre le réchauffement climatique",
+      "Valorisation du patrimoine culturel béninois et africain",
+    ],
+  },
+  {
+    slug: "innovation-sociale",
+    title: "Innovation sociale",
+    summary: "Inventer avec les communautés des réponses locales à leurs besoins.",
+    description:
+      "L'innovation sociale est au cœur du projet d'INA-AFRICA depuis sa création. L'ONG s'appuie sur une approche participative, le développement de partenariats et la mobilisation du bénévolat pour construire, avec les communautés, des réponses durables à leurs besoins.",
+    actions: [
+      "Approche participative centrée sur l'impact à long terme",
+      "Développement de partenariats",
+      "Mobilisation du bénévolat",
+      "Campagnes de collecte de fonds",
+    ],
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Instances de l'ONG (composition transmise le 06/11/2026)
+// Mêmes données que la migration 20261106110000_team_groups.
+// ---------------------------------------------------------------------------
+
+export type OfficialTeamMember = { fullName: string; position: string; bio: string; group: TeamGroup };
+
+export const TEAM: OfficialTeamMember[] = [
+  {
+    fullName: "DJOSSOU Wilfried",
+    position: "Président",
+    bio: "Premier responsable de l'ONG. Préside l'Assemblée générale et le Conseil d'administration, dirige l'ONG et répond devant toutes les institutions de l'État.",
+    group: "conseil_administration",
+  },
+  {
+    fullName: "DJOSSOU Milka Ruth Fifamè",
+    position: "Vice-présidente",
+    bio: "Assiste le président dans l'exercice de ses fonctions et le supplée en cas d'empêchement.",
+    group: "conseil_administration",
+  },
+  {
+    fullName: "TOFFA Clotilde Kinvemi",
+    position: "Secrétaire générale",
+    bio: "Assure le secrétariat de l'Assemblée générale et du Conseil d'administration : conçoit les actes administratifs, rédige les procès-verbaux, comptes rendus, rapports de séance et convocations. Traite, affecte et classe les courriers, met en œuvre le plan de communication de l'ONG, constitue et archive sa mémoire.",
+    group: "conseil_administration",
+  },
+  {
+    fullName: "DJOSSOU Odilon Serge",
+    position: "Secrétaire général adjoint",
+    bio: "Assiste la secrétaire générale dans ses actions.",
+    group: "conseil_administration",
+  },
+  {
+    fullName: "KOUASSI Mewemahuwon Chantal",
+    position: "Trésorière générale",
+    bio: "Responsable de la gestion des fonds et du patrimoine de l'organisation. Tient une comptabilité régulière, transparente et sincère.",
+    group: "conseil_administration",
+  },
+  {
+    fullName: "NICOUE Ginette Sylvana",
+    position: "Trésorière générale adjointe",
+    bio: "Assiste la trésorière générale dans ses actions et missions, et la remplace en cas d'empêchement.",
+    group: "conseil_administration",
+  },
+  {
+    fullName: "AKAKPOVI Bertille Lucresse Amélévi",
+    position: "Chargée des affaires féminines",
+    bio: "Conçoit, coordonne et met en œuvre des projets et activités au profit des femmes.",
+    group: "conseil_administration",
+  },
+  {
+    fullName: "KOUASSI Coffi Boris",
+    position: "Chargé des affaires juvéniles",
+    bio: "Conçoit, coordonne et met en œuvre des projets et activités au profit de la jeunesse.",
+    group: "conseil_administration",
+  },
+  {
+    fullName: "ABIOLA Christelle Gloria",
+    position: "Chargée des affaires culturelles",
+    bio: "Conçoit, met en œuvre et coordonne des projets et activités en faveur de la culture.",
+    group: "conseil_administration",
+  },
+  {
+    fullName: "CHETAN Biwegnon Raoul",
+    position: "Président du conseil de surveillance",
+    bio: "Dirige et préside les réunions du conseil de surveillance, coordonne les activités de contrôle et de suivi, veille au respect des statuts et à la bonne gouvernance de l'ONG.",
+    group: "conseil_surveillance",
+  },
+  {
+    fullName: "ALINDIN Donan Jaelle",
+    position: "Secrétaire du conseil de surveillance",
+    bio: "Garante de la bonne organisation administrative et de la traçabilité des travaux du conseil de surveillance.",
+    group: "conseil_surveillance",
+  },
+  {
+    fullName: "BESSAN Guy",
+    position: "Membre du conseil de surveillance",
+    bio: "Veille à la transparence et à la bonne gouvernance de l'ONG, sans intervenir dans sa gestion quotidienne.",
+    group: "conseil_surveillance",
+  },
+  {
+    fullName: "OLYMPIO Maxylle Emmanuella",
+    position: "Chargée des affaires féminines adjointe",
+    bio: "Assiste la chargée des affaires féminines dans ses actions et missions.",
+    group: "adjoints",
+  },
+  {
+    fullName: "WINIWANOU Beninda Silvana",
+    position: "Chargée des affaires culturelles adjointe",
+    bio: "Assiste la chargée des affaires culturelles dans ses actions et missions.",
+    group: "adjoints",
+  },
+];
+
+/** Repères factuels (aucun chiffre inventé : tout se compte dans ce fichier). */
+export const KEY_FACTS = [
+  { value: String(IDENTITY.foundedYear), label: "Année de création" },
+  { value: String(AREAS.length), label: "Domaines d'action" },
+  { value: String(TEAM.length), label: "Membres dans ses instances" },
+  { value: IDENTITY.country, label: "Pays d'intervention" },
+];
