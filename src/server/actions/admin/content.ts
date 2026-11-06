@@ -256,6 +256,7 @@ export async function deletePartner(input: unknown): Promise<ActionResult<Ref>> 
 function toTeamRow(data: {
   fullName: string;
   position: string;
+  teamGroup: string;
   bio: string | null;
   photoPath: string | null;
   displayOrder: number;
@@ -263,6 +264,7 @@ function toTeamRow(data: {
   return {
     full_name: data.fullName,
     position: data.position,
+    team_group: data.teamGroup,
     bio: data.bio,
     photo_path: data.photoPath,
     display_order: data.displayOrder,

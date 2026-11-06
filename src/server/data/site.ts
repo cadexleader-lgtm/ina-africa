@@ -11,6 +11,7 @@ import type {
   SiteSettings,
   TeamMember,
 } from "@/lib/types/content";
+import { DEFAULT_TEAM_GROUP, isTeamGroup } from "@/lib/team";
 import { richTextDocSchema, type RichTextDoc } from "@/lib/validation/rich-text";
 import { DEV_PREVIEW_AREAS, DEV_PREVIEW_SETTINGS, isDevPreview } from "@/server/data/dev-preview";
 import { emptyPage, getReader, logReadError, pageRange, paginated, toImage } from "@/server/data/reader";
@@ -197,8 +198,9 @@ export async function listTeamMembers(): Promise<TeamMember[]> {
   if (!db) return [];
   const { data, error } = await db
     .from("team_members")
-    .select("id, full_name, position, bio, photo_path")
-    .order("display_order");
+    .select("id, full_name, position, bio, photo_path, team_group")
+    .order("display_order")
+    .order("full_name");
   if (error) {
     logReadError("team_members", error);
     return [];
@@ -207,6 +209,7 @@ export async function listTeamMembers(): Promise<TeamMember[]> {
     id: row.id,
     fullName: row.full_name,
     position: row.position,
+    group: isTeamGroup(row.team_group) ? row.team_group : DEFAULT_TEAM_GROUP,
     bio: row.bio,
     photo: toImage(row.photo_path, null, `Portrait de ${row.full_name}`),
   }));

@@ -1,3 +1,5 @@
+import type { TeamGroup } from "@/lib/team";
+
 /**
  * Types des contenus PUBLICS lus par le site (voir supabase/migrations).
  * Ils ne contiennent que les colonnes lues par les pages publiques : aucune
@@ -123,6 +125,8 @@ export type TeamMember = {
   id: string;
   fullName: string;
   position: string;
+  /** Instance de l'ONG (src/lib/team.ts). */
+  group: TeamGroup;
   bio: string | null;
   photo: ImageRef | null;
 };

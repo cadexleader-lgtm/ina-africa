@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { DEFAULT_TEAM_GROUP, TEAM_GROUP_VALUES } from "@/lib/team";
 import { youtubeId } from "@/lib/video";
 import {
   ADMIN_MESSAGES as M,
@@ -179,6 +180,7 @@ export const partnerUpdateSchema = z.object({ id: idField }).and(partnerInputSch
 export const teamMemberInputSchema = z.object({
   fullName: requiredLine(2, 120, "Indiquez le nom de la personne."),
   position: requiredLine(2, 120, "Indiquez la fonction de la personne."),
+  teamGroup: z.enum(TEAM_GROUP_VALUES, { error: "Choisissez l'instance de la personne." }).default(DEFAULT_TEAM_GROUP),
   bio: optionalText(2000),
   photoPath: optionalStoragePath,
   displayOrder: displayOrderField,

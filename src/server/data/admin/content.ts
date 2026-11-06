@@ -1,5 +1,6 @@
 import "server-only";
 
+import { DEFAULT_TEAM_GROUP, isTeamGroup } from "@/lib/team";
 import { galleryFiltersSchema, projectFiltersSchema } from "@/lib/validation/admin/content";
 import { check } from "@/server/admin/action";
 import { sanitizeSearch } from "@/server/data/articles";
@@ -203,19 +204,21 @@ type TeamRow = {
   id: string;
   full_name: string;
   position: string;
+  team_group: string;
   bio: string | null;
   photo_path: string | null;
   display_order: number;
   is_active: boolean;
 };
 
-const TEAM_COLUMNS = "id, full_name, position, bio, photo_path, display_order, is_active";
+const TEAM_COLUMNS = "id, full_name, position, team_group, bio, photo_path, display_order, is_active";
 
 function toTeamMember(row: TeamRow): AdminTeamMember {
   return {
     id: row.id,
     fullName: row.full_name,
     position: row.position,
+    teamGroup: isTeamGroup(row.team_group) ? row.team_group : DEFAULT_TEAM_GROUP,
     bio: row.bio,
     photoPath: row.photo_path,
     displayOrder: row.display_order,
@@ -225,7 +228,7 @@ function toTeamMember(row: TeamRow): AdminTeamMember {
 
 export async function listAdminTeamMembers(): Promise<AdminTeamMember[]> {
   const { db } = await adminReader("editor");
-  const rows = check(await db.from("team_members").select(TEAM_COLUMNS).order("display_order").order("full_name"));
+  const rows = check(await db.from("team_members").select(TEAM_COLUMNS).order("team_group").order("display_order").order("full_name"));
   return ((rows ?? []) as unknown as TeamRow[]).map(toTeamMember);
 }
 

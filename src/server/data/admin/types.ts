@@ -5,6 +5,7 @@
  * directement avec l'objet lu.
  */
 import type { RichTextDoc } from "@/lib/validation/rich-text";
+import type { TeamGroup } from "@/lib/team";
 
 export type { Paginated } from "@/lib/types/content";
 
@@ -112,6 +113,7 @@ export type AdminTeamMember = {
   id: string;
   fullName: string;
   position: string;
+  teamGroup: TeamGroup;
   bio: string | null;
   photoPath: string | null;
   displayOrder: number;
