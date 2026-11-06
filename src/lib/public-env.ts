@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { siteOrigin } from "@/lib/site-url";
+
 /**
  * Variables publiques (préfixe NEXT_PUBLIC_) : incluses dans le code envoyé
  * au navigateur. N'y mettre AUCUN secret.
@@ -21,7 +23,8 @@ let cached: PublicEnv | undefined;
 export function getPublicEnv(): PublicEnv {
   if (!cached) {
     const parsed = publicEnvSchema.safeParse({
-      NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+      // Jamais manquante : repli sur l'adresse Vercel puis localhost (src/lib/site-url.ts).
+      NEXT_PUBLIC_SITE_URL: siteOrigin(),
       NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
       NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
     });
