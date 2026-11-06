@@ -70,4 +70,4 @@ navigateur : aucun secret. La clé secrète Supabase n'est lue que par
 | 3 | Opérations backend (contenus, formulaires, dons hors ligne, médias) | à faire |
 | 4 | Paiement en ligne (après validation du compte marchand) | à faire |
 | 5 | Tests et validation | à faire |
-| 6 | Site public et administration, selon la maquette | à faire |
+| 6 | Site public (fait le 06/11/2026 : accueil, À propos, domaines, projets, galerie, actualités, pages légales, contact, nous rejoindre, newsletter, dons) ; administration à faire | en cours |

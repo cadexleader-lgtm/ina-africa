@@ -16,7 +16,7 @@ import { ORG } from "@/content/fr/site";
 import { mediaUrl } from "@/lib/media";
 import { absoluteUrl } from "@/lib/site-url";
 import { SLUG } from "@/lib/validation/forms";
-import { getCampaign, getCampaignProgress } from "@/server/data/campaigns";
+import { getCampaign, getCampaignProgress, listActiveCampaigns } from "@/server/data/campaigns";
 import { getSiteSettings } from "@/server/data/site";
 
 const D = DONATE_TEXT;
@@ -27,7 +27,16 @@ const D = DONATE_TEXT;
  * sans JavaScript) et vrai code 404 pour un appel inconnu ou inactif.
  * Les données restent mises en cache (getCampaign, « use cache »).
  */
+export const ensureStatic = "navigation";
 export const instant = false;
+
+/** Cache Components exige au moins une valeur : sans appel actif, une adresse de remplacement (404). */
+const PLACEHOLDER_SLUG = "__aucun-appel__";
+
+export async function generateStaticParams() {
+  const campaigns = await listActiveCampaigns();
+  return campaigns.length > 0 ? campaigns.map(({ slug }) => ({ slug })) : [{ slug: PLACEHOLDER_SLUG }];
+}
 
 async function loadCampaign(slug: string) {
   return SLUG.test(slug) ? getCampaign(slug) : null;

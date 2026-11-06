@@ -19,6 +19,7 @@ import { getArticle, listArticleSlugs, listArticles } from "@/server/data/articl
  * restent en cache (`use cache`, invalidées à chaque publication).
  */
 
+export const ensureStatic = "navigation";
 export const instant = false;
 
 /**
