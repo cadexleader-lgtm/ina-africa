@@ -1,24 +1,36 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ArticleView, articleBreadcrumbs } from "@/components/news/ArticleView";
-import { ArticleSkeleton } from "@/components/news/Skeletons";
 import { isValidSlug } from "@/components/news/news-params";
 import { NEWS_T } from "@/content/fr/news";
 import { pageMetadata, shareImage } from "@/lib/seo/metadata";
 import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo/structured-data";
 import { absoluteUrl } from "@/lib/site-url";
-import { getArticle, listArticles } from "@/server/data/articles";
+import { getArticle, listArticleSlugs, listArticles } from "@/server/data/articles";
 
 /**
  * /actualites/[slug] : lecture d'un article publié.
  *
- * Cache Components + Partial Prefetching : l'adresse (params) est lue SOUS
- * <Suspense>. Au premier passage, la page est rendue puis gardée en cache
- * (lectures `use cache`, invalidées à chaque publication).
+ * Cache Components : la page est rendue EN ENTIER côté serveur
+ * (`instant = false`, adresse lue sans <Suspense>) : texte lisible sans
+ * JavaScript et vrai code 404 pour un article inexistant. Les lectures
+ * restent en cache (`use cache`, invalidées à chaque publication).
  */
+
+export const instant = false;
+
+/**
+ * Articles prérendus au build. Cache Components exige au moins une valeur :
+ * sans article publié, une adresse volontairement INVALIDE (« _ » est interdit
+ * dans les adresses d'articles) qui donne une page 404, jamais un vrai contenu.
+ * Les articles publiés ensuite sont rendus à leur première visite.
+ */
+export async function generateStaticParams() {
+  const slugs = (await listArticleSlugs()).map(({ slug }) => ({ slug }));
+  return slugs.length > 0 ? slugs : [{ slug: "_aucun-article" }];
+}
 
 async function findArticle(slug: string) {
   return isValidSlug(slug) ? getArticle(slug) : null;
@@ -41,7 +53,7 @@ export async function generateMetadata({ params }: PageProps<"/actualites/[slug]
   });
 }
 
-async function ArticleContent({ params }: { params: PageProps<"/actualites/[slug]">["params"] }) {
+export default async function ArticlePage({ params }: PageProps<"/actualites/[slug]">) {
   const { slug } = await params;
   const article = await findArticle(slug);
   if (!article) notFound();
@@ -57,13 +69,5 @@ async function ArticleContent({ params }: { params: PageProps<"/actualites/[slug
       <JsonLd data={breadcrumbJsonLd(breadcrumbs.map((item) => ({ name: item.label, path: item.href })))} />
       <ArticleView article={article} url={absoluteUrl(`/actualites/${article.slug}`)} related={related} />
     </>
-  );
-}
-
-export default function ArticlePage({ params }: PageProps<"/actualites/[slug]">) {
-  return (
-    <Suspense fallback={<ArticleSkeleton />}>
-      <ArticleContent params={params} />
-    </Suspense>
   );
 }

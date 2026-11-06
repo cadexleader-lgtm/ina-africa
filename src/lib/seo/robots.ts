@@ -3,8 +3,8 @@ import type { MetadataRoute } from "next";
 import { isSiteIndexable } from "@/lib/seo/indexing";
 import { absoluteUrl } from "@/lib/site-url";
 
-/** Parties du site jamais explorées : administration, liens d'email, page de travail du design system. */
-export const PRIVATE_PATHS = ["/admin", "/auth", "/styleguide"] as const;
+/** Parties du site jamais explorées : administration, page de travail du design system. */
+export const PRIVATE_PATHS = ["/admin", "/styleguide"] as const;
 
 /**
  * Contenu de robots.txt.

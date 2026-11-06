@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
@@ -8,7 +7,6 @@ import { NewsCategoryNav } from "@/components/news/NewsCategoryNav";
 import { NewsListView, describeNewsList, type NewsListState } from "@/components/news/NewsListView";
 import { NewsSearchForm } from "@/components/news/NewsSearchForm";
 import { PageIntro } from "@/components/news/PageIntro";
-import { NewsListSkeleton } from "@/components/news/Skeletons";
 import { newsHref, parseNewsParams } from "@/components/news/news-params";
 import { NEWS_T } from "@/content/fr/news";
 import type { SearchParamsRecord } from "@/lib/pagination";
@@ -20,9 +18,12 @@ import { listArticleCategories, listArticles, sanitizeSearch } from "@/server/da
  * /actualites : article le plus récent mis en avant, puis grille ; filtres par
  * catégorie (?categorie=), recherche (?q=) et pagination (?page=).
  *
- * Cache Components : le titre et l'introduction sont prérendus ; tout ce qui
- * dépend de l'adresse (?…) est lu SOUS <Suspense>. Les lectures sont en cache.
+ * Cache Components : la page est rendue EN ENTIER côté serveur à chaque
+ * adresse (`instant = false`, adresse lue sans <Suspense>) pour que les
+ * résultats soient lisibles sans JavaScript ; les lectures restent en cache.
  */
+
+export const instant = false;
 
 /** Lit l'adresse et charge la liste (mêmes appels pour la page et ses métadonnées : cache partagé). */
 async function loadNewsList(searchParams: Promise<SearchParamsRecord>): Promise<NewsListState> {
@@ -64,32 +65,11 @@ export async function generateMetadata({ searchParams }: PageProps<"/actualites"
   });
 }
 
-async function NewsSearch({ searchParams }: { searchParams: Promise<SearchParamsRecord> }) {
-  const params = parseNewsParams(await searchParams);
-  const categories = await listArticleCategories();
-  const active = categories.some((item) => item.slug === params.category) ? params.category : undefined;
-  return <NewsSearchForm q={params.q} category={active} />;
-}
-
-async function NewsCategories({ searchParams }: { searchParams: Promise<SearchParamsRecord> }) {
-  const params = parseNewsParams(await searchParams);
-  const categories = await listArticleCategories();
-  const active = categories.some((item) => item.slug === params.category) ? params.category : undefined;
-  return <NewsCategoryNav categories={categories} active={active} q={params.q || undefined} />;
-}
-
-/** Filtres sans catégorie active, affichés dans la page prérendue le temps de lire l'adresse. */
-async function NewsCategoriesFallback() {
-  const categories = await listArticleCategories();
-  return <NewsCategoryNav categories={categories} />;
-}
-
-async function NewsResults({ searchParams }: { searchParams: Promise<SearchParamsRecord> }) {
+export default async function NewsPage({ searchParams }: PageProps<"/actualites">) {
   const state = await loadNewsList(searchParams);
-  return <NewsListView state={state} />;
-}
+  const categories = await listArticleCategories();
+  const active = state.category?.slug;
 
-export default function NewsPage({ searchParams }: PageProps<"/actualites">) {
   return (
     <>
       <JsonLd
@@ -103,22 +83,14 @@ export default function NewsPage({ searchParams }: PageProps<"/actualites">) {
         label={NEWS_T.list.label}
         title={NEWS_T.list.title}
         intro={NEWS_T.list.intro}
-        aside={
-          <Suspense fallback={<NewsSearchForm />}>
-            <NewsSearch searchParams={searchParams} />
-          </Suspense>
-        }
+        aside={<NewsSearchForm q={state.params.q} category={active} />}
       >
-        <Suspense fallback={<NewsCategoriesFallback />}>
-          <NewsCategories searchParams={searchParams} />
-        </Suspense>
+        <NewsCategoryNav categories={categories} active={active} q={state.params.q || undefined} />
       </PageIntro>
 
       <Section spacing="compact">
         <Container>
-          <Suspense fallback={<NewsListSkeleton />}>
-            <NewsResults searchParams={searchParams} />
-          </Suspense>
+          <NewsListView state={state} />
         </Container>
       </Section>
     </>
