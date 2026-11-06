@@ -122,6 +122,15 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   poweredByHeader: false,
 
+  // Envoi des photos par l'administration (Server Actions, 1 Mo par défaut).
+  // 4 Mo : sous la limite de 4,5 Mo des fonctions Vercel. Les photos sont
+  // converties en WebP dans le navigateur avant l'envoi ; les justificatifs
+  // plus lourds (jusqu'à 10 Mo) passeront par un envoi signé direct vers
+  // Supabase Storage (interface d'administration, à venir).
+  experimental: {
+    serverActions: { bodySizeLimit: "4mb" },
+  },
+
   // Même adresse du site côté serveur et navigateur (repli Vercel compris).
   env: { NEXT_PUBLIC_SITE_URL: siteUrl },
 
