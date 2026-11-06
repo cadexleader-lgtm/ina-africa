@@ -120,6 +120,8 @@ Dans `supabase/migrations/`, à appliquer dans l'ordre :
 10. `…090000_frontend_content_fields` — champs utilisés par le site public (accueil, domaines, projets, pages légales)
 11. `…090100_official_texts` — textes officiels des statuts (vision, missions, objectifs, approche, historique)
 12. `…100000_foreign_key_indexes` — index de 3 clés étrangères (signalés par l'outil de performance)
+13. `…110000_team_groups` — instances de l'équipe et composition transmise par l'ONG
+14. `…120000_ngo_information_update` — instance « conseillers », nouveaux membres, coordonnées, dons directs, partenaires
 
 Règles pour toute nouvelle migration :
 - ne jamais modifier une migration déjà appliquée : en créer une nouvelle ;
@@ -144,7 +146,7 @@ binaires Postgres 16 (`PGBIN=/chemin/vers/bin` si besoin).
 
 - Projet **ina-africa**, référence `vzmkyegczqlzjtuntmvz`, région Paris (eu-west-3),
   adresse `https://vzmkyegczqlzjtuntmvz.supabase.co`.
-- **Les 12 migrations sont appliquées** (06/11/2026). Les numéros enregistrés
+- **Les 14 migrations sont appliquées** (06/11/2026). Les numéros enregistrés
   dans `supabase_migrations.schema_migrations` sont ceux des fichiers, donc
   `supabase db push` n'appliquera que les nouvelles migrations.
 - Vérification faite après application : empreinte du schéma (colonnes,
