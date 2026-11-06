@@ -3,7 +3,7 @@ import { ArrowRight, HandHeart, Handshake, ShieldCheck, UserPlus, type LucideIco
 
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { Section } from "@/components/ui/Section";
+import { Section, type SectionTone } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ENGAGEMENT_OPTIONS, JOIN_REASONS } from "@/content/fr/ina-africa";
 
@@ -13,14 +13,14 @@ const ICONS: Record<(typeof ENGAGEMENT_OPTIONS)[number]["key"], LucideIcon> = {
   partenaire: Handshake,
 };
 
-/** Section 8 : pourquoi rejoindre INA-AFRICA, et les trois façons de s'engager. */
-export function HomeJoin() {
+/** Pourquoi rejoindre INA-AFRICA, et les trois façons de s'engager (accueil, À propos). */
+export function HomeJoin({ tone = "ivory", id = "rejoindre" }: { tone?: SectionTone; id?: string } = {}) {
   return (
-    <Section tone="ivory" labelledBy="accueil-rejoindre">
+    <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
       <Container>
         <Reveal>
           <SectionHeading
-            id="accueil-rejoindre"
+            id={`${id}-titre`}
             label="Nous rejoindre"
             title="Pourquoi rejoindre INA-AFRICA ?"
             intro="Chacun peut contribuer, à sa mesure, à un nouvel avenir pour les communautés. Choisissez la forme d'engagement qui vous ressemble."

@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, Gavel, Landmark, ShieldCheck, Wallet, type LucideIcon } from "lucide-react";
 
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
@@ -6,6 +6,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section, type SectionTone } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { splitTerm } from "@/components/pages/page-helpers";
+import { AUDIENCES, EXPERIENCE, GOVERNANCE } from "@/content/fr/ina-africa";
 import { FOUNDING_YEAR, PAGES } from "@/content/fr/pages";
 import type { ProvisionalImage } from "@/content/provisional-images";
 import { cn } from "@/lib/cn";
@@ -95,7 +96,7 @@ export function AboutHistory({
 // Vision
 // ---------------------------------------------------------------------------
 
-export function AboutVision({ text }: { text: string }) {
+export function AboutVision({ text, explanation }: { text: string; explanation?: string }) {
   const id = T.vision.id;
   return (
     <Section id={id} tone="brand" labelledBy={`${id}-titre`} className="relative isolate overflow-hidden">
@@ -112,6 +113,7 @@ export function AboutVision({ text }: { text: string }) {
             <p className="max-w-[36ch] border-l-[3px] border-gold pl-6 font-heading text-h3 font-semibold text-white md:pl-8">
               {text}
             </p>
+            {explanation && <p className="mt-6 max-w-measure text-lead text-muted-inverse">{explanation}</p>}
           </div>
         </Reveal>
       </Container>
@@ -251,6 +253,104 @@ export function AboutApproach({ items, tone }: { items: string[]; tone: SectionT
             </li>
           ))}
         </ol>
+      </Container>
+    </Section>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Contexte et raison d'être (historique, expériences, publics)
+// ---------------------------------------------------------------------------
+
+export function AboutContext({ paragraphs, tone }: { paragraphs: string[]; tone: SectionTone }) {
+  const id = "raison-d-etre";
+  return (
+    <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
+      <Container>
+        <Reveal className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-6">
+            <Heading id={id} label="Contexte et raison d'être" title="Pourquoi INA-AFRICA existe" />
+            <div className="mt-6 space-y-4 text-ink">
+              {paragraphs.map((paragraph) => (
+                <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+              ))}
+              <p>{EXPERIENCE.impact}</p>
+            </div>
+            <h3 className="mt-8 text-h4">Les publics accompagnés</h3>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              {AUDIENCES.map((audience) => (
+                <li key={audience.title} className={cn("rounded-card p-4", tone === "ivory" ? "bg-white" : "bg-ivory")}>
+                  <span className="block font-semibold text-brand">{audience.title}</span>
+                  <span className="text-small text-muted">{audience.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="lg:col-span-6">
+            <div className="rounded-panel bg-brand p-6 text-white sm:p-8">
+              <h3 className="text-h3 text-white">Depuis sa création, INA-AFRICA œuvre pour…</h3>
+              <ul className="mt-6 space-y-3">
+                {EXPERIENCE.fields.map((field) => (
+                  <li key={field} className="flex items-start gap-3 text-body">
+                    <span aria-hidden="true" className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-gold text-brand">
+                      <Check className="size-4" strokeWidth={2.5} />
+                    </span>
+                    {field}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 text-small text-muted-inverse">
+                Avec une approche participative et centrée sur l&apos;impact à long terme.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+      </Container>
+    </Section>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Gouvernance
+// ---------------------------------------------------------------------------
+
+const GOVERNANCE_ICONS: Record<(typeof GOVERNANCE)[number]["key"], LucideIcon> = {
+  assemblee: Landmark,
+  administration: Gavel,
+  surveillance: ShieldCheck,
+  finances: Wallet,
+};
+
+export function AboutGovernance({ tone }: { tone: SectionTone }) {
+  const id = "gouvernance";
+  return (
+    <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
+      <Container>
+        <Reveal className="max-w-reading">
+          <Heading id={id} label="Gouvernance" title="Une organisation structurée" />
+          <p className="mt-4 text-lead text-muted">
+            INA-AFRICA s&apos;appuie sur des instances aux rôles distincts, qui garantissent une direction claire et un
+            contrôle indépendant.
+          </p>
+        </Reveal>
+        <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {GOVERNANCE.map((item, index) => {
+            const Icon = GOVERNANCE_ICONS[item.key];
+            return (
+              <li key={item.key} className="flex">
+                <Reveal delay={index * 70} className="flex w-full">
+                  <div className={cn("flex w-full flex-col rounded-card p-6", tone === "ivory" ? "bg-white shadow-card" : "border border-line bg-white")}>
+                    <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-brand-50 text-brand-2">
+                      <Icon className="size-6" strokeWidth={1.75} />
+                    </span>
+                    <h3 className="mt-4 text-h4">{item.title}</h3>
+                    <p className="mt-2 text-small text-muted">{item.text}</p>
+                  </div>
+                </Reveal>
+              </li>
+            );
+          })}
+        </ul>
       </Container>
     </Section>
   );

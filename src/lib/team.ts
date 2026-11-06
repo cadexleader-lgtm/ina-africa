@@ -4,9 +4,21 @@
  * L'ordre ci-dessous est l'ordre d'affichage sur le site.
  */
 export const TEAM_GROUPS = [
-  { value: "conseil_administration", label: "Conseil d'administration" },
-  { value: "conseil_surveillance", label: "Conseil de surveillance" },
-  { value: "adjoints", label: "Adjoints aux membres de l'administration" },
+  {
+    value: "conseil_administration",
+    label: "Conseil d'administration",
+    description: "Il dirige l'ONG et conduit ses actions.",
+  },
+  {
+    value: "conseil_surveillance",
+    label: "Conseil de surveillance",
+    description: "Contrôle, suivi et bonne gouvernance, sans intervenir dans la gestion quotidienne.",
+  },
+  {
+    value: "adjoints",
+    label: "Adjoints aux membres de l'administration",
+    description: "Ils assistent les responsables dans leurs actions et missions.",
+  },
 ] as const;
 
 export type TeamGroup = (typeof TEAM_GROUPS)[number]["value"];

@@ -35,13 +35,16 @@ export function AboutTeam({ members, tone }: { members: TeamMember[]; tone: Sect
           <p className="mt-4 text-lead text-muted">{T.intro}</p>
         </Reveal>
 
-        <div className="space-y-14">
+        <div className="space-y-12">
           {groups.map((group) => (
             <section key={group.value} aria-labelledby={`${T.id}-${group.value}`}>
               <h3 id={`${T.id}-${group.value}`} className="flex items-center gap-3 text-h3">
                 <span aria-hidden="true" className="h-1 w-8 shrink-0 rounded-full bg-gold" />
                 {group.label}
               </h3>
+              <p className="mt-2 text-body text-muted">
+                {group.description} {group.members.length} membre{group.members.length > 1 ? "s" : ""}.
+              </p>
               <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {group.members.map((member, index) => (
                   <li key={member.id}>

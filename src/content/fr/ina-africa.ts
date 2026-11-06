@@ -463,3 +463,30 @@ export const ENGAGEMENT_OPTIONS = [
     action: "Proposer un partenariat",
   },
 ] as const;
+
+/**
+ * Gouvernance : rôle des instances, déduit UNIQUEMENT des fonctions de leurs
+ * membres transmises par l'ONG (aucune règle statutaire supposée).
+ */
+export const GOVERNANCE = [
+  {
+    key: "assemblee",
+    title: "L'Assemblée générale",
+    text: "Elle est présidée par le président de l'ONG. Le secrétariat général en assure le secrétariat : convocations, procès-verbaux et comptes rendus de séance.",
+  },
+  {
+    key: "administration",
+    title: "Le conseil d'administration",
+    text: "Il dirige l'ONG et conduit ses actions. Il réunit la présidence, le secrétariat général, la trésorerie générale et les chargés des affaires féminines, juvéniles et culturelles.",
+  },
+  {
+    key: "surveillance",
+    title: "Le conseil de surveillance",
+    text: "Il coordonne les activités de contrôle et de suivi, veille au respect des statuts et à la bonne gouvernance, sans intervenir dans la gestion quotidienne de l'ONG.",
+  },
+  {
+    key: "finances",
+    title: "Une gestion financière transparente",
+    text: "La trésorière générale est responsable de la gestion des fonds et du patrimoine de l'organisation. Elle tient une comptabilité régulière, transparente et sincère.",
+  },
+] as const;
