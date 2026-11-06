@@ -1,38 +1,21 @@
 import { Accessibility, ArrowRight, Baby, GraduationCap, HeartHandshake, type LucideIcon } from "lucide-react";
 
+import { AfricaMapSlideshow, type MapSlide } from "@/components/home/AfricaMapSlideshow";
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/SectionHeading";
-import { AFRICA_PATH, AFRICA_VIEWBOX, BENIN_POINT } from "@/content/africa-map";
 import { AUDIENCES, ORGANISATION_INTRO } from "@/content/fr/ina-africa";
-import { HOME_PHOTOS } from "@/content/provisional-images";
+import { ILLUSTRATIONS, shortCredit } from "@/content/illustrations";
 import { T } from "@/content/fr/site";
+
+/** Photos libres du Bénin qui défilent dans la carte (crédits sur /credits-photos). */
+const MAP_SLIDES: MapSlide[] = ILLUSTRATIONS.map((item) => ({ src: item.path, alt: item.alt, credit: shortCredit(item) }));
 
 const AUDIENCE_ICONS: LucideIcon[] = [HeartHandshake, GraduationCap, Baby, Accessibility];
 
-/** Petite carte de l'Afrique : situe le Bénin (décor, le texte le dit déjà). */
-function BeninBadge() {
-  return (
-    <div className="absolute -bottom-6 -left-4 flex items-center gap-3 rounded-card bg-white py-3 pr-5 pl-3 shadow-overlay sm:-left-6">
-      <svg viewBox={AFRICA_VIEWBOX} aria-hidden="true" className="h-14 w-auto">
-        <path d={AFRICA_PATH} className="fill-brand-50 stroke-brand" strokeWidth={14} strokeLinejoin="round" />
-        <g transform={`translate(${BENIN_POINT.x} ${BENIN_POINT.y})`}>
-          <circle r={70} className="benin-pulse fill-gold/40" />
-          <circle r={34} className="fill-gold stroke-white" strokeWidth={10} />
-        </g>
-      </svg>
-      <p className="text-small leading-tight">
-        <span className="block font-semibold text-brand">Née au Bénin</span>
-        <span className="text-muted">en 2017</span>
-      </p>
-    </div>
-  );
-}
-
-/** Section 2 : présentation de l'organisation, publics accompagnés, photo. */
+/** Section 2 : présentation de l'organisation, publics accompagnés, carte de l'Afrique animée (photos du Bénin). */
 export function HomeAbout() {
   return (
     <Section labelledBy="accueil-presentation">
@@ -73,18 +56,7 @@ export function HomeAbout() {
           </Reveal>
 
           <Reveal delay={120} className="lg:col-span-5">
-            <div className="relative">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-card rounded-tl-[4rem] sm:aspect-[4/3] lg:aspect-[4/5]">
-                <ResponsiveImage
-                  image={HOME_PHOTOS.presentation}
-                  fill
-                  focus="50% 50%"
-                  sizes="(min-width: 1024px) 460px, 100vw"
-                  labelPosition="top-left"
-                />
-              </div>
-              <BeninBadge />
-            </div>
+            <AfricaMapSlideshow slides={MAP_SLIDES} />
           </Reveal>
         </div>
       </Container>

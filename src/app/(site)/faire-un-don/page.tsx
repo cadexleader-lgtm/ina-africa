@@ -11,6 +11,7 @@ import { AsideCard, contactsFrom, PageIntro } from "@/components/forms/PageParts
 import { DONATE_TEXT } from "@/content/fr/forms";
 import { listActiveCampaigns } from "@/server/data/campaigns";
 import { getSiteSettings } from "@/server/data/site";
+import { PAGE_BACKDROPS } from "@/content/provisional-images";
 
 const D = DONATE_TEXT;
 
@@ -34,7 +35,8 @@ export default async function DonatePage() {
 
   return (
     <>
-      <PageIntro eyebrow={D.eyebrow} title={D.title} intro={D.intro} breadcrumbs={[{ label: D.eyebrow }]} />
+      <PageIntro
+        backdrop={PAGE_BACKDROPS.donate} eyebrow={D.eyebrow} title={D.title} intro={D.intro} breadcrumbs={[{ label: D.eyebrow }]} />
 
       <Section labelledBy="don-comment">
         <Container>

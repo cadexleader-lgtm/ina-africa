@@ -109,7 +109,7 @@ export async function Footer({ newsletter }: FooterProps) {
   const [settings, areas] = await Promise.all([getSiteSettings(), listActionAreas()]);
 
   return (
-    <footer className="on-dark bg-brand text-small">
+    <footer className="on-dark bg-brand bg-motif-brand text-small">
       <div className="mx-auto box-content max-w-site px-gutter pt-16 pb-10 md:pt-20">
         {newsletter && <div className="mb-14 border-b border-white/15 pb-12">{newsletter}</div>}
 

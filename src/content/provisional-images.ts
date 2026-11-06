@@ -105,6 +105,29 @@ export const PROVISIONAL_AREA_IMAGES: Partial<Record<string, ProvisionalImage>> 
  */
 export const HOME_PHOTOS = {
   hero: PROVISIONAL_IMAGES.groupeDeFemmes,
+  /** Photos des diapositives suivantes du hero (clés de HERO_SLIDES). */
+  heroSlides: {
+    femmes: PROVISIONAL_IMAGES.atelierCouture,
+    jeunes: PROVISIONAL_IMAGES.formationTechnique,
+    sante: illustrationAsProvisional("/images/illustrations/femmes-cotonou.webp"),
+    inclusion: PROVISIONAL_IMAGES.enfantsFauteuil,
+  },
   presentation: PROVISIONAL_IMAGES.enfantsFauteuil,
   callToAction: illustrationAsProvisional("/images/illustrations/chemin-ecole.webp"),
+} as const;
+
+/** Photo d'illustration en fond de l'en-tête de chaque page intérieure. */
+export const PAGE_BACKDROPS = {
+  about: illustrationAsProvisional("/images/illustrations/nouvelles-classes.webp"),
+  areas: PROVISIONAL_IMAGES.groupeDeFemmes,
+  projects: PROVISIONAL_IMAGES.formationTechnique,
+  news: illustrationAsProvisional("/images/illustrations/chemin-ecole.webp"),
+  contact: PROVISIONAL_IMAGES.eleveEnClasse,
+  gallery: illustrationAsProvisional("/images/illustrations/femmes-cotonou.webp"),
+  join: illustrationAsProvisional("/images/illustrations/egalite-femme-moto.webp"),
+  member: PROVISIONAL_IMAGES.groupeDeFemmes,
+  volunteer: PROVISIONAL_IMAGES.atelierCouture,
+  partner: illustrationAsProvisional("/images/illustrations/alphabetisation.webp"),
+  donate: PROVISIONAL_IMAGES.enfantsFauteuil,
+  newsletter: illustrationAsProvisional("/images/illustrations/eleves-lecture.webp"),
 } as const;

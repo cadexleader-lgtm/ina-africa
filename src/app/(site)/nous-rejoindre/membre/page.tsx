@@ -9,6 +9,7 @@ import { MembershipForm } from "@/components/forms/RequestForms";
 import { FORM_TEXT } from "@/content/fr/forms";
 import { submitMembership } from "@/server/actions/requests";
 import { getSiteSettings } from "@/server/data/site";
+import { PAGE_BACKDROPS } from "@/content/provisional-images";
 
 const M = FORM_TEXT.member;
 
@@ -23,6 +24,7 @@ export default async function MembershipPage() {
   const contacts = contactsFrom(await getSiteSettings());
   return (
     <JoinLayout
+        backdrop={PAGE_BACKDROPS.member}
       current="member"
       title={M.title}
       intro={M.intro}

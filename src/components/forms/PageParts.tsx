@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 
 import { Breadcrumbs, type BreadcrumbItem } from "@/components/ui/Breadcrumbs";
 import { Container } from "@/components/ui/Container";
+import { HeaderBackdrop } from "@/components/ui/HeaderBackdrop";
+import type { ImageSource } from "@/components/ui/ResponsiveImage";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import type { OrgContacts } from "@/components/forms/ContactAlternatives";
 import { cn } from "@/lib/cn";
@@ -20,13 +22,16 @@ type PageIntroProps = {
   breadcrumbs: BreadcrumbItem[];
   /** id du titre (h1). */
   id?: string;
+  /** Photo d'illustration en fond (à droite, fondue dans l'ivoire). */
+  backdrop?: ImageSource;
   children?: ReactNode;
 };
 
 /** En-tête des pages formulaires et dons : fil d'Ariane, libellé, titre, introduction. */
-export function PageIntro({ title, eyebrow, intro, breadcrumbs, id = "page-titre", children }: PageIntroProps) {
+export function PageIntro({ title, eyebrow, intro, breadcrumbs, id = "page-titre", backdrop, children }: PageIntroProps) {
   return (
-    <section aria-labelledby={id} className="border-b border-line bg-ivory">
+    <section aria-labelledby={id} className="relative isolate overflow-hidden border-b border-line bg-ivory bg-motif-ivory">
+      {backdrop && <HeaderBackdrop image={backdrop} />}
       <Container className="py-section-sm">
         <Breadcrumbs items={[{ label: "Accueil", href: "/" }, ...breadcrumbs]} className="mb-8 md:mb-10" />
         <div className="max-w-reading">

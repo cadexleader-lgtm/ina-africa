@@ -9,6 +9,7 @@ import { JOIN_PATHS } from "@/components/forms/JoinLayout";
 import { PageIntro } from "@/components/forms/PageParts";
 import { CARD, CARD_LINK, CARD_MORE } from "@/components/site/card-styles";
 import { FORM_TEXT } from "@/content/fr/forms";
+import { PAGE_BACKDROPS } from "@/content/provisional-images";
 
 const J = FORM_TEXT.join;
 
@@ -26,7 +27,8 @@ const TEXT_LINK =
 export default function JoinPage() {
   return (
     <>
-      <PageIntro eyebrow={J.eyebrow} title={J.title} intro={J.intro} breadcrumbs={[{ label: J.breadcrumb }]} />
+      <PageIntro
+        backdrop={PAGE_BACKDROPS.join} eyebrow={J.eyebrow} title={J.title} intro={J.intro} breadcrumbs={[{ label: J.breadcrumb }]} />
 
       <Section labelledBy="rejoindre-parcours">
         <Container>

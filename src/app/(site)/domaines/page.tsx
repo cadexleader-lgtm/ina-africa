@@ -17,6 +17,7 @@ import { PAGES } from "@/content/fr/pages";
 import { cn } from "@/lib/cn";
 import { ORG } from "@/content/fr/site";
 import { listActionAreas } from "@/server/data/site";
+import { PAGE_BACKDROPS } from "@/content/provisional-images";
 
 const T = PAGES.areas;
 
@@ -41,6 +42,7 @@ export default async function AreasPage() {
   return (
     <>
       <PageHeader
+        backdrop={PAGE_BACKDROPS.areas}
         id="domaines-titre"
         breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: T.title }]}
         label={T.label}

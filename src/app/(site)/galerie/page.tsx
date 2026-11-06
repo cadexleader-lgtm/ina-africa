@@ -13,6 +13,7 @@ import { parsePage } from "@/components/pages/page-helpers";
 import { PAGES } from "@/content/fr/pages";
 import { ORG } from "@/content/fr/site";
 import { listGalleryItems } from "@/server/data/site";
+import { PAGE_BACKDROPS } from "@/content/provisional-images";
 
 const T = PAGES.gallery;
 
@@ -42,6 +43,7 @@ export default async function GalleryPage({ searchParams }: PageProps<"/galerie"
   return (
     <>
       <PageHeader
+        backdrop={PAGE_BACKDROPS.gallery}
         id="galerie-titre"
         breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: T.label }]}
         label={T.label}

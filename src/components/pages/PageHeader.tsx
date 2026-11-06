@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 
 import { Breadcrumbs, type BreadcrumbItem } from "@/components/ui/Breadcrumbs";
 import { Container } from "@/components/ui/Container";
+import { HeaderBackdrop } from "@/components/ui/HeaderBackdrop";
+import type { ImageSource } from "@/components/ui/ResponsiveImage";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { cn } from "@/lib/cn";
 
@@ -17,6 +19,8 @@ type PageHeaderProps = {
   meta?: ReactNode;
   /** Colonne de droite dès 1024 px (fiche « En bref », etc.). */
   aside?: ReactNode;
+  /** Photo d'illustration en fond (à droite, fondue dans l'ivoire). */
+  backdrop?: ImageSource;
   className?: string;
 };
 
@@ -25,9 +29,10 @@ type PageHeaderProps = {
  * introduction. Fond ivoire et grand arc décoratif (rappel de la photo courbe
  * de l'accueil), sans image : l'en-tête reste beau même sans aucun contenu.
  */
-export function PageHeader({ id, breadcrumbs, label, title, intro, meta, aside, className }: PageHeaderProps) {
+export function PageHeader({ id, breadcrumbs, label, title, intro, meta, aside, backdrop, className }: PageHeaderProps) {
   return (
-    <section aria-labelledby={id} className={cn("relative isolate overflow-hidden bg-ivory", className)}>
+    <section aria-labelledby={id} className={cn("relative isolate overflow-hidden bg-ivory bg-motif-ivory", className)}>
+      {backdrop && <HeaderBackdrop image={backdrop} />}
       {/* Arcs décoratifs (aucun sens) : masqués sur téléphone. */}
       <span
         aria-hidden="true"

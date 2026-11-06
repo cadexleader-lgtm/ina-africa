@@ -5,6 +5,7 @@ import { ArrowRight, Handshake, HandHeart, Heart, ShieldCheck, Users, type Lucid
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { AsideCard, FormCard, PageIntro, StepList } from "@/components/forms/PageParts";
+import type { ImageSource } from "@/components/ui/ResponsiveImage";
 import { FORM_TEXT } from "@/content/fr/forms";
 
 export type JoinPath = "volunteer" | "member" | "partner";
@@ -27,16 +28,19 @@ type JoinLayoutProps = {
   formNote?: ReactNode;
   /** Sections de présentation affichées avant le formulaire (ex. adhésion). */
   before?: ReactNode;
+  /** Photo d'illustration en fond de l'en-tête. */
+  backdrop?: ImageSource;
   children: ReactNode;
 };
 
 /** Mise en page commune des formulaires « Nous rejoindre » : formulaire + encadrés (étapes, confidentialité, autres parcours). */
-export function JoinLayout({ current, title, intro, formTitle, formNote, before, children }: JoinLayoutProps) {
+export function JoinLayout({ current, title, intro, formTitle, formNote, before, backdrop, children }: JoinLayoutProps) {
   const J = FORM_TEXT.join;
   const others = JOIN_PATHS.filter((path) => path.key !== current);
   return (
     <>
       <PageIntro
+        backdrop={backdrop}
         eyebrow={J.eyebrow}
         title={title}
         intro={intro}

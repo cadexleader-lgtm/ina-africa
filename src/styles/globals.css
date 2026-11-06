@@ -254,8 +254,20 @@ dialog[open]::backdrop {
   animation: backdrop-in var(--duration-base) var(--ease-out);
 }
 
-/* Point du Bénin sur la petite carte de l'accueil : respire doucement
-   (coupé en mouvement réduit, ci-dessous). */
+/* Carte de l'Afrique de l'accueil : la bordure se dessine une fois (2,4 s),
+   le point du Bénin respire doucement. Coupés en mouvement réduit (ci-dessous). */
+.africa-outline {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: africa-draw 2.4s var(--ease-out) both;
+}
+
+@keyframes africa-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
 .benin-pulse {
   transform-box: fill-box;
   transform-origin: center;
@@ -271,6 +283,34 @@ dialog[open]::backdrop {
   50% {
     opacity: 0.6;
     scale: 1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Motifs d'arrière-plan (inspirés des tissages africains), très discrets :
+   ivoire = losanges, blanc = trame de points, bleu = diagonales. Couleurs de
+   la charte à faible opacité : le contraste du texte n'est pas modifié.
+   -------------------------------------------------------------------------- */
+.bg-motif-ivory {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2256%22 height=%2256%22 viewBox=%220 0 56 56%22%3E%3Cg fill=%22none%22 stroke=%22%2317465a%22 stroke-opacity=%22.07%22 stroke-width=%221.2%22%3E%3Cpath d=%22M28 4 52 28 28 52 4 28Z%22/%3E%3Cpath d=%22M28 16 40 28 28 40 16 28Z%22/%3E%3C/g%3E%3Ccircle cx=%2228%22 cy=%2228%22 r=%222%22 fill=%22%23d9a500%22 fill-opacity=%22.22%22/%3E%3Ccircle cx=%220%22 cy=%220%22 r=%221.6%22 fill=%22%2317465a%22 fill-opacity=%22.10%22/%3E%3Ccircle cx=%2256%22 cy=%220%22 r=%221.6%22 fill=%22%2317465a%22 fill-opacity=%22.10%22/%3E%3Ccircle cx=%220%22 cy=%2256%22 r=%221.6%22 fill=%22%2317465a%22 fill-opacity=%22.10%22/%3E%3Ccircle cx=%2256%22 cy=%2256%22 r=%221.6%22 fill=%22%2317465a%22 fill-opacity=%22.10%22/%3E%3C/svg%3E");
+  background-size: 56px 56px;
+}
+
+.bg-motif-dots {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22 viewBox=%220 0 28 28%22%3E%3Ccircle cx=%222%22 cy=%222%22 r=%221.3%22 fill=%22%2317465a%22 fill-opacity=%22.07%22/%3E%3C/svg%3E");
+  background-size: 28px 28px;
+}
+
+.bg-motif-brand {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22%3E%3Cg stroke=%22%23ffffff%22 stroke-opacity=%22.05%22 stroke-width=%221.5%22%3E%3Cpath d=%22M-10 10 10 -10M0 40 40 0M30 50 50 30%22/%3E%3C/g%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%221.4%22 fill=%22%23d9a500%22 fill-opacity=%22.18%22/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+}
+
+@media print {
+  .bg-motif-ivory,
+  .bg-motif-dots,
+  .bg-motif-brand {
+    background-image: none;
   }
 }
 

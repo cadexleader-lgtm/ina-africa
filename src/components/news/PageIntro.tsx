@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 
 import { Breadcrumbs, type BreadcrumbItem } from "@/components/ui/Breadcrumbs";
 import { Container } from "@/components/ui/Container";
+import { HeaderBackdrop } from "@/components/ui/HeaderBackdrop";
+import type { ImageSource } from "@/components/ui/ResponsiveImage";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { cn } from "@/lib/cn";
 
@@ -19,6 +21,8 @@ type PageIntroProps = {
   titleId?: string;
   /** Largeur : site (1200 px, défaut) ou lecture (680 px, centrée, pour un texte long en dessous). */
   size?: "site" | "reading";
+  /** Photo d'illustration en fond (à droite, fondue dans l'ivoire). */
+  backdrop?: ImageSource;
   className?: string;
 };
 
@@ -27,10 +31,11 @@ type PageIntroProps = {
  * titre (h1) et introduction. Un arc discret rappelle la courbe du hero
  * de l'accueil (décoratif).
  */
-export function PageIntro({ breadcrumbs, label, title, intro, aside, children, titleId, size = "site", className }: PageIntroProps) {
+export function PageIntro({ breadcrumbs, label, title, intro, aside, children, titleId, size = "site", backdrop, className }: PageIntroProps) {
   const hasAside = Boolean(aside);
   return (
-    <header className={cn("relative isolate overflow-hidden border-b border-line bg-ivory", className)}>
+    <header className={cn("relative isolate overflow-hidden border-b border-line bg-ivory bg-motif-ivory", className)}>
+      {backdrop && <HeaderBackdrop image={backdrop} />}
       <span
         aria-hidden="true"
         className="absolute -top-40 -right-40 -z-10 hidden size-[30rem] rounded-full border-[3px] border-brand-2/25 md:block"

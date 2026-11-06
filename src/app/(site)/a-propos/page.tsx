@@ -18,7 +18,7 @@ import { PageHeader } from "@/components/pages/PageHeader";
 import { excerpt, paragraphs } from "@/components/pages/page-helpers";
 import { HISTORY, MISSIONS, OBJECTIVES, APPROACH, ORGANISATION_INTRO, VISION, VISION_EXPLAINED } from "@/content/fr/ina-africa";
 import { PAGES } from "@/content/fr/pages";
-import { illustrationAsProvisional } from "@/content/provisional-images";
+import { illustrationAsProvisional, PAGE_BACKDROPS } from "@/content/provisional-images";
 import { ORG } from "@/content/fr/site";
 import { getSiteSettings, listActionAreas, listTeamMembers, splitLines } from "@/server/data/site";
 
@@ -69,6 +69,7 @@ export default async function AboutPage() {
   return (
     <>
       <PageHeader
+        backdrop={PAGE_BACKDROPS.about}
         id="a-propos-titre"
         breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: T.label }]}
         label={T.label}

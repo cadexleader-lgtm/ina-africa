@@ -8,6 +8,7 @@ import { VolunteerForm } from "@/components/forms/RequestForms";
 import { FORM_TEXT } from "@/content/fr/forms";
 import { submitVolunteer } from "@/server/actions/requests";
 import { getSiteSettings } from "@/server/data/site";
+import { PAGE_BACKDROPS } from "@/content/provisional-images";
 
 const V = FORM_TEXT.volunteer;
 
@@ -21,7 +22,8 @@ export const metadata: Metadata = {
 export default async function VolunteerPage() {
   const contacts = contactsFrom(await getSiteSettings());
   return (
-    <JoinLayout current="volunteer" title={V.title} intro={V.intro} formTitle={V.formTitle}>
+    <JoinLayout
+        backdrop={PAGE_BACKDROPS.volunteer} current="volunteer" title={V.title} intro={V.intro} formTitle={V.formTitle}>
       <VolunteerForm
         action={submitVolunteer}
         contacts={contacts}

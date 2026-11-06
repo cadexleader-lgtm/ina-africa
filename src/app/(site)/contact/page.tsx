@@ -12,6 +12,7 @@ import { ContactForm } from "@/components/forms/RequestForms";
 import { FORM_TEXT } from "@/content/fr/forms";
 import { submitContact } from "@/server/actions/requests";
 import { getSiteSettings } from "@/server/data/site";
+import { PAGE_BACKDROPS } from "@/content/provisional-images";
 
 const C = FORM_TEXT.contact;
 
@@ -29,7 +30,8 @@ export default async function ContactPage() {
 
   return (
     <>
-      <PageIntro eyebrow={C.eyebrow} title={C.title} intro={C.intro} breadcrumbs={[{ label: C.eyebrow }]} />
+      <PageIntro
+        backdrop={PAGE_BACKDROPS.contact} eyebrow={C.eyebrow} title={C.title} intro={C.intro} breadcrumbs={[{ label: C.eyebrow }]} />
       <Section labelledBy="contact-formulaire">
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">

@@ -540,3 +540,35 @@ export const MEMBER_PARTICIPATION = [
   "Soutenir les campagnes de collecte de fonds",
   "Mobiliser d'autres bénévoles autour des actions",
 ];
+
+/**
+ * Diapositives du hero de l'accueil (après la première, qui reprend les
+ * paramètres du site). Textes tirés des documents ci-dessus ; la photo de
+ * chaque diapositive est choisie dans src/content/provisional-images.ts.
+ */
+export const HERO_SLIDES = [
+  {
+    key: "femmes",
+    kicker: "Autonomisation des femmes",
+    title: "Autonomiser les femmes et les filles mères",
+    text: "Économie solidaire, transformation de produits locaux, entrepreneuriat social : des formations pour renforcer leurs compétences et leur indépendance économique.",
+  },
+  {
+    key: "jeunes",
+    kicker: "Jeunesse",
+    title: "Former la relève de demain",
+    text: "INA-AFRICA favorise la formation et l'insertion socio-professionnelle des jeunes, notamment à travers son « Programme Jeune Professionnel » (PJP).",
+  },
+  {
+    key: "sante",
+    kicker: "Santé",
+    title: "Informer pour mieux protéger",
+    text: "Des actions de sensibilisation aux droits et à la santé sexuels et reproductifs auprès d'artisans, d'élèves et de leaders communautaires, à Abomey-Calavi et Godomey.",
+  },
+  {
+    key: "inclusion",
+    kicker: "Inclusion",
+    title: "Une place pour chacun",
+    text: "Œuvrer à l'inclusion et à la participation active des femmes, des jeunes et des personnes en situation de handicap dans les initiatives de développement durable.",
+  },
+] as const;

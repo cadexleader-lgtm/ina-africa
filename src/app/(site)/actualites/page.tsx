@@ -15,6 +15,7 @@ import { pageMetadata } from "@/lib/seo/metadata";
 import { breadcrumbJsonLd } from "@/lib/seo/structured-data";
 import { listArticleCategories, listArticles, sanitizeSearch } from "@/server/data/articles";
 import { getSiteSettings } from "@/server/data/site";
+import { PAGE_BACKDROPS } from "@/content/provisional-images";
 
 /**
  * /actualites : article le plus récent mis en avant, puis grille ; filtres par
@@ -83,6 +84,7 @@ export default async function NewsPage({ searchParams }: PageProps<"/actualites"
         ])}
       />
       <PageIntro
+        backdrop={PAGE_BACKDROPS.news}
         breadcrumbs={[{ label: NEWS_T.article.home, href: "/" }, { label: NEWS_T.article.news }]}
         label={NEWS_T.list.label}
         title={NEWS_T.list.title}

@@ -11,6 +11,7 @@ import { ProjectResults } from "@/components/pages/projects/ProjectResults";
 import { PAGES } from "@/content/fr/pages";
 import { ORG } from "@/content/fr/site";
 import { getSiteSettings, listActionAreas } from "@/server/data/site";
+import { PAGE_BACKDROPS } from "@/content/provisional-images";
 
 const T = PAGES.projects;
 
@@ -48,6 +49,7 @@ export default async function ProjectsPage({ searchParams }: PageProps<"/projets
   return (
     <>
       <PageHeader
+        backdrop={PAGE_BACKDROPS.projects}
         id="projets-titre"
         breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: T.label }]}
         label={T.label}

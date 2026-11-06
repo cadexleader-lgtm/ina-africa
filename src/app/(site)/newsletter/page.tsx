@@ -9,6 +9,7 @@ import { contactsFrom, FormCard, PageIntro } from "@/components/forms/PageParts"
 import { FORM_TEXT } from "@/content/fr/forms";
 import { subscribeNewsletter } from "@/server/actions/newsletter";
 import { getSiteSettings } from "@/server/data/site";
+import { PAGE_BACKDROPS } from "@/content/provisional-images";
 
 const N = FORM_TEXT.newsletter;
 
@@ -26,7 +27,8 @@ export default async function NewsletterPage() {
   const contacts = contactsFrom(await getSiteSettings());
   return (
     <>
-      <PageIntro eyebrow={N.pageTitle} title={N.pageTitle} intro={N.pageIntro} breadcrumbs={[{ label: N.pageTitle }]} />
+      <PageIntro
+        backdrop={PAGE_BACKDROPS.newsletter} eyebrow={N.pageTitle} title={N.pageTitle} intro={N.pageIntro} breadcrumbs={[{ label: N.pageTitle }]} />
       <Section labelledBy="newsletter-formulaire">
         <Container size="reading">
           <FormCard title={N.footerTitle} titleId="newsletter-formulaire">
