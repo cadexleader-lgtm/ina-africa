@@ -77,6 +77,20 @@ const CONSTRAINT_MESSAGES: Record<string, string> = {
   donations_online_fields: "Indiquez au moins un email ou un numéro de téléphone.",
   donations_offline_reference_uidx: "Cette opération (même mode de réception et même référence) est déjà enregistrée.",
   donations_campaign_id_fkey: "Cet appel aux dons a déjà reçu des dons : désactivez-le plutôt que de le supprimer.",
+  // Administration (Phase 3)
+  action_areas_title_key: "Un domaine porte déjà ce nom.",
+  article_categories_name_key: "Une catégorie porte déjà ce nom.",
+  site_settings_hero_image_has_alt: "Ajoutez un texte alternatif à l'image de l'accueil.",
+  site_settings_impact_image_has_alt: "Ajoutez un texte alternatif à l'image de la section impact.",
+  site_settings_whatsapp_number_check: "Numéro WhatsApp invalide : indicatif et numéro, 8 à 15 chiffres.",
+  projects_dates_order: "La date de fin doit être postérieure à la date de début.",
+  donation_campaigns_dates_order: "La date de fin doit être postérieure à la date de début.",
+  gallery_items_photo_fields: "Une photo de la galerie doit avoir une image de la médiathèque, sans adresse de vidéo.",
+  gallery_items_video_fields: "Une vidéo de la galerie doit avoir son adresse YouTube ou Facebook.",
+  partners_website_url_check: "L'adresse du site doit commencer par https:// ou http://.",
+  media_bucket_path_key: "Ce fichier existe déjà dans la médiathèque.",
+  profiles_email_key: "Un compte existe déjà avec cette adresse.",
+  user_roles_user_id_key: "Ce compte a déjà un rôle : modifiez-le plutôt.",
 };
 
 function constraintFrom(error: DatabaseErrorLike): string | undefined {

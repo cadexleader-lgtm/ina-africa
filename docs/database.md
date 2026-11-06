@@ -181,3 +181,104 @@ Les comptes suivants sont créés depuis l'administration par ce super_admin.
 - Authentication → Multi-Factor : activer **TOTP**.
 - Authentication → Emails → SMTP : SMTP personnalisé (Resend) avant la mise en ligne.
 - Authentication → URL Configuration : adresse du site + `/auth/confirm`.
+
+## 6. Opérations de l'administration (Phase 3)
+
+Logique serveur de l'administration, sans interface : Server Actions dans
+`src/server/actions/admin/*`, services dans `src/server/admin/*`, lectures dans
+`src/server/data/admin/*`, schémas de saisie dans `src/lib/validation/admin/*`.
+**Aucune migration nouvelle** : les règles RLS existantes couvrent toutes les
+opérations (vérifié par `tests/db/07_admin_operations.sql`).
+
+### Déroulé d'une action
+
+1. `authorize(min)` (`src/server/auth/guard.ts`) : refus sans session, ou si le
+   rôle ne suffit pas ;
+2. validation Zod (messages en français, `fieldErrors` par champ : `champ` ou
+   `liste.0.sous-champ`) — un champ facultatif vide devient `null` ;
+3. requête avec le client de **session** (`createSessionClient`) : les règles
+   RLS restent la barrière finale ;
+4. erreur de la base → `fromDatabaseError` (messages des contraintes dans
+   `src/server/errors.ts`) ; jamais de détail technique affiché ;
+5. invalidation du cache public avec `updateTag` (lecture de ses propres
+   écritures : la page suivante attend la nouvelle version) ;
+6. résultat `ActionResult` limité à ce dont l'interface a besoin (id, adresse, statut).
+
+Les actions prennent un objet (composant client) ; `Object.fromEntries(formData)`
+convient aussi (cases « on », nombres en texte, contenu riche en JSON texte).
+Seul l'envoi de fichier prend un `FormData`.
+
+### Actions par domaine (rôle minimal)
+
+| Domaine | Actions | Rôle |
+|---|---|---|
+| Articles | `createArticle`, `updateArticle` (non publiés pour l'éditeur), `submitArticleForReview`, `deleteArticle` (éditeur : ses brouillons) | editor |
+| | `publishArticle`, `unpublishArticle` (remarque facultative), `archiveArticle`, `rejectArticle` (remarque obligatoire) | admin |
+| Catégories | `createCategory`, `updateCategory`, `reorderCategories`, `deleteCategory` | admin |
+| Projets | `createProject`, `updateProject`, `setProjectPublished`, `deleteProject` | admin |
+| Domaines | `createActionArea`, `updateActionArea`, `setActionAreaActive`, `reorderActionAreas`, `deleteActionArea` | admin |
+| Partenaires / sponsors | `createPartner`, `updatePartner`, `setPartnerActive`, `reorderPartners`, `deletePartner` | admin |
+| Équipe | `createTeamMember`, `updateTeamMember`, `setTeamMemberActive`, `reorderTeamMembers`, `deleteTeamMember` | admin |
+| Galerie | `createGalleryItem`, `updateGalleryItem`, `setGalleryItemPublished`, `reorderGalleryItems`, `deleteGalleryItem` | admin |
+| Paramètres | `updateSiteSettings` (mise à jour partielle) | admin |
+| Appels aux dons | `createCampaign`, `updateCampaign`, `setCampaignActive`, `deleteCampaign` | admin |
+| Dons | `recordOfflineDonation`, `cancelOfflineDonation`, `exportDonationsCsv` | admin |
+| Demandes | `updateRequestStatus`, `deleteRequest` | admin |
+| Newsletter | `exportNewsletterCsv` (abonnés confirmés seulement), `deleteNewsletterSubscriber` | admin |
+| Médiathèque | `uploadMedia` (public), `updateMedia` | editor |
+| | `uploadMedia` (justificatifs), `deleteMedia`, `getPrivateDocumentUrl` | admin |
+| Comptes | `inviteMember`, `changeMemberRole`, `revokeMemberAccess`, `deleteMemberAccount` | super_admin |
+
+Tout contenu est créé non publié / inactif ; publier ou activer est une action
+séparée (refusée pour un contenu vide). Une image renseignée exige toujours son
+texte alternatif.
+
+### Cache public invalidé
+
+| Écriture | Étiquettes (`src/server/data/tags.ts`) |
+|---|---|
+| article publié (ou qui l'était) | `articles`, `article:<ancienne adresse>`, `article:<nouvelle>` — un brouillon n'invalide rien |
+| catégorie | `article-categories`, `articles` |
+| projet | `projects`, `project:<adresse>` (+ `gallery` à la suppression) |
+| domaine | `action-areas`, `projects` (le domaine figure sur les cartes des projets) |
+| partenaire, équipe, galerie, paramètres | `partners`, `team`, `gallery`, `site-settings` |
+| appel aux dons | `campaigns`, `campaign:<adresse>`, `campaign-progress` |
+| don hors ligne (saisie, annulation) | `campaign-progress` |
+
+Demandes, newsletter, médias et comptes ne sont pas affichés sur le site : rien à invalider.
+
+### Médiathèque
+
+- Type **réel** lu dans les premiers octets (JPEG, PNG, WebP, PDF) ; le type
+  annoncé et l'extension sont ignorés (un SVG ou du HTML renommé est refusé).
+- Public : images ≤ 5 Mo ; justificatifs (privé, admin) : PDF ou image ≤ 10 Mo,
+  toujours rangés dans `justificatifs/`.
+- Chemin aléatoire `<dossier>/<année>/<mois>/<32 hex>.<ext>` (conforme à
+  `private.is_valid_storage_path`), fiche dans `media`.
+- Petite version : le navigateur de l'administration convertit les photos en
+  WebP (≈ 2000 px et ≈ 800 px) et envoie `file` + `small`. Sans `small`, la
+  grande est copiée sous `-sm.webp` (le `srcset` ne casse jamais). Un JPEG / PNG
+  envoyé tel quel n'annonce pas de petite version (`src/lib/media.ts` ne la
+  cherche que pour `.webp`). Aucune dépendance de traitement d'image côté serveur.
+- Suppression (admin) refusée si le fichier est l'image d'un contenu ou le
+  justificatif d'un don (les images insérées dans un texte riche ne sont pas
+  recherchées). La fiche est supprimée avant le fichier.
+- Taille des envois : une Server Action accepte 1 Mo par défaut — régler
+  `experimental.serverActions.bodySizeLimit` (ex. `"11mb"`) dans `next.config.ts`.
+
+### Exports CSV
+
+UTF-8 avec BOM, séparateur `;`, fins de ligne CRLF (Excel en français). Toute
+cellule texte commençant par `=`, `+`, `-`, `@` (ou tabulation / retour chariot)
+est préfixée d'une apostrophe : une formule glissée dans un nom de donateur
+n'est jamais exécutée. Dons : 20 000 lignes au plus par export (`truncated`
+signale un export incomplet).
+
+### Comptes
+
+Invitation par email (`auth.admin.inviteUserByEmail`, client privilégié,
+lien vers `/auth/confirm`) puis rôle écrit **avec la session** du super_admin
+(RLS, audit, protection du dernier super_admin). Si le rôle échoue, l'invitation
+est annulée. Personne ne modifie son propre accès. Retirer l'accès supprime le
+rôle (compte conservé) ; supprimer le compte retire d'abord le rôle avec la
+session, puis supprime le compte Auth.
