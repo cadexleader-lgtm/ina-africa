@@ -39,6 +39,78 @@ tests/unit/            tests unitaires
 
 Si une vérification est oubliée dans le code, la base refuse quand même.
 
+## Connexion à l'administration
+
+Pas d'inscription publique : les comptes sont créés par un super_admin (le
+tout premier à la main, voir `docs/database.md` §5 « Créer le premier
+super_admin »). Tout passe par la session de la personne (Supabase Auth +
+RLS) : le client privilégié n'est jamais utilisé pour se connecter.
+
+### Fichiers
+
+| Rôle | Fichier |
+|---|---|
+| Proxy (ex-middleware) : rafraîchit la session, `/admin/**` sans session → `/admin/connexion?suite=…` ; matcher `/admin`, `/admin/:path*`, `/auth/:path*` (jamais le site public) | `src/proxy.ts` |
+| Garde (contrat des pages et des actions) : `getAdminSession()`, `requireAdminPage(min)`, `authorize(min)`, `roleAtLeast()` | `src/server/auth/guard.ts` (rôles : `roles.ts`) |
+| Actions : connexion, déconnexion, code TOTP, activation TOTP, mot de passe oublié, lien reçu par email, nouveau mot de passe | `src/server/auth/actions.ts` |
+| Validation (Zod) et paramètre `suite` | `src/lib/validation/auth.ts` |
+| Pages d'accès (mise en page sobre centrée) | `src/app/(admin)/(acces)/admin/…`, `src/app/auth/confirm` |
+| Espace connecté (en-tête : nom, rôle, déconnexion) | `src/app/(admin)/(espace)/admin/…` (layout + tableau de bord minimal) |
+| Composants et textes | `src/components/admin/` |
+
+**Nouvelle page d'administration** : la placer dans
+`src/app/(admin)/(espace)/admin/<chemin>/page.tsx`, avec `export const instant = false`
+et `const session = await requireAdminPage("editor" | "admin" | "super_admin")`
+en tête. Le layout ne protège rien à lui seul. Chaque Server Action commence
+par `const auth = await authorize(rôle); if (!auth.ok) return auth;`.
+
+### Parcours
+
+1. `/admin/connexion` : email + mot de passe (`signInWithPassword`). Échec →
+   « Email ou mot de passe incorrect » (jamais d'indication sur l'existence du compte).
+2. Après la connexion, le rôle est lu dans `user_roles` (règle RLS : chacun lit son rôle) :
+   - aucun rôle → déconnexion + « Ce compte n'a pas accès à l'administration » ;
+   - un facteur TOTP vérifié et session `aal1` → `/admin/verification` (code à 6 chiffres,
+     `challenge` + `verify` → `aal2`), quel que soit le rôle ;
+   - admin ou super_admin SANS facteur → `/admin/securite/double-authentification`
+     (activation forcée : `enroll` → QR code et clé texte → premier code) ;
+   - editor sans facteur → accès direct ; l'activation lui est proposée (facultative).
+3. Retour à la page demandée (`suite`) ou à `/admin`.
+
+`suite` n'accepte qu'un chemin interne de l'administration (commence par
+`/admin`, pas de `//`, de `\`, de schéma, de `..` ni de caractère de contrôle)
+— protection contre les redirections ouvertes (`safeAdminPath`).
+
+Décisions côté serveur : `auth.getUser()` (jeton vérifié par Supabase Auth) puis
+`mfa.getAuthenticatorAssuranceLevel()` ; jamais `getSession()` seul. Le proxy
+utilise `getClaims()` (vérification du jeton, rafraîchissement des cookies).
+La base exige de toute façon `aal2` pour admin et super_admin (`private.has_role`).
+Un rôle insuffisant pour une page → `/admin/acces-refuse` (`forbidden()` demanderait
+`experimental.authInterrupts` dans `next.config.ts`).
+
+### Mot de passe oublié, invitation
+
+- `/admin/mot-de-passe-oublie` : `resetPasswordForEmail`, réponse identique qu'un compte existe ou non.
+- `/auth/confirm?token_hash=…&type=recovery|invite` : le jeton n'est utilisé
+  (`verifyOtp`) qu'au **clic** sur « Continuer » (les filtres de messagerie
+  ouvrent les liens et consommeraient un jeton à usage unique). Accepte aussi
+  `?code=` (modèle d'email par défaut, flux PKCE, même navigateur seulement).
+- `/admin/nouveau-mot-de-passe` : `updateUser` (12 caractères au moins, 72 octets
+  au plus). Un compte qui a activé la double authentification valide d'abord son code
+  (Supabase exige `aal2` pour changer le mot de passe).
+- Déconnexion : Server Action `signOut` (session courante seulement).
+
+### Réglages Supabase (tableau de bord, à faire une fois)
+
+- Authentication → Sign In / Providers : désactiver « Allow new users to sign up ».
+- Authentication → Multi-Factor : activer **TOTP** (enroll + verify).
+- Authentication → URL Configuration : « Site URL » = adresse du site ;
+  « Redirect URLs » : `https://<domaine>/auth/confirm` (et `http://localhost:3000/auth/confirm` en développement).
+- Authentication → Emails → modèles :
+  - « Reset password » : lien `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery`
+  - « Invite user » : lien `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=invite`
+- SMTP personnalisé (Resend) avant la mise en ligne (l'envoi par défaut est très limité).
+
 ## Écritures publiques
 
 Formulaires (contact, bénévole, adhésion, sponsor, newsletter) et dons en ligne :
