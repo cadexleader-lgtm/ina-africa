@@ -48,6 +48,7 @@ export const FOOTER_NAV: NavItem[] = [
 export const LEGAL_NAV: NavItem[] = [
   { href: "/mentions-legales", label: "Mentions légales" },
   { href: "/politique-de-confidentialite", label: "Politique de confidentialité" },
+  { href: "/credits-photos", label: "Crédits photos" },
 ];
 
 /** Noms affichés des réseaux sociaux (clé de site_settings.social_links → libellé). */

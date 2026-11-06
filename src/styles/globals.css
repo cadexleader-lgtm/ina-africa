@@ -254,6 +254,38 @@ dialog[open]::backdrop {
   animation: backdrop-in var(--duration-base) var(--ease-out);
 }
 
+/* Carte de l'Afrique de l'accueil : la bordure se dessine une fois (2,4 s),
+   le point du Bénin respire doucement. Coupés en mouvement réduit (ci-dessous). */
+.africa-outline {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: africa-draw 2.4s var(--ease-out) both;
+}
+
+@keyframes africa-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+.benin-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: benin-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes benin-pulse {
+  0%,
+  100% {
+    opacity: 0.15;
+    scale: 0.6;
+  }
+  50% {
+    opacity: 0.6;
+    scale: 1;
+  }
+}
+
 /* Mouvement réduit : TOUT est coupé. */
 @media (prefers-reduced-motion: reduce) {
   *,

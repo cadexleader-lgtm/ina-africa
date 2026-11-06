@@ -19,3 +19,8 @@ sous licence vérifiée), puis supprimer ce dossier.
 | `eleve-en-classe.webp` (+ `-sm`) | 817 × 464 | élève en uniforme bleu |
 | `groupe-de-femmes.webp` (+ `-sm`) | 1290 × 860 | groupe de femmes en plein air |
 | `enfants-fauteuil.webp` (+ `-sm`) | 1147 × 860 | enfants et camarade en fauteuil roulant |
+
+---
+Les photos de `public/images/illustrations/` sont différentes : licence libre connue
+(Wikimedia Commons, crédits dans `src/content/illustrations.ts` et sur /credits-photos).
+Elles restent des **illustrations** (jamais présentées comme des actions d'INA-AFRICA).
