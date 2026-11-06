@@ -35,3 +35,13 @@ export function AreaVisual({ area, priority = false }: { area: ActionArea; prior
     </div>
   );
 }
+
+/** Visuel d'un domaine qui remplit son parent (positionné et dimensionné). */
+export function AreaVisualFill({ area }: { area: ActionArea }) {
+  const image = area.image ?? PROVISIONAL_AREA_IMAGES[area.slug] ?? null;
+  return image ? (
+    <ResponsiveImage image={image} fill focus="50% 40%" sizes="(min-width: 768px) 480px, 100vw" labelPosition="top-left" />
+  ) : (
+    <IconPanel icon={areaIcon(area.slug)} />
+  );
+}

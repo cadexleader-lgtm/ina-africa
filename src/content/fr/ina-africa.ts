@@ -148,10 +148,22 @@ export const APPROACH = [
 
 /** Publics auxquels l'ONG s'adresse (vision, historique, expériences). */
 export const AUDIENCES = [
-  { title: "Les femmes et les filles mères", text: "En particulier celles issues de milieux ruraux et marginalisés." },
-  { title: "Les jeunes et les adolescents", text: "La relève de demain, à former et à accompagner vers un travail décent." },
-  { title: "Les enfants vulnérables", text: "Soutenus pour grandir et apprendre dans de meilleures conditions." },
-  { title: "Les personnes en situation de handicap", text: "Pour leur inclusion et leur participation active au développement." },
+  {
+    title: "Les femmes et les filles mères",
+    text: "En particulier celles issues de milieux ruraux et marginalisés.",
+  },
+  {
+    title: "Les jeunes et les adolescents",
+    text: "La relève de demain, à former et à accompagner vers un travail décent.",
+  },
+  {
+    title: "Les enfants vulnérables",
+    text: "Soutenus pour grandir et apprendre dans de meilleures conditions.",
+  },
+  {
+    title: "Les personnes en situation de handicap",
+    text: "Pour leur inclusion et leur participation active au développement.",
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -163,6 +175,13 @@ export type OfficialArea = {
   slug: string;
   title: string;
   summary: string;
+  /**
+   * La problématique : reformulée à partir de l'historique, des statuts et
+   * des réalisations. À FAIRE VALIDER par l'ONG (modifiable ici).
+   */
+  problem: string;
+  /** Les publics concernés (tirés des documents). */
+  audiences: string[];
   description: string;
   /** Ce que l'ONG fait ou vise dans ce domaine (tiré des documents). */
   actions: string[];
@@ -173,18 +192,20 @@ export const AREAS: OfficialArea[] = [
     slug: "education",
     title: "Éducation",
     summary: "Former les jeunes et soutenir les enfants vulnérables, pour préparer la relève de demain.",
+    problem:
+      "L'éducation fait partie des défis socio-économiques persistants qui ont conduit à la création d'INA-AFRICA. Former les jeunes et soutenir les enfants vulnérables, c'est préparer la relève de demain.",
+    audiences: ["Les jeunes et les adolescents", "Les enfants vulnérables"],
     description:
       "L'éducation est l'un des défis qui ont conduit à la création d'INA-AFRICA. L'ONG s'engage pour la formation des jeunes et le soutien aux enfants vulnérables, avec une approche participative et centrée sur l'impact à long terme.",
-    actions: [
-      "Formation des jeunes",
-      "Soutien aux enfants vulnérables",
-      "Sessions de formation et de sensibilisation",
-    ],
+    actions: ["Formation des jeunes", "Soutien aux enfants vulnérables", "Sessions de formation et de sensibilisation"],
   },
   {
     slug: "sante-sexuelle-et-reproductive",
     title: "Santé et droits en santé sexuelle et reproductive",
     summary: "Informer et sensibiliser sur les droits et la santé sexuels et reproductifs.",
+    problem:
+      "La santé fait partie des défis persistants identifiés par l'ONG. Une information fiable sur les droits et la santé sexuels et reproductifs, sur les infections sexuellement transmissibles et sur la loi 2021-12, est essentielle pour que chacun puisse protéger sa santé.",
+    audiences: ["Les artisans", "Les élèves et les jeunes", "Les chefs de quartier, leaders d'opinion et religieux"],
     description:
       "INA-AFRICA contribue à une bonne santé des populations en leur fournissant les informations essentielles pour leur bien. L'ONG mène des actions de sensibilisation sur les droits et la santé sexuels et reproductifs auprès d'artisans, d'élèves et de leaders communautaires.",
     actions: [
@@ -197,6 +218,9 @@ export const AREAS: OfficialArea[] = [
     slug: "autonomisation-des-femmes",
     title: "Autonomisation des femmes",
     summary: "Renforcer les compétences, l'estime de soi et l'indépendance économique des femmes et des filles mères.",
+    problem:
+      "Les femmes et les filles mères, en particulier celles issues de milieux ruraux et marginalisés, ont besoin de compétences et de ressources pour gagner en indépendance économique et en estime de soi.",
+    audiences: ["Les femmes rurales", "Les filles mères", "Les femmes issues de milieux marginalisés"],
     description:
       "INA-AFRICA œuvre activement pour l'autonomisation des femmes et des filles mères, en particulier celles issues de milieux ruraux et marginalisés. Ses programmes visent à relever leur niveau de vie et à renforcer leurs compétences, leur estime de soi et leur indépendance économique.",
     actions: [
@@ -210,6 +234,9 @@ export const AREAS: OfficialArea[] = [
     slug: "jeunesse-et-adolescents",
     title: "Jeunesse et adolescents",
     summary: "Accompagner les jeunes, la relève de demain, vers le bien-être et le travail décent.",
+    problem:
+      "Les jeunes et les adolescents constituent la relève de demain. Leur formation, leur santé et leur accès à un travail décent conditionnent l'avenir des communautés.",
+    audiences: ["Les jeunes en recherche d'insertion professionnelle", "Les adolescents et les élèves"],
     description:
       "Les jeunes et les adolescents constituent la relève de demain. INA-AFRICA veille à leur bien-être et favorise leur insertion socio-professionnelle et leur accès au travail décent, notamment à travers son « Programme Jeune Professionnel » (PJP).",
     actions: [
@@ -222,6 +249,9 @@ export const AREAS: OfficialArea[] = [
     slug: "inclusion-et-egalite-de-genre",
     title: "Inclusion et égalité de genre",
     summary: "Réduire les inégalités entre les sexes et inclure les personnes vulnérables.",
+    problem:
+      "Les inégalités entre les sexes et la mise à l'écart des personnes vulnérables freinent le développement durable. L'ODD 5 fixe l'objectif de parvenir à l'égalité des sexes et d'autonomiser toutes les femmes et les filles.",
+    audiences: ["Les femmes et les filles", "Les personnes en situation de handicap", "Les personnes vulnérables"],
     description:
       "INA-AFRICA œuvre à l'inclusion et à la participation active des femmes, des jeunes et des personnes en situation de handicap. Elle promeut la représentativité des femmes dans toutes les sphères de décision et l'atteinte de l'ODD 5 : « Parvenir à l'égalité des sexes et autonomiser toutes les femmes et les filles ».",
     actions: [
@@ -234,6 +264,9 @@ export const AREAS: OfficialArea[] = [
     slug: "developpement-local-durable",
     title: "Développement local durable et inclusif",
     summary: "Des initiatives locales et durables pour de meilleures conditions de vie.",
+    problem:
+      "Les couches défavorisées ont besoin de meilleures conditions de vie, à la fois socio-économiques et environnementales. Le réchauffement climatique et la gestion des écosystèmes sont aussi des enjeux pour les communautés.",
+    audiences: ["Les communautés rurales", "Les populations défavorisées"],
     description:
       "INA-AFRICA promeut des initiatives locales, durables et inclusives pour offrir aux couches défavorisées de meilleures conditions de vie socio-économiques et environnementales. L'ONG agit pour le développement rural, la lutte contre le réchauffement climatique et la valorisation du patrimoine culturel béninois et africain.",
     actions: [
@@ -247,6 +280,9 @@ export const AREAS: OfficialArea[] = [
     slug: "innovation-sociale",
     title: "Innovation sociale",
     summary: "Inventer avec les communautés des réponses locales à leurs besoins.",
+    problem:
+      "Les défis des communautés appellent des réponses adaptées à chaque territoire. INA-AFRICA a été créée pour promouvoir des initiatives locales, durables et inclusives, construites avec les personnes concernées.",
+    audiences: ["Les communautés locales", "Les bénévoles et partenaires engagés à leurs côtés"],
     description:
       "L'innovation sociale est au cœur du projet d'INA-AFRICA depuis sa création. L'ONG s'appuie sur une approche participative, le développement de partenariats et la mobilisation du bénévolat pour construire, avec les communautés, des réponses durables à leurs besoins.",
     actions: [
@@ -263,7 +299,12 @@ export const AREAS: OfficialArea[] = [
 // Mêmes données que la migration 20261106110000_team_groups.
 // ---------------------------------------------------------------------------
 
-export type OfficialTeamMember = { fullName: string; position: string; bio: string; group: TeamGroup };
+export type OfficialTeamMember = {
+  fullName: string;
+  position: string;
+  bio: string;
+  group: TeamGroup;
+};
 
 export const TEAM: OfficialTeamMember[] = [
   {

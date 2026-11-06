@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Compass } from "lucide-react";
+import { ArrowRight, Check, Compass } from "lucide-react";
+
+import { LinkButton } from "@/components/ui/Button";
 
 import { Container } from "@/components/ui/Container";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
-import { DomainCard } from "@/components/site/DomainCard";
+import { AreaVisualFill } from "@/components/pages/areas/AreaVisual";
 import { PageCallToAction } from "@/components/pages/PageCallToAction";
 import { PageHeader } from "@/components/pages/PageHeader";
 import { excerpt } from "@/components/pages/page-helpers";
+import { AREAS } from "@/content/fr/ina-africa";
 import { PAGES } from "@/content/fr/pages";
+import { cn } from "@/lib/cn";
 import { ORG } from "@/content/fr/site";
 import { listActionAreas } from "@/server/data/site";
 
@@ -52,36 +56,59 @@ export default async function AreasPage() {
         }
       />
 
-      <Section aria-label={T.listLabel}>
+      <Section tone="ivory" aria-label={T.listLabel}>
         <Container>
           {areas.length === 0 ? (
             <EmptyState icon={Compass} headingLevel="h2" title={T.emptyTitle} description={T.emptyText} />
           ) : (
-            <ul className="grid gap-3 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-              {areas.map((area, index) => (
-                <li key={area.id} className="flex">
-                  <Reveal delay={(index % 4) * 70} className="flex w-full">
-                    <DomainCard area={area} headingLevel="h2" className="w-full" />
-                  </Reveal>
-                </li>
-              ))}
-              <li className="flex">
-                <Reveal delay={(areas.length % 4) * 70} className="flex w-full">
-                  <Link
-                    href="/projets"
-                    className="group flex w-full items-center justify-between gap-4 rounded-card bg-brand p-5 font-heading text-h4 text-white transition-colors duration-(--duration-base) hover:bg-brand-strong sm:min-h-56 sm:flex-col sm:items-start sm:justify-end sm:p-6"
-                  >
-                    <span>{T.allProjects}</span>
-                    <span
-                      aria-hidden="true"
-                      className="flex size-11 shrink-0 items-center justify-center rounded-full bg-gold text-brand transition-transform duration-(--duration-fast) motion-safe:group-hover:translate-x-1"
-                    >
-                      <ArrowRight className="size-5" />
-                    </span>
-                  </Link>
-                </Reveal>
-              </li>
-            </ul>
+            <ol className="space-y-8 lg:space-y-10">
+              {areas.map((area, index) => {
+                const official = AREAS.find((item) => item.slug === area.slug);
+                const reversed = index % 2 === 1;
+                return (
+                  <li key={area.id}>
+                    <Reveal>
+                      <article className="grid overflow-hidden rounded-panel bg-white shadow-card md:grid-cols-12">
+                        <div className={cn("relative aspect-[16/10] md:col-span-5 md:aspect-auto md:min-h-[20rem]", reversed && "md:order-2")}>
+                          <AreaVisualFill area={area} />
+                        </div>
+                        <div className="p-6 sm:p-8 md:col-span-7 lg:p-10">
+                          <p aria-hidden="true" className="font-heading text-h4 text-brand">
+                            {String(index + 1).padStart(2, "0")}
+                          </p>
+                          <h2 className="mt-1 text-h3">
+                            <Link href={`/domaines/${area.slug}`} className="hover:text-link-strong">
+                              {area.title}
+                            </Link>
+                          </h2>
+                          {area.summary && <p className="mt-3 text-body text-ink">{area.summary}</p>}
+                          {official && <p className="mt-3 text-small text-muted">{official.problem}</p>}
+                          {area.actions.length > 0 && (
+                            <ul className="mt-5 flex flex-wrap gap-2">
+                              {area.actions.slice(0, 4).map((action) => (
+                                <li key={action} className="inline-flex items-center gap-1.5 rounded-full bg-ivory px-3 py-1.5 text-small text-ink">
+                                  <Check aria-hidden="true" className="size-4 text-success" />
+                                  {action}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          <LinkButton
+                            href={`/domaines/${area.slug}`}
+                            variant="secondary"
+                            className="mt-6"
+                            iconRight={<ArrowRight aria-hidden="true" />}
+                          >
+                            Découvrir ce domaine
+                            <span className="sr-only"> : {area.title}</span>
+                          </LinkButton>
+                        </div>
+                      </article>
+                    </Reveal>
+                  </li>
+                );
+              })}
+            </ol>
           )}
         </Container>
       </Section>
