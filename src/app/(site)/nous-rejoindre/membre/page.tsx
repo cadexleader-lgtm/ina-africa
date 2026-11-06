@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { FormGuard } from "@/components/forms/FormGuard";
 import { FORM_IDS, FORM_KEYS } from "@/components/forms/ids";
 import { JoinLayout } from "@/components/forms/JoinLayout";
+import { MembershipIntro } from "@/components/forms/MembershipIntro";
 import { contactsFrom } from "@/components/forms/PageParts";
 import { MembershipForm } from "@/components/forms/RequestForms";
 import { FORM_TEXT } from "@/content/fr/forms";
@@ -21,7 +22,14 @@ export const metadata: Metadata = {
 export default async function MembershipPage() {
   const contacts = contactsFrom(await getSiteSettings());
   return (
-    <JoinLayout current="member" title={M.title} intro={M.intro} formTitle={M.formTitle} formNote={M.conditionsNote}>
+    <JoinLayout
+      current="member"
+      title={M.title}
+      intro={M.intro}
+      formTitle={M.formTitle}
+      formNote={M.conditionsNote}
+      before={<MembershipIntro />}
+    >
       <MembershipForm
         action={submitMembership}
         contacts={contacts}

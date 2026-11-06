@@ -139,8 +139,9 @@ export const FORM_TEXT = {
     metaTitle: "Devenir membre",
     metaDescription: "Demander à devenir membre de l'ONG INA-AFRICA.",
     title: "Devenir membre",
-    intro: "Rejoignez INA-AFRICA en tant que membre et prenez part à la vie de l'ONG.",
-    conditionsNote: "Les conditions d'adhésion vous seront présentées par l'équipe.",
+    intro:
+      "Rejoignez INA-AFRICA en tant que membre et prenez part à la vie de l'ONG et à ses initiatives en faveur des femmes, des jeunes, des enfants vulnérables et des personnes en situation de handicap.",
+    conditionsNote: "Chaque demande est étudiée par l'organisation, qui vous présentera les conditions d'adhésion.",
     formTitle: "Votre demande d'adhésion",
     motivation: "Pourquoi souhaitez-vous devenir membre ?",
     success: "Votre demande d'adhésion a bien été enregistrée. Elle sera lue par l'équipe d'INA-AFRICA.",

@@ -25,11 +25,13 @@ type JoinLayoutProps = {
   formTitle: string;
   /** Information complémentaire sous le titre du formulaire. */
   formNote?: ReactNode;
+  /** Sections de présentation affichées avant le formulaire (ex. adhésion). */
+  before?: ReactNode;
   children: ReactNode;
 };
 
 /** Mise en page commune des formulaires « Nous rejoindre » : formulaire + encadrés (étapes, confidentialité, autres parcours). */
-export function JoinLayout({ current, title, intro, formTitle, formNote, children }: JoinLayoutProps) {
+export function JoinLayout({ current, title, intro, formTitle, formNote, before, children }: JoinLayoutProps) {
   const J = FORM_TEXT.join;
   const others = JOIN_PATHS.filter((path) => path.key !== current);
   return (
@@ -40,6 +42,7 @@ export function JoinLayout({ current, title, intro, formTitle, formNote, childre
         intro={intro}
         breadcrumbs={[{ label: J.breadcrumb, href: "/nous-rejoindre" }, { label: title }]}
       />
+      {before}
       <Section labelledBy="rejoindre-formulaire">
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
@@ -49,9 +52,10 @@ export function JoinLayout({ current, title, intro, formTitle, formNote, childre
               </FormCard>
             </div>
             <div className="flex flex-col gap-6 lg:col-span-5">
-              <AsideCard title={J.stepsTitle}>
-                <StepList steps={J.steps} />
-                <p className="mt-6 flex gap-2 border-t border-line pt-5 text-small text-muted">
+              <AsideCard title={before ? "Vos données" : J.stepsTitle}>
+                {/* Avec une présentation avant le formulaire, la démarche y est déjà décrite. */}
+                {!before && <StepList steps={J.steps} />}
+                <p className={before ? "flex gap-2 text-small text-muted" : "mt-6 flex gap-2 border-t border-line pt-5 text-small text-muted"}>
                   <ShieldCheck aria-hidden="true" className="size-5 shrink-0 text-brand-2" />
                   <span>
                     {J.privacyNote}{" "}

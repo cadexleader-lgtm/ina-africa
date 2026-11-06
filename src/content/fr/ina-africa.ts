@@ -531,3 +531,12 @@ export const GOVERNANCE = [
     text: "La trésorière générale est responsable de la gestion des fonds et du patrimoine de l'organisation. Elle tient une comptabilité régulière, transparente et sincère.",
   },
 ] as const;
+
+/** Façons de participer pour un membre : les moyens d'action des statuts (art. 11), formulés pour le lecteur. */
+export const MEMBER_PARTICIPATION = [
+  "Participer aux sessions de formation et de sensibilisation",
+  "Contribuer aux actions d'aide humanitaire",
+  "Aider à développer des partenariats",
+  "Soutenir les campagnes de collecte de fonds",
+  "Mobiliser d'autres bénévoles autour des actions",
+];
