@@ -31,7 +31,7 @@ type PageHeaderProps = {
  */
 export function PageHeader({ id, breadcrumbs, label, title, intro, meta, aside, backdrop, className }: PageHeaderProps) {
   return (
-    <section aria-labelledby={id} className={cn("relative isolate overflow-hidden bg-ivory bg-motif-ivory", className)}>
+    <section aria-labelledby={id} className={cn("relative isolate overflow-hidden bg-ivory", className)}>
       {backdrop && <HeaderBackdrop image={backdrop} />}
       {/* Arcs décoratifs (aucun sens) : masqués sur téléphone. */}
       <span

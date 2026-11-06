@@ -30,7 +30,7 @@ type PageIntroProps = {
 /** En-tête des pages formulaires et dons : fil d'Ariane, libellé, titre, introduction. */
 export function PageIntro({ title, eyebrow, intro, breadcrumbs, id = "page-titre", backdrop, children }: PageIntroProps) {
   return (
-    <section aria-labelledby={id} className="relative isolate overflow-hidden border-b border-line bg-ivory bg-motif-ivory">
+    <section aria-labelledby={id} className="relative isolate overflow-hidden border-b border-line bg-ivory">
       {backdrop && <HeaderBackdrop image={backdrop} />}
       <Container className="py-section-sm">
         <Breadcrumbs items={[{ label: "Accueil", href: "/" }, ...breadcrumbs]} className="mb-8 md:mb-10" />

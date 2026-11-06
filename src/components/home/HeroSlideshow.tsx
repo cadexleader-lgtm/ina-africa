@@ -55,7 +55,7 @@ export function HeroSlideshow({
     <section
       aria-labelledby="accueil-titre"
       aria-roledescription="carrousel"
-      className="relative overflow-hidden bg-ivory bg-motif-ivory"
+      className="relative overflow-hidden bg-ivory"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocusCapture={() => setHovered(true)}

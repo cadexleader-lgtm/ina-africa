@@ -14,9 +14,9 @@ type SectionProps = ComponentPropsWithoutRef<"section"> & {
 };
 
 const TONES: Record<SectionTone, string> = {
-  white: "bg-white bg-motif-dots",
-  ivory: "bg-ivory bg-motif-ivory",
-  brand: "bg-brand bg-motif-brand on-dark",
+  white: "bg-white",
+  ivory: "bg-ivory",
+  brand: "bg-brand on-dark",
 };
 
 const SPACING = {

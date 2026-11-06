@@ -34,7 +34,7 @@ type PageIntroProps = {
 export function PageIntro({ breadcrumbs, label, title, intro, aside, children, titleId, size = "site", backdrop, className }: PageIntroProps) {
   const hasAside = Boolean(aside);
   return (
-    <header className={cn("relative isolate overflow-hidden border-b border-line bg-ivory bg-motif-ivory", className)}>
+    <header className={cn("relative isolate overflow-hidden border-b border-line bg-ivory", className)}>
       {backdrop && <HeaderBackdrop image={backdrop} />}
       <span
         aria-hidden="true"
