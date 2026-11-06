@@ -6,7 +6,7 @@ import { DashboardStatsView } from "@/components/admin/DashboardStatsView";
 import { Alert } from "@/components/ui/Alert";
 import { LinkButton } from "@/components/ui/Button";
 import { LoadingState } from "@/components/ui/LoadingState";
-import { requireAdminPage } from "@/server/auth/guard";
+import { requireAdminPage, roleAtLeast } from "@/server/auth/guard";
 import { ROLE_LABELS } from "@/server/auth/roles";
 
 import { readDashboardStats } from "./dashboard-stats";
@@ -20,7 +20,11 @@ async function Stats() {
   return <DashboardStatsView stats={await readDashboardStats()} />;
 }
 
-/** Tableau de bord MINIMAL (coquille) : nom, rôle et chiffres de admin_dashboard_stats(). */
+/**
+ * Tableau de bord : chiffres de admin_dashboard_stats() avec un lien vers
+ * chaque page concernée. La fonction ne renvoie dons, demandes et lettre
+ * d'information qu'aux administrateurs : un éditeur ne voit que les contenus.
+ */
 export default async function DashboardPage({ searchParams }: PageProps<"/admin">) {
   const session = await requireAdminPage("editor");
   const params = await searchParams;
@@ -32,6 +36,11 @@ export default async function DashboardPage({ searchParams }: PageProps<"/admin"
         <h1 className="text-h2">Tableau de bord</h1>
         <p className="mt-2 text-body text-muted">
           {session.fullName} · {ROLE_LABELS[session.role]}
+        </p>
+        <p className="mt-1 max-w-measure text-small text-muted">
+          {roleAtLeast(session.role, "admin")
+            ? "Ce qui attend une action, les dons reçus et l'activité du site, en un coup d'œil."
+            : "Vos articles et les contenus du site en un coup d'œil."}
         </p>
       </div>
 
@@ -56,7 +65,7 @@ export default async function DashboardPage({ searchParams }: PageProps<"/admin"
         </Alert>
       )}
 
-      <Suspense fallback={<LoadingState variant="cards" count={3} label="Chargement des chiffres…" />}>
+      <Suspense fallback={<LoadingState variant="list" count={4} label="Chargement des chiffres…" />}>
         <Stats />
       </Suspense>
     </div>
