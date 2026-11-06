@@ -2,6 +2,11 @@ import { z } from "zod";
 
 import { DEFAULT_MIN_DONATION, MAX_DONATION_AMOUNT, parseAmount } from "@/lib/money";
 
+// Ces schémas tournent aussi dans le navigateur : sans ce réglage, Zod teste
+// `new Function()` au démarrage, ce que la Content-Security-Policy (sans
+// 'unsafe-eval') refuse. Zod reste aussi rapide pour des formulaires de cette taille.
+z.config({ jitless: true });
+
 /**
  * Validation des formulaires PUBLICS (contact, nous rejoindre, newsletter,
  * don en ligne). Partagée navigateur / serveur, mais la seule validation qui
