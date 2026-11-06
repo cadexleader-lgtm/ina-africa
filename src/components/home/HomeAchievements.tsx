@@ -4,7 +4,7 @@ import { ArrowRight, Check, FileCheck2, MapPin, Users } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Reveal } from "@/components/ui/Reveal";
-import { Section } from "@/components/ui/Section";
+import { Section, type SectionTone } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ACHIEVEMENTS, AREAS, EXPERIENCE, WOMEN_PROGRAM } from "@/content/fr/ina-africa";
 import { cn } from "@/lib/cn";
@@ -16,16 +16,24 @@ import type { SiteSettings } from "@/lib/types/content";
  * et photo modifiables dans l'administration (paramètres « impact »).
  * Aucune date, aucun chiffre, aucun partenaire : le document n'en donne pas.
  */
-export function HomeAchievements({ settings }: { settings: SiteSettings }) {
+export function HomeAchievements({
+  settings,
+  tone = "ivory",
+  id = "accueil-terrain",
+}: {
+  settings: SiteSettings;
+  tone?: SectionTone;
+  id?: string;
+}) {
   const title = settings.impactTitle ?? EXPERIENCE.title;
   const intro = settings.impactText ?? EXPERIENCE.intro;
   const photo = settings.impactImage;
 
   return (
-    <Section tone="ivory" labelledBy="accueil-terrain">
+    <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
       <Container>
         <Reveal>
-          <SectionHeading id="accueil-terrain" label="Nos actions sur le terrain" title={title} intro={intro} />
+          <SectionHeading id={`${id}-titre`} label="Nos actions sur le terrain" title={title} intro={intro} />
         </Reveal>
 
         <ul className="grid gap-5 md:grid-cols-3">

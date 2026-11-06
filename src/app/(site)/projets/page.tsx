@@ -2,11 +2,15 @@ import type { Metadata } from "next";
 
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { HomeAchievements } from "@/components/home/HomeAchievements";
+import { OtherAreas } from "@/components/pages/areas/OtherAreas";
 import { PageCallToAction } from "@/components/pages/PageCallToAction";
 import { PageHeader } from "@/components/pages/PageHeader";
 import { ProjectResults } from "@/components/pages/projects/ProjectResults";
 import { PAGES } from "@/content/fr/pages";
 import { ORG } from "@/content/fr/site";
+import { getSiteSettings, listActionAreas } from "@/server/data/site";
 
 const T = PAGES.projects;
 
@@ -35,11 +39,12 @@ export const metadata: Metadata = {
 export const instant = false;
 
 /**
- * Liste des projets publiés : filtres par domaine (?domaine=) et par état
- * (?statut=planned|ongoing|completed), pagination (?page=).
+ * Trois rubriques distinctes : les projets publiés (filtres par domaine,
+ * état, pagination), les actions documentées (contenu officiel, sans photo
+ * présentée comme preuve) et les domaines d'intervention.
  */
 export default async function ProjectsPage({ searchParams }: PageProps<"/projets">) {
-  const params = await searchParams;
+  const [params, settings, areas] = await Promise.all([searchParams, getSiteSettings(), listActionAreas()]);
   return (
     <>
       <PageHeader
@@ -49,12 +54,25 @@ export default async function ProjectsPage({ searchParams }: PageProps<"/projets
         title={T.title}
         intro={<p>{T.intro}</p>}
       />
-      <Section spacing="compact">
+      <Section labelledBy="projets-publies">
         <Container>
+          <SectionHeading id="projets-publies" label="Projets" title="Projets publiés" />
           <ProjectResults searchParams={params} />
         </Container>
       </Section>
-      <PageCallToAction id="projets-soutenir" explore="areas" flushTop />
+      <HomeAchievements settings={settings} tone="ivory" id="actions-documentees" />
+      <Section labelledBy="projets-domaines">
+        <Container>
+          <SectionHeading
+            id="projets-domaines"
+            label="Nos domaines d'intervention"
+            title="Les sept domaines de l'ONG"
+            intro="Chaque projet et chaque action s'inscrit dans l'un des domaines d'intervention d'INA-AFRICA."
+          />
+          <OtherAreas areas={areas} />
+        </Container>
+      </Section>
+      <PageCallToAction id="projets-soutenir" explore="none" flushTop />
     </>
   );
 }

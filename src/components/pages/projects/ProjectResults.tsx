@@ -1,4 +1,4 @@
-import { ArrowRight, FolderOpen, SearchX } from "lucide-react";
+import { FolderOpen, SearchX } from "lucide-react";
 
 import { LinkButton } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -27,17 +27,15 @@ export async function ProjectResults({ searchParams }: { searchParams: SearchPar
 
   if (nothingPublished) {
     return (
-      <EmptyState
-        icon={FolderOpen}
-        headingLevel="h2"
-        title={T.emptyTitle}
-        description={T.emptyText}
-        action={
-          <LinkButton href="/domaines" variant="secondary" iconRight={<ArrowRight aria-hidden="true" />}>
-            {T.emptyLink}
-          </LinkButton>
-        }
-      />
+      <div className="flex gap-4 rounded-card border border-line bg-white p-5 sm:p-6">
+        <span aria-hidden="true" className="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-2">
+          <FolderOpen className="size-5" strokeWidth={1.75} />
+        </span>
+        <p className="text-body text-ink">
+          Les projets d&apos;INA-AFRICA seront présentés ici dès leur publication par l&apos;équipe. En attendant,
+          découvrez ci-dessous les actions déjà documentées et les domaines d&apos;intervention de l&apos;ONG.
+        </p>
+      </div>
     );
   }
 

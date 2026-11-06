@@ -124,17 +124,23 @@ export function NewsListView({ state }: { state: NewsListState }) {
           }
         />
       ) : view.empty ? (
-        <EmptyState
-          icon={Newspaper}
-          headingLevel="h2"
-          title={NEWS_T.list.emptyTitle}
-          description={NEWS_T.list.emptyText}
-          action={
-            <LinkButton href="/a-propos" variant="secondary" iconRight={<ArrowRight aria-hidden="true" />}>
-              {NEWS_T.list.emptyAction}
-            </LinkButton>
-          }
-        />
+        <div className="flex flex-col gap-5 rounded-card border border-line bg-white p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex gap-4">
+            <span aria-hidden="true" className="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-2">
+              <Newspaper className="size-5" strokeWidth={1.75} />
+            </span>
+            <div>
+              <h2 className="text-h4">Les premières actualités arrivent bientôt</h2>
+              <p className="mt-1 max-w-measure text-small text-muted">
+                Inscrivez-vous à la lettre d&apos;information pour recevoir les nouvelles d&apos;INA-AFRICA dès leur
+                publication. En attendant, découvrez ci-dessous les actions déjà menées.
+              </p>
+            </div>
+          </div>
+          <LinkButton href="/newsletter" className="shrink-0" iconRight={<ArrowRight aria-hidden="true" />}>
+            S&apos;inscrire à la lettre
+          </LinkButton>
+        </div>
       ) : (
         <>
           {view.featured && <FeaturedArticle article={view.featured} />}

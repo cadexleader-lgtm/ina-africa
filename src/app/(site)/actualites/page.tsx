@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
+import { HomeAchievements } from "@/components/home/HomeAchievements";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { NewsCategoryNav } from "@/components/news/NewsCategoryNav";
 import { NewsListView, describeNewsList, type NewsListState } from "@/components/news/NewsListView";
@@ -13,6 +14,7 @@ import type { SearchParamsRecord } from "@/lib/pagination";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { breadcrumbJsonLd } from "@/lib/seo/structured-data";
 import { listArticleCategories, listArticles, sanitizeSearch } from "@/server/data/articles";
+import { getSiteSettings } from "@/server/data/site";
 
 /**
  * /actualites : article le plus récent mis en avant, puis grille ; filtres par
@@ -67,8 +69,10 @@ export async function generateMetadata({ searchParams }: PageProps<"/actualites"
 
 export default async function NewsPage({ searchParams }: PageProps<"/actualites">) {
   const state = await loadNewsList(searchParams);
-  const categories = await listArticleCategories();
+  const [categories, settings] = await Promise.all([listArticleCategories(), getSiteSettings()]);
   const active = state.category?.slug;
+  // Aucun article publié (ni recherche ni catégorie) : les actions documentées remplissent la page.
+  const nothingPublished = describeNewsList(state).empty && !state.search && !state.category && !state.unknownCategory;
 
   return (
     <>
@@ -93,6 +97,7 @@ export default async function NewsPage({ searchParams }: PageProps<"/actualites"
           <NewsListView state={state} />
         </Container>
       </Section>
+      {nothingPublished && <HomeAchievements settings={settings} tone="ivory" id="actions-documentees" />}
     </>
   );
 }
