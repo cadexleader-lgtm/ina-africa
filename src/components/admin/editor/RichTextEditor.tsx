@@ -1,9 +1,9 @@
 "use client";
 
-import { EditorContent, useEditor, useEditorState, type Editor } from "@tiptap/react";
+import { EditorContent, useEditor, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { NodeSelection } from "@tiptap/pm/state";
-import { useId, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import {
   Bold,
   Film,
@@ -115,6 +115,19 @@ function readToolbarState(editor: Editor): ToolbarState {
 
 type Dialog = "link" | "image" | "video" | null;
 
+/** Attributs de la zone de texte : nommée par le libellé, reliée à l'aide et à l'erreur. */
+function editorAttributes(params: { id: string; labelId: string; describedBy?: string; invalid?: boolean; helpId: string }) {
+  return {
+    id: params.id,
+    role: "textbox",
+    "aria-multiline": "true",
+    "aria-labelledby": params.labelId,
+    "aria-describedby": [params.describedBy, params.helpId].filter(Boolean).join(" "),
+    ...(params.invalid ? { "aria-invalid": "true" } : {}),
+    class: CONTENT_CLASSES,
+  };
+}
+
 export type RichTextEditorProps = {
   id: string;
   /** Identifiant du libellé visible (aria-labelledby). */
@@ -140,25 +153,23 @@ export default function RichTextEditor({ id, labelId, describedBy, invalid, valu
 
   const editor = useEditor({
     immediatelyRender: false,
+    // L'état des boutons (gras actif, annuler possible…) suit chaque modification.
+    shouldRerenderOnTransaction: true,
     extensions: [StarterKit.configure(starterKitOptions()), MediaImage, VideoEmbedNode],
     content: value ?? { type: "doc", content: [] },
-    editorProps: {
-      attributes: {
-        id,
-        role: "textbox",
-        "aria-multiline": "true",
-        "aria-labelledby": labelId,
-        ...(describedBy ? { "aria-describedby": `${describedBy} ${toolbarId}-aide` } : { "aria-describedby": `${toolbarId}-aide` }),
-        ...(invalid ? { "aria-invalid": "true" } : {}),
-        class: CONTENT_CLASSES,
-      },
-    },
+    editorProps: { attributes: editorAttributes({ id, labelId, describedBy, invalid, helpId: `${toolbarId}-aide` }) },
     onUpdate: ({ editor: current }) => onChange(toClosedDoc(current.getJSON())),
   });
 
-  const state = useEditorState({ editor, selector: ({ editor: current }) => (current ? readToolbarState(current) : null) });
+  // Erreur affichée après coup (ex. au premier enregistrement) : attributs mis à jour.
+  useEffect(() => {
+    if (!editor || editor.isDestroyed) return;
+    editor.setOptions({
+      editorProps: { attributes: editorAttributes({ id, labelId, describedBy, invalid, helpId: `${toolbarId}-aide` }) },
+    });
+  }, [editor, id, labelId, describedBy, invalid, toolbarId]);
 
-  if (!editor || !state) {
+  if (!editor) {
     return <EditorPlaceholder />;
   }
 
@@ -223,6 +234,8 @@ export default function RichTextEditor({ id, labelId, describedBy, invalid, valu
     setFocusIndex(next);
     buttonsRef.current[next]?.focus();
   }
+
+  const state = readToolbarState(editor);
 
   const closeDialog = () => {
     setDialog(null);

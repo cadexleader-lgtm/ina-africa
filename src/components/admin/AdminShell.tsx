@@ -51,11 +51,13 @@ export function AdminShell({ user, nav, children }: { user: ReactNode; nav?: Rea
           {user}
         </div>
       </header>
-      <div className="mx-auto box-content flex w-full max-w-site flex-1 flex-col gap-6 px-gutter py-6 lg:flex-row lg:gap-10 lg:py-10">
-        {nav ?? <DefaultNav />}
-        <main id="contenu" tabIndex={-1} className="min-w-0 flex-1 focus:outline-none">
-          {children}
-        </main>
+      <div className="flex-1">
+        <div className="mx-auto box-content flex max-w-site flex-col gap-6 px-gutter py-6 lg:flex-row lg:gap-10 lg:py-10">
+          {nav ?? <DefaultNav />}
+          <main id="contenu" tabIndex={-1} className="min-w-0 flex-1 focus:outline-none">
+            {children}
+          </main>
+        </div>
       </div>
     </div>
   );
