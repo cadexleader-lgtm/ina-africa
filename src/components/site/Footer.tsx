@@ -118,6 +118,14 @@ export async function Footer({ newsletter }: FooterProps) {
             <Logo inverse size="lg" />
             {settings.heroText && <p className="mt-6 max-w-sm text-body text-muted-inverse">{settings.heroText}</p>}
 
+            {!settings.address && !settings.contactEmail && !settings.contactPhone && !settings.whatsappNumber && (
+              <p className="mt-6">
+                <Link href="/contact" className={LINK}>
+                  Écrire à INA-AFRICA
+                </Link>
+                <span className="text-muted-inverse"> par le formulaire de contact.</span>
+              </p>
+            )}
             <FooterContacts
               address={settings.address}
               email={settings.contactEmail}

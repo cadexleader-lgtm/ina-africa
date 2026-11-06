@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { Heart, Menu, X } from "lucide-react";
@@ -8,7 +9,7 @@ import { LinkButton } from "@/components/ui/Button";
 import { useModalDialog } from "@/components/ui/Modal";
 import { Logo } from "@/components/site/Logo";
 import { NavLinks } from "@/components/site/NavLinks";
-import { T, type NavItem } from "@/content/fr/site";
+import { ENGAGE_NAV, T, type NavItem } from "@/content/fr/site";
 
 type MobileMenuProps = {
   items: NavItem[];
@@ -82,6 +83,21 @@ export function MobileMenu({ items, donate, pathname = null }: MobileMenuProps) 
           </div>
           <nav aria-label={T.a11y.mainNav} className="min-h-0 flex-1 overflow-y-auto px-gutter py-2">
             <NavLinks items={items} pathname={pathname} layout="panel" onNavigate={close} />
+            <p className="mt-6 mb-2 text-small font-semibold text-muted">Agir avec nous</p>
+            <ul className="grid gap-2 pb-4">
+              {ENGAGE_NAV.filter((item) => item.href !== donate.href).map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={close}
+                    className="block rounded-card border border-line px-4 py-3 transition-colors duration-(--duration-fast) hover:bg-ivory"
+                  >
+                    <span className="block font-semibold text-brand">{item.label}</span>
+                    <span className="block text-small text-muted">{item.description}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
           <div className="shrink-0 border-t border-line bg-ivory px-gutter py-5">
             <LinkButton href={donate.href} variant="donate" size="lg" fullWidth onClick={close} iconLeft={<Heart aria-hidden="true" />}>

@@ -27,6 +27,23 @@ export const MAIN_NAV: NavItem[] = [
 
 export const DONATE_LINK: NavItem = { href: "/faire-un-don", label: "Faire un don" };
 
+/** Navigation de l'en-tête sur ordinateur (le logo mène à l'accueil). */
+export const DESKTOP_NAV: NavItem[] = [
+  { href: "/a-propos", label: "À propos" },
+  { href: "/domaines", label: "Domaines d'action" },
+  { href: "/projets", label: "Projets" },
+  { href: "/actualites", label: "Actualités" },
+  { href: "/contact", label: "Contact" },
+];
+
+/** Menu « Agir avec nous » de l'en-tête et du menu mobile. */
+export const ENGAGE_NAV: (NavItem & { description: string })[] = [
+  { href: "/nous-rejoindre/membre", label: "Devenir membre", description: "Participer à la vie de l'organisation" },
+  { href: "/nous-rejoindre/benevole", label: "Devenir bénévole", description: "Donner de son temps et de ses compétences" },
+  { href: "/nous-rejoindre/partenaire", label: "Devenir partenaire", description: "Soutenir et construire des collaborations" },
+  { href: "/faire-un-don", label: "Faire un don", description: "Financer les actions sur le terrain" },
+];
+
 /** Liens « Nous rejoindre » (appel à l'action, pied de page). */
 export const JOIN_NAV: NavItem[] = [
   { href: "/nous-rejoindre/benevole", label: "Devenir bénévole" },
