@@ -100,7 +100,12 @@ export default async function TrackingPage({ searchParams }: PageProps<"/faire-u
               {pending && (
                 <>
                   <AutoRefresh />
-                  <LinkButton href={`/faire-un-don/suivi?tx=${encodeURIComponent(String(tx))}`} variant="secondary">
+                  <LinkButton
+                    href={`/faire-un-don/suivi?tx=${encodeURIComponent(String(tx))}${
+                      typeof kkiapayId === "string" ? `&transaction_id=${encodeURIComponent(kkiapayId)}` : ""
+                    }`}
+                    variant="secondary"
+                  >
                     {D.refresh}
                   </LinkButton>
                 </>

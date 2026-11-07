@@ -73,11 +73,16 @@ export function KkiapayCheckout({ checkout, editHref }: { checkout: Checkout; ed
   const verify = useCallback(
     async (transactionId: string) => {
       setPhase({ kind: "checking" });
-      let result: PaymentCheckResult;
-      try {
-        result = await checkOnlinePayment(checkout.reference, transactionId);
-      } catch {
-        result = { status: "error", message: C.checkFailed };
+      let result: PaymentCheckResult = { status: "pending" };
+      // KKiaPay met parfois quelques secondes à confirmer : jusqu'à 4 essais espacés.
+      for (let attempt = 0; attempt < 4; attempt++) {
+        if (attempt > 0) await new Promise((resolve) => window.setTimeout(resolve, 3_000));
+        try {
+          result = await checkOnlinePayment(checkout.reference, transactionId);
+        } catch {
+          result = { status: "error", message: C.checkFailed };
+        }
+        if (result.status !== "pending" || result.trackingUrl) break;
       }
       if ((result.status === "succeeded" || result.status === "pending") && result.trackingUrl) {
         doneRef.current = true;

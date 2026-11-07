@@ -226,7 +226,8 @@ export async function checkOnlinePayment(reference: unknown, transactionId: unkn
   const backend = getFormsBackend();
   if (!backend) return { status: "error", message: T.unavailable };
 
-  const trackingUrl = `/faire-un-don/suivi?tx=${encodeURIComponent(reference)}`;
+  // L'identifiant KKiaPay accompagne la page de suivi : chaque actualisation revérifie le paiement.
+  const trackingUrl = `/faire-un-don/suivi?tx=${encodeURIComponent(reference)}&transaction_id=${encodeURIComponent(transactionId)}`;
   const outcome = await reconcileKkiapayPayment(backend, config, reference, transactionId);
   switch (outcome) {
     case "succeeded":
