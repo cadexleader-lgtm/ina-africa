@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useSyncExternalStore, type FormEvent, type ReactNode, type RefObject } from "react";
 import { ArrowRight } from "lucide-react";
 
 import { Checkbox, FieldError } from "@/components/ui/FormField";
@@ -36,6 +36,20 @@ const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign"] as const;
 const noSubscription = () => () => {};
 const readSearch = () => window.location.search;
 const readNoSearch = () => "";
+
+/**
+ * Clé anti double-soumission : créée dans le navigateur (jamais pendant le
+ * prérendu de la page, qui la figerait pour tous les visiteurs), puis gardée
+ * tant que la page est ouverte, même quand le formulaire est réaffiché.
+ */
+function IdempotencyKeyField({ keyRef }: { keyRef: RefObject<string | null> }) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (!keyRef.current) keyRef.current = crypto.randomUUID();
+    if (inputRef.current) inputRef.current.value = keyRef.current;
+  }, [keyRef]);
+  return <input ref={inputRef} type="hidden" name="idempotencyKey" defaultValue="" />;
+}
 
 function AmountField({ field, suggested, minAmount }: { field: FieldHelpers; suggested: number[]; minAmount: number }) {
   const O = DONATE_TEXT.online;
@@ -104,8 +118,8 @@ export function DonationForm({
   campaign,
 }: DonationFormProps) {
   const O = DONATE_TEXT.online;
-  // Clé anti double-soumission : la même tant que la page est ouverte.
-  const [idempotencyKey] = useState(() => crypto.randomUUID());
+  // Clé anti double-soumission : la même tant que la page est ouverte (voir IdempotencyKeyField).
+  const idempotencyKeyRef = useRef<string | null>(null);
   // Provenance (liens partagés avec ?utm_source=…) : lue dans le navigateur, revalidée par le serveur.
   const search = useSyncExternalStore(noSubscription, readSearch, readNoSearch);
   const utm = useMemo(() => {
@@ -132,7 +146,7 @@ export function DonationForm({
       security={
         <>
           {security}
-          <input type="hidden" name="idempotencyKey" value={idempotencyKey} />
+          <IdempotencyKeyField keyRef={idempotencyKeyRef} />
           {campaign && <input type="hidden" name="campaign" value={campaign.slug} />}
           {UTM_KEYS.map((key) => (utm[key] ? <input key={key} type="hidden" name={key} value={utm[key]} /> : null))}
         </>
