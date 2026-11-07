@@ -62,7 +62,7 @@ export default async function ProjectsPage({ searchParams }: PageProps<"/projets
           <ProjectResults searchParams={params} />
         </Container>
       </Section>
-      <HomeAchievements settings={settings} tone="ivory" id="actions-documentees" />
+      <HomeAchievements settings={settings} tone="ivory" id="actions-documentees" groupByArea />
       <Section labelledBy="projets-domaines">
         <Container>
           <SectionHeading
