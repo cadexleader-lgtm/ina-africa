@@ -98,15 +98,19 @@ export function Panel({
   );
 }
 
-/** Liste « libellé : valeur » ; les valeurs vides sont ignorées. */
+/**
+ * Liste « libellé : valeur » ; les valeurs vides sont ignorées. Libellé
+ * au-dessus de la valeur : lisible même dans une colonne étroite (encadré
+ * latéral), une adresse email longue passe à la ligne sans couper chaque lettre.
+ */
 export function DetailList({ items }: { items: { label: string; value: ReactNode }[] }) {
   const shown = items.filter((item) => item.value !== null && item.value !== undefined && item.value !== "");
   return (
-    <dl className="grid gap-x-6 gap-y-3 sm:grid-cols-[minmax(10rem,auto)_1fr]">
+    <dl className="flex flex-col gap-3">
       {shown.map((item) => (
-        <div key={item.label} className="contents">
+        <div key={item.label} className="min-w-0">
           <dt className="text-small font-semibold text-muted">{item.label}</dt>
-          <dd className="min-w-0 text-body break-words text-ink">{item.value}</dd>
+          <dd className="mt-0.5 min-w-0 text-body text-ink [overflow-wrap:anywhere]">{item.value}</dd>
         </div>
       ))}
     </dl>
