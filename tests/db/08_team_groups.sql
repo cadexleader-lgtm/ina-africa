@@ -9,7 +9,7 @@ select tests.fails($$ update public.team_members set team_group = 'bureau' where
   'Une instance inconnue est refusée', '23514');
 select tests.ok((select bio like '%(convocations, procès-verbaux, rapports)%' from public.team_members where full_name = 'TOFFA Clotilde Kinvemi'),
   'La fonction de la secrétaire générale est mise à jour');
-select tests.ok((select contact_email = 'inaafrica1@gmail.com' and whatsapp_number = '+2290194340455'
+select tests.ok((select contact_email = 'onginaafrica@gmail.com' and whatsapp_number = '+2290194340455'
   and donation_min_amount = 2000 and donation_suggested_amounts = array[2000, 5000, 10000]::bigint[]
   and jsonb_array_length(offline_donation_instructions) = 2 and social_links ? 'tiktok'
   from public.site_settings where id = 1), 'Coordonnées et dons directs renseignés');

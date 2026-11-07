@@ -630,7 +630,7 @@ export const HERO_SLIDES = [
 // ---------------------------------------------------------------------------
 
 export const CONTACTS = {
-  email: "inaafrica1@gmail.com",
+  email: "onginaafrica@gmail.com",
   phone: "+229 01 94 34 04 55",
   /** Format international sans espace (lien wa.me). */
   whatsapp: "+2290194340455",
