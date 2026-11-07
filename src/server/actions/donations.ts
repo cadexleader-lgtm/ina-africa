@@ -1,5 +1,7 @@
 "use server";
 
+import { randomUUID } from "node:crypto";
+
 import { FORM_KEYS } from "@/components/forms/ids";
 import { DONATE_TEXT, FORM_TEXT } from "@/content/fr/forms";
 import { TEST_REFERENCE_PREFIX, widgetPhone, type KkiapayCheckout, type PaymentCheckResult } from "@/lib/payments/checkout";
@@ -60,6 +62,9 @@ const FIELDS = [
   "utm_campaign",
 ] as const;
 
+/** Champs que le donateur voit (les autres sont techniques et cachés). */
+const VISIBLE_FIELDS = new Set(["amount", "donorName", "email", "phone", "donorMessage", "consent", "isAnonymous"]);
+
 function utm(value: string): string | null {
   return cleanLine(value).slice(0, 100) || null;
 }
@@ -93,13 +98,22 @@ export async function startOnlineDonation(_previous: FormState, formData: FormDa
   if (!config) return { status: "unavailable", message: T.unavailable, respondedAt: Date.now() };
 
   const raw = readFields(formData, FIELDS);
+  // Clé anti double-soumission absente (navigateur ancien, page restée ouverte…) :
+  // le serveur en crée une plutôt que de refuser le don.
+  if (!raw.idempotencyKey) raw.idempotencyKey = randomUUID();
   const values = echoValues(raw, ["isAnonymous", "consent"]);
   const settings = await getSiteSettings();
   const parsed = validate(donationSchema(settings.donationMinAmount), {
     ...raw,
     amount: pickDonationAmount(raw.amountChoice, raw.customAmount),
   });
-  if (!parsed.ok) return invalidState(parsed.fieldErrors, values);
+  if (!parsed.ok) {
+    // Erreur sur un champ visible : le donateur la voit sous le champ.
+    if (Object.keys(parsed.fieldErrors).some((name) => VISIBLE_FIELDS.has(name))) return invalidState(parsed.fieldErrors, values);
+    // Champ technique (caché) : jamais de « corrigez le champ indiqué » sans champ à corriger.
+    console.warn("[ina-africa] don : champ technique invalide", Object.keys(parsed.fieldErrors).join(", "));
+    return errorState(FORM_TEXT.errors.refreshed, values);
+  }
   if (isHoneypotFilled(formData)) return errorState(FORM_TEXT.errors.rejected, values);
 
   const backend = getFormsBackend();

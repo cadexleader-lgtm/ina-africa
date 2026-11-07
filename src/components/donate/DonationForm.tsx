@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode, type RefObject } from "react";
+import { useCallback, useMemo, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
 import { Heart, ShieldCheck } from "lucide-react";
 
-import { Checkbox, FieldError } from "@/components/ui/FormField";
+import { Checkbox, FieldError, Input } from "@/components/ui/FormField";
 import type { OrgContacts } from "@/components/forms/ContactAlternatives";
 import { LineField, TextAreaField } from "@/components/forms/fields";
 import { FORM_IDS } from "@/components/forms/ids";
@@ -38,33 +38,44 @@ const readSearch = () => window.location.search;
 const readNoSearch = () => "";
 
 /**
- * Clé anti double-soumission : créée dans le navigateur (jamais pendant le
- * prérendu de la page, qui la figerait pour tous les visiteurs), puis gardée
- * tant que la page est ouverte, même quand le formulaire est réaffiché.
+ * Montant : des raccourcis (montants suggérés) et UNE case « Montant de votre
+ * don ». Toucher un raccourci écrit son montant dans la case ; taper un
+ * montant sélectionne « Autre montant ». Sans JavaScript, les raccourcis
+ * restent de simples boutons radio (le serveur lit l'un ou l'autre).
  */
-function IdempotencyKeyField({ keyRef }: { keyRef: RefObject<string | null> }) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (!keyRef.current) keyRef.current = crypto.randomUUID();
-    if (inputRef.current) inputRef.current.value = keyRef.current;
-  }, [keyRef]);
-  return <input ref={inputRef} type="hidden" name="idempotencyKey" defaultValue="" />;
-}
-
 function AmountField({ field, suggested, minAmount }: { field: FieldHelpers; suggested: number[]; minAmount: number }) {
   const O = DONATE_TEXT.online;
   const error = field.error("amount");
   const errorId = `${field.id("amount")}-erreur`;
+  const inputId = field.id("customAmount");
   const previousChoice = field.value("amountChoice");
   const initialChoice = previousChoice ?? (suggested.length > 0 ? String(suggested[0]) : "autre");
+  const initialAmount = field.value("customAmount") ?? (initialChoice !== "autre" ? initialChoice : "");
   const option =
     "flex min-h-12 cursor-pointer items-center justify-center rounded-field border border-line-strong bg-white px-4 font-semibold text-brand tabular-nums transition-colors " +
     "hover:border-brand has-[:checked]:border-brand has-[:checked]:bg-brand has-[:checked]:text-white " +
     "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-(--focus-ring-color)";
 
-  // Saisir un montant libre sélectionne « Autre montant » (sans JavaScript : le visiteur le coche lui-même).
+  // Raccourci choisi : son montant apparaît dans la case.
+  function fillAmount(event: FormEvent<HTMLDivElement>) {
+    const radio = event.target as HTMLInputElement;
+    if (radio.name !== "amountChoice" || !radio.checked) return;
+    const input = event.currentTarget.closest("fieldset")?.querySelector<HTMLInputElement>(`#${CSS.escape(inputId)}`);
+    if (!input) return;
+    if (radio.value === "autre") {
+      input.value = "";
+      input.focus();
+    } else {
+      input.value = radio.value;
+    }
+  }
+
+  // Montant tapé : « Autre montant » est sélectionné.
   function selectOther(event: FormEvent<HTMLDivElement>) {
-    const radio = event.currentTarget.closest("fieldset")?.querySelector<HTMLInputElement>('input[value="autre"]');
+    const fieldset = event.currentTarget.closest("fieldset");
+    const typed = parseAmount((event.target as HTMLInputElement).value);
+    const match = typed ? fieldset?.querySelector<HTMLInputElement>(`input[name="amountChoice"][value="${typed}"]`) : null;
+    const radio = match ?? fieldset?.querySelector<HTMLInputElement>('input[name="amountChoice"][value="autre"]');
     if (radio) radio.checked = true;
   }
 
@@ -83,7 +94,7 @@ function AmountField({ field, suggested, minAmount }: { field: FieldHelpers; sug
           *
         </span>
       </legend>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4" onChange={fillAmount}>
         {[...suggested.map(String), "autre"].map((value) => (
           <label key={value} className={option}>
             <input type="radio" name="amountChoice" value={value} defaultChecked={initialChoice === value} className="sr-only" />
@@ -91,16 +102,28 @@ function AmountField({ field, suggested, minAmount }: { field: FieldHelpers; sug
           </label>
         ))}
       </div>
-      <div onInput={selectOther}>
-        <LineField
-          field={field}
-          name="customAmount"
-          label={O.customAmount}
-          hint={O.customAmountHint(formatFcfa(minAmount))}
-          maxLength={15}
-          inputMode="text"
-          autoComplete="off"
-        />
+      <div onInput={selectOther} className="flex flex-col gap-2">
+        <label htmlFor={inputId} className="text-small font-semibold text-brand">
+          {O.customAmount}
+        </label>
+        <p id={`${inputId}-aide`} className="text-small text-muted">
+          {O.customAmountHint(formatFcfa(minAmount))}
+        </p>
+        <div className="relative">
+          <Input
+            id={inputId}
+            name="customAmount"
+            inputMode="numeric"
+            autoComplete="off"
+            maxLength={15}
+            defaultValue={initialAmount}
+            aria-describedby={`${inputId}-aide`}
+            className="font-semibold tabular-nums"
+          />
+          <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-4 flex items-center font-semibold text-muted">
+            FCFA
+          </span>
+        </div>
       </div>
       {error && <FieldError id={errorId}>{error}</FieldError>}
     </fieldset>
@@ -118,8 +141,12 @@ export function DonationForm({
   campaign,
 }: DonationFormProps) {
   const O = DONATE_TEXT.online;
-  // Clé anti double-soumission : la même tant que la page est ouverte (voir IdempotencyKeyField).
-  const idempotencyKeyRef = useRef<string | null>(null);
+  // Clé anti double-soumission, créée dans le navigateur (jamais au prérendu,
+  // qui la figerait pour tous) et gardée tant que le formulaire est affiché.
+  // Le serveur en crée une si elle manque : jamais d'erreur pour le donateur.
+  const keyRef = useRef<string | null>(null);
+  const readKey = useCallback(() => (keyRef.current ??= crypto.randomUUID()), []);
+  const idempotencyKey = useSyncExternalStore(noSubscription, readKey, readNoSearch);
   // Montant choisi, repris sur le bouton (« Je donne 5 000 FCFA ») ; le serveur revalide tout.
   const [amount, setAmount] = useState<number | null>(suggestedAmounts[0] ?? null);
   function trackAmount(event: FormEvent<HTMLDivElement>) {
@@ -156,7 +183,7 @@ export function DonationForm({
       security={
         <>
           {security}
-          <IdempotencyKeyField keyRef={idempotencyKeyRef} />
+          <input type="hidden" name="idempotencyKey" value={idempotencyKey} />
           {campaign && <input type="hidden" name="campaign" value={campaign.slug} />}
           {UTM_KEYS.map((key) => (utm[key] ? <input key={key} type="hidden" name={key} value={utm[key]} /> : null))}
         </>
