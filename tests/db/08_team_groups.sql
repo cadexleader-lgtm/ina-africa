@@ -13,6 +13,11 @@ select tests.ok((select contact_email = 'onginaafrica@gmail.com' and whatsapp_nu
   and donation_min_amount = 100 and donation_suggested_amounts = array[2000, 5000, 10000]::bigint[]
   and jsonb_array_length(offline_donation_instructions) = 2 and social_links ? 'tiktok'
   from public.site_settings where id = 1), 'Coordonnées et dons directs renseignés');
+select tests.ok((select offline_donation_instructions @> '[{"label": "Moov Money", "number": "01 94 34 04 55"}]'::jsonb
+  and not offline_donation_instructions @> '[{"number": "01 94 84 04 55"}]'::jsonb
+  from public.site_settings where id = 1), 'Numéro Moov Money corrigé (01 94 34 04 55)');
+select tests.ok((select coalesce(about_history, '') !~ '[DdQq]u?[''’]INA' from public.site_settings where id = 1),
+  'Pas d''élision devant INA-AFRICA dans l''historique');
 select tests.ok((select count(*) = 7 from public.partners where is_active), '7 partenaires et sponsors publiés');
 
 set local role anon;

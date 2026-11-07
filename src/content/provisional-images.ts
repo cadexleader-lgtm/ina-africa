@@ -7,7 +7,7 @@
  *    encore fourni de photo (accueil, domaines, sections générales) ;
  *  - toujours accompagnées de la mention « Photo d'illustration » ;
  *  - jamais présentées comme une activité, un projet ou un bénéficiaire
- *    d'INA-AFRICA ; jamais dans un projet, un article ou la galerie.
+ *    de INA-AFRICA ; jamais dans un projet, un article ou la galerie.
  */
 
 import { ILLUSTRATIONS } from "@/content/illustrations";

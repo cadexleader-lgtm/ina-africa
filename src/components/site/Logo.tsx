@@ -27,7 +27,7 @@ type LogoProps = {
 };
 
 /**
- * LOGO OFFICIEL d'INA-AFRICA (fichier fourni par l'ONG, fond rendu transparent,
+ * LOGO OFFICIEL de INA-AFRICA (fichier fourni par l'ONG, fond rendu transparent,
  * aucune autre modification). Un seul composant : tout le site le suit.
  */
 export function Logo({ inverse = false, size = "md", link = true, className }: LogoProps) {

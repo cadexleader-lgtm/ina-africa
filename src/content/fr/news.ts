@@ -16,10 +16,10 @@ export const NEWS_T = {
   list: {
     metaTitle: "Actualités",
     metaDescription:
-      "Les actualités d'INA-AFRICA (Initiative pour un Nouvel Avenir en Afrique), ONG béninoise : nouvelles de l'association, de ses actions et de ses projets.",
+      "Les actualités de INA-AFRICA (Initiative pour un Nouvel Avenir en Afrique), ONG béninoise : nouvelles de l'association, de ses actions et de ses projets.",
     label: "Actualités",
-    title: "La vie d'INA-AFRICA",
-    intro: "Les nouvelles de l'ONG, de ses actions et de ses projets, publiées par l'équipe d'INA-AFRICA.",
+    title: "La vie de INA-AFRICA",
+    intro: "Les nouvelles de l'ONG, de ses actions et de ses projets, publiées par l'équipe de INA-AFRICA.",
     searchLabel: "Rechercher un article",
     searchPlaceholder: "Un mot, un sujet…",
     searchSubmit: "Rechercher",
@@ -37,7 +37,7 @@ export const NEWS_T = {
       `${count}${NBSP}${count > 1 ? "articles" : "article"} dans la catégorie ${quote(name)}`,
     clearSearch: "Effacer la recherche",
     emptyTitle: "Aucune actualité publiée pour le moment",
-    emptyText: "Les nouvelles d'INA-AFRICA paraîtront ici dès leur publication.",
+    emptyText: "Les nouvelles de INA-AFRICA paraîtront ici dès leur publication.",
     emptyAction: "Découvrir INA-AFRICA",
     noResultsTitle: (query: string) => `Aucun article ne correspond à ${quote(query)}`,
     noResultsText: "Vérifiez l'orthographe ou essayez avec d'autres mots.",
@@ -52,7 +52,7 @@ export const NEWS_T = {
     pageSuffix: (page: number) => ` (page ${page})`,
     searchMetaTitle: (query: string) => `Recherche ${quote(query)} dans les actualités`,
     categoryMetaTitle: (name: string) => `${name} — Actualités`,
-    categoryMetaDescription: (name: string) => `Les actualités d'INA-AFRICA dans la catégorie ${quote(name)}.`,
+    categoryMetaDescription: (name: string) => `Les actualités de INA-AFRICA dans la catégorie ${quote(name)}.`,
     paginationLabel: "Pagination des actualités",
   },
   article: {
@@ -73,11 +73,11 @@ export const NEWS_T = {
     label: "Informations légales",
     legalNotice: {
       title: "Mentions légales",
-      description: "Mentions légales du site d'INA-AFRICA (Initiative pour un Nouvel Avenir en Afrique).",
+      description: "Mentions légales du site de INA-AFRICA (Initiative pour un Nouvel Avenir en Afrique).",
     },
     privacyPolicy: {
       title: "Politique de confidentialité",
-      description: "Politique de confidentialité du site d'INA-AFRICA (Initiative pour un Nouvel Avenir en Afrique).",
+      description: "Politique de confidentialité du site de INA-AFRICA (Initiative pour un Nouvel Avenir en Afrique).",
     },
     emptyTitle: "Ce contenu sera publié prochainement",
     emptyText: "INA-AFRICA prépare le texte de cette page. Pour toute question en attendant, vous pouvez nous écrire.",
@@ -93,7 +93,7 @@ export const NEWS_T = {
     linksTitle: "Pages utiles",
     searchTitle: "Chercher dans les actualités",
     links: [
-      { href: "/a-propos", label: "À propos d'INA-AFRICA" },
+      { href: "/a-propos", label: "À propos de INA-AFRICA" },
       { href: "/domaines", label: "Nos domaines d'action" },
       { href: "/projets", label: "Nos projets" },
       { href: "/actualites", label: "Actualités" },

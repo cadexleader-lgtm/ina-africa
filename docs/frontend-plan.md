@@ -18,7 +18,7 @@
   fournies → **photos provisoires** (`public/images/provisoires/`,
   `src/content/provisional-images.ts`) : en illustration seulement, toujours
   avec la mention « Photo d'illustration », jamais présentées comme une action
-  d'INA-AFRICA, **à remplacer avant la mise en ligne**.
+  de INA-AFRICA, **à remplacer avant la mise en ligne**.
 - **Logo** : envoyé plus tard → en attendant, « INA-AFRICA » en texte dans un
   composant `Logo` unique (jamais de logo redessiné).
 - **Données** : lectures publiques prêtes dans `src/server/data/` (cache +
@@ -78,11 +78,11 @@ Une migration, testée en local comme les autres. Rien n'a encore été appliqu�
 |---|---|---|
 | Couturière à la machine | 1200 × 1200 | belle qualité ; usage possible en carte ou section, trop carrée pour le hero |
 | Jeunes en atelier (combinaisons bleues) | 1200 × 800 | bonne qualité ; un peu juste pour un hero plein écran (2000 px conseillés) |
-| Salle de classe | **565 × 377** | **trop petite** (floue au-delà d'une vignette) ; l'emploi du temps au tableau est en **anglais** (« Mon, Tue… English & SST ») : ce n'est vraisemblablement **pas le Bénin**, donc pas une activité d'INA-AFRICA |
+| Salle de classe | **565 × 377** | **trop petite** (floue au-delà d'une vignette) ; l'emploi du temps au tableau est en **anglais** (« Mon, Tue… English & SST ») : ce n'est vraisemblablement **pas le Bénin**, donc pas une activité de INA-AFRICA |
 
 Aucune des trois n'a de métadonnées d'auteur. **Avant de les utiliser, j'ai besoin de savoir d'où elles viennent** :
 - **Photos de l'ONG** → utilisables partout ;
-- **photos sous licence** (banque d'images, autorisation écrite) → seulement en illustration (domaines, sections générales), avec la mention « Photo d'illustration », **jamais** présentées comme une action d'INA-AFRICA ni dans un projet ou un article ;
+- **photos sous licence** (banque d'images, autorisation écrite) → seulement en illustration (domaines, sections générales), avec la mention « Photo d'illustration », **jamais** présentées comme une action de INA-AFRICA ni dans un projet ou un article ;
 - **source inconnue** (prises sur internet) → non utilisables (droits d'auteur et droit à l'image).
 
 ---

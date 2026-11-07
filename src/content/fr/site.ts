@@ -156,7 +156,7 @@ export const T = {
       title: "Nos projets et actions",
       all: "Voir tous nos projets",
       emptyTitle: "Aucun projet publié pour le moment",
-      emptyText: "Les projets d'INA-AFRICA seront présentés ici dès leur publication.",
+      emptyText: "Les projets de INA-AFRICA seront présentés ici dès leur publication.",
       emptyAction: "Découvrir nos domaines d'action",
     },
     impact: {

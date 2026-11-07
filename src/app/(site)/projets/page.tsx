@@ -69,7 +69,7 @@ export default async function ProjectsPage({ searchParams }: PageProps<"/projets
             id="projets-domaines"
             label="Nos domaines d'intervention"
             title="Les sept domaines de l'ONG"
-            intro="Chaque projet et chaque action s'inscrit dans l'un des domaines d'intervention d'INA-AFRICA."
+            intro="Chaque projet et chaque action s'inscrit dans l'un des domaines d'intervention de INA-AFRICA."
           />
           <OtherAreas areas={areas} />
         </Container>

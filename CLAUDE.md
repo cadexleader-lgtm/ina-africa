@@ -16,7 +16,7 @@ fonctionnalité hors périmètre sans accord.
 - **Photos provisoires** (`public/images/provisoires/`, `src/content/provisional-images.ts`) : origine inconnue, fournies par l'utilisateur pour le développement. Illustration seulement, toujours avec « Photo d'illustration », jamais dans un projet, un article ou la galerie, **à remplacer avant la mise en ligne**. Les photos de la maquette (générées par IA) ne sont jamais utilisées.
 - **Aucun faux contenu** : pas de faux partenaires, chiffres, témoignages, réalisations. Les textes viennent de l'ONG.
 - **Aucune clé inventée**, aucun paiement simulé présenté comme réel. Paiements réels seulement après validation du compte marchand (le mode test KKiaPay, annoncé comme tel et sans écriture en base, est autorisé).
-- **Pas de migration appliquée sur Supabase sans accord explicite** de l'utilisateur. Projet Supabase : `vzmkyegczqlzjtuntmvz` (ina-africa) ; les 17 migrations actuelles y sont appliquées (voir `docs/database.md` §5).
+- **Pas de migration appliquée sur Supabase sans accord explicite** de l'utilisateur. Projet Supabase : `vzmkyegczqlzjtuntmvz` (ina-africa) ; les 18 migrations actuelles y sont appliquées (voir `docs/database.md` §5).
 - Avancer **par étapes**, présenter le résultat avant de passer à la suivante. Phase 1 (base) faite ; frontend en cours selon `docs/frontend-plan.md` (validé) ; Phase 2 (connexion admin) avant le dashboard.
 - La maquette sert de référence de **mise en page** uniquement : ses logos de partenaires, chiffres, valeurs et articles ne sont pas des contenus réels.
 
@@ -48,6 +48,7 @@ fonctionnalité hors périmètre sans accord.
 - Nouvelle migration : nouveau fichier ; RLS + `revoke all … from anon, authenticated` + droits explicites + `grant all … to service_role` ; `set search_path = ''` ; erreurs `hint = 'ina-africa'` ; tests dans `tests/db/`.
 - Next.js 16 avec **Cache Components** : lecture de `cookies()` uniquement sous `<Suspense>` ; lire `node_modules/next/dist/docs/` avant d'écrire du code Next.
 - UI et messages en français ; code en anglais.
+- **Jamais d'élision devant « INA-AFRICA »** (demande de l'ONG) : « de INA-AFRICA », « que INA-AFRICA », jamais « d'INA » / « qu'INA ».
 - Couleurs : `#079FD2` jamais pour du texte courant (liens = `#0679A1`) ; or `#D9A500` jamais en texte sur fond clair (traits d'accent, bouton de don avec texte `#17465A`).
 
 ## Avant de pousser

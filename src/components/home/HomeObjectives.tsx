@@ -25,7 +25,7 @@ export function HomeObjectives() {
             id="accueil-objectifs"
             label="Nos objectifs"
             title="Ce que nous nous engageons à faire"
-            intro="Les objectifs inscrits dans les statuts d'INA-AFRICA guident chacune de ses actions."
+            intro="Les objectifs inscrits dans les statuts de INA-AFRICA guident chacune de ses actions."
           />
         </Reveal>
         <ul className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">

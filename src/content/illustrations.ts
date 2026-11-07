@@ -1,7 +1,7 @@
 /**
  * PHOTOS D'ILLUSTRATION SOUS LICENCE LIBRE (Wikimedia Commons), prises au
  * Bénin. Elles illustrent les domaines d'action de l'ONG mais NE MONTRENT PAS
- * des actions d'INA-AFRICA : toujours la mention « Photo d'illustration » et
+ * des actions de INA-AFRICA : toujours la mention « Photo d'illustration » et
  * le crédit de l'auteur (obligatoire pour les licences CC BY / CC BY-SA),
  * détaillé sur la page /credits-photos. À compléter puis remplacer par les
  * vraies photos de l'ONG.

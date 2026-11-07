@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = pageMetadata({
   title: "Crédits photos",
-  description: "Auteurs et licences des photos d'illustration et de la carte utilisées sur le site d'INA-AFRICA.",
+  description: "Auteurs et licences des photos d'illustration et de la carte utilisées sur le site de INA-AFRICA.",
   path: "/credits-photos",
 });
 
@@ -20,7 +20,7 @@ export default function PhotoCreditsPage() {
         breadcrumbs={[{ label: "Accueil", href: "/" }, { label: "Crédits photos" }]}
         label="Crédits"
         title="Crédits photos"
-        intro="Les photos d'illustration de ce site sont publiées sous licence libre sur Wikimedia Commons. Elles illustrent les domaines d'action de l'ONG et ne montrent pas des actions d'INA-AFRICA."
+        intro="Les photos d'illustration de ce site sont publiées sous licence libre sur Wikimedia Commons. Elles illustrent les domaines d'action de l'ONG et ne montrent pas des actions de INA-AFRICA."
       />
       <Section spacing="compact">
         <Container size="reading">

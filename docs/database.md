@@ -125,6 +125,7 @@ Dans `supabase/migrations/`, à appliquer dans l'ordre :
 15. `20261107090000_update_contact_email` — email de contact onginaafrica@gmail.com
 16. `20261107100000_ngo_head_office_address` — adresse du siège
 17. `20261107120000_donation_min_100` — don minimum ramené à 100 FCFA (tout montant accepté)
+18. `20261107130000_moov_number_and_wording` — numéro Moov Money corrigé (01 94 34 04 55), « de INA-AFRICA » sans élision
 
 Règles pour toute nouvelle migration :
 - ne jamais modifier une migration déjà appliquée : en créer une nouvelle ;
@@ -149,7 +150,7 @@ binaires Postgres 16 (`PGBIN=/chemin/vers/bin` si besoin).
 
 - Projet **ina-africa**, référence `vzmkyegczqlzjtuntmvz`, région Paris (eu-west-3),
   adresse `https://vzmkyegczqlzjtuntmvz.supabase.co`.
-- **Les 17 migrations sont appliquées** (07/11/2026). Les numéros enregistrés
+- **Les 18 migrations sont appliquées** (07/11/2026). Les numéros enregistrés
   dans `supabase_migrations.schema_migrations` sont ceux des fichiers, donc
   `supabase db push` n'appliquera que les nouvelles migrations.
 - Vérification faite après application : empreinte du schéma (colonnes,

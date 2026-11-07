@@ -13,7 +13,7 @@ export const FORM_TEXT = {
     optional: "facultatif",
     send: "Envoyer",
     sending: "Envoi en cours…",
-    consentLead: "J'accepte qu'INA-AFRICA utilise ces informations uniquement pour traiter ma demande (voir la ",
+    consentLead: "J'accepte que INA-AFRICA utilise ces informations uniquement pour traiter ma demande (voir la ",
     consentLink: "politique de confidentialité",
     consentEnd: ").",
     fixErrors: (count: number) =>
@@ -71,9 +71,9 @@ export const FORM_TEXT = {
     metaDescription: "Écrire à l'ONG INA-AFRICA : une question, une proposition, une demande d'information.",
     eyebrow: "Contact",
     title: "Écrivez-nous",
-    intro: "Une question, une idée, une demande d'information ? Remplissez ce formulaire, il sera lu par l'équipe d'INA-AFRICA.",
+    intro: "Une question, une idée, une demande d'information ? Remplissez ce formulaire, il sera lu par l'équipe de INA-AFRICA.",
     formTitle: "Votre message",
-    success: "Votre message a bien été enregistré. Il sera lu par l'équipe d'INA-AFRICA.",
+    success: "Votre message a bien été enregistré. Il sera lu par l'équipe de INA-AFRICA.",
     detailsTitle: "Nos coordonnées",
     detailsEmpty: "Les coordonnées de l'ONG seront publiées ici prochainement.",
     whatsappAction: "Écrire sur WhatsApp",
@@ -113,7 +113,7 @@ export const FORM_TEXT = {
     stepsTitle: "Comment ça se passe ?",
     steps: [
       "Vous remplissez ce formulaire.",
-      "Votre demande est enregistrée et lue par l'équipe d'INA-AFRICA.",
+      "Votre demande est enregistrée et lue par l'équipe de INA-AFRICA.",
       "L'équipe prend contact avec vous par email ou par téléphone.",
     ],
     privacyNote: "Vos informations servent uniquement à traiter votre demande.",
@@ -125,14 +125,14 @@ export const FORM_TEXT = {
     metaTitle: "Devenir bénévole",
     metaDescription: "Proposer votre aide comme bénévole à l'ONG INA-AFRICA.",
     title: "Devenir bénévole",
-    intro: "Vous souhaitez donner de votre temps et partager vos compétences aux côtés d'INA-AFRICA ? Présentez-vous en quelques lignes.",
+    intro: "Vous souhaitez donner de votre temps et partager vos compétences aux côtés de INA-AFRICA ? Présentez-vous en quelques lignes.",
     formTitle: "Votre candidature de bénévole",
     phoneLabel: "Téléphone (WhatsApp si possible)",
     skills: "Vos compétences",
     skillsHint: "Ce que vous savez faire ou aimeriez apporter : animation, communication, informatique, logistique…",
     motivation: "Votre motivation",
     motivationHint: "Quelques phrases suffisent.",
-    success: "Votre candidature de bénévole a bien été enregistrée. Elle sera lue par l'équipe d'INA-AFRICA.",
+    success: "Votre candidature de bénévole a bien été enregistrée. Elle sera lue par l'équipe de INA-AFRICA.",
   },
 
   member: {
@@ -144,14 +144,14 @@ export const FORM_TEXT = {
     conditionsNote: "Chaque demande est étudiée par l'organisation, qui vous présentera les conditions d'adhésion.",
     formTitle: "Votre demande d'adhésion",
     motivation: "Pourquoi souhaitez-vous devenir membre ?",
-    success: "Votre demande d'adhésion a bien été enregistrée. Elle sera lue par l'équipe d'INA-AFRICA.",
+    success: "Votre demande d'adhésion a bien été enregistrée. Elle sera lue par l'équipe de INA-AFRICA.",
   },
 
   partner: {
     metaTitle: "Devenir partenaire",
     metaDescription: "Proposer un partenariat ou un sponsoring à l'ONG INA-AFRICA.",
     title: "Devenir partenaire",
-    intro: "Entreprise, institution, association ou fondation : proposez un partenariat ou un sponsoring au service des actions d'INA-AFRICA.",
+    intro: "Entreprise, institution, association ou fondation : proposez un partenariat ou un sponsoring au service des actions de INA-AFRICA.",
     formTitle: "Votre proposition",
     fullName: "Votre nom et prénom",
     kindLegend: "Type de collaboration",
@@ -161,14 +161,14 @@ export const FORM_TEXT = {
     },
     message: "Votre proposition",
     messageHint: "Présentez votre organisation et l'idée de collaboration.",
-    success: "Votre proposition a bien été enregistrée. Elle sera lue par l'équipe d'INA-AFRICA.",
+    success: "Votre proposition a bien été enregistrée. Elle sera lue par l'équipe de INA-AFRICA.",
   },
 
   newsletter: {
     footerTitle: "Restez informé",
-    footerText: "Recevez les nouvelles d'INA-AFRICA par email.",
+    footerText: "Recevez les nouvelles de INA-AFRICA par email.",
     emailLabel: "Votre adresse email",
-    consent: "J'accepte de recevoir la lettre d'information d'INA-AFRICA. Désinscription possible à tout moment.",
+    consent: "J'accepte de recevoir la lettre d'information de INA-AFRICA. Désinscription possible à tout moment.",
     submit: "S'inscrire",
     submitting: "Inscription…",
     doubleOptIn: "Un email de confirmation vous sera envoyé : l'inscription n'est validée qu'après un clic sur son lien.",
@@ -181,13 +181,13 @@ export const FORM_TEXT = {
     pageMetaDescription: "S'inscrire à la lettre d'information de l'ONG INA-AFRICA.",
     pageTitle: "Lettre d'information",
     pageIntro:
-      "Recevez par email les nouvelles d'INA-AFRICA. Votre adresse ne sert qu'à cela, et vous pouvez vous désinscrire à tout moment.",
+      "Recevez par email les nouvelles de INA-AFRICA. Votre adresse ne sert qu'à cela, et vous pouvez vous désinscrire à tout moment.",
     pageUnavailableTitle: "La lettre d'information n'est pas encore disponible",
     pageUnavailableText: "L'envoi d'emails n'est pas encore activé sur ce site. Revenez bientôt.",
 
     confirmMetaTitle: "Confirmer votre inscription",
     confirmTitle: "Confirmer votre inscription",
-    confirmIntro: "Cliquez sur le bouton ci-dessous pour confirmer votre inscription à la lettre d'information d'INA-AFRICA.",
+    confirmIntro: "Cliquez sur le bouton ci-dessous pour confirmer votre inscription à la lettre d'information de INA-AFRICA.",
     confirmAction: "Confirmer mon inscription",
     confirmPending: "Confirmation…",
     confirmSuccess: "Votre inscription est confirmée. Merci, et à bientôt dans votre boîte mail !",
@@ -196,7 +196,7 @@ export const FORM_TEXT = {
 
     unsubscribeMetaTitle: "Se désinscrire",
     unsubscribeTitle: "Se désinscrire de la lettre d'information",
-    unsubscribeIntro: "Cliquez sur le bouton ci-dessous pour ne plus recevoir la lettre d'information d'INA-AFRICA.",
+    unsubscribeIntro: "Cliquez sur le bouton ci-dessous pour ne plus recevoir la lettre d'information de INA-AFRICA.",
     unsubscribeAction: "Me désinscrire",
     unsubscribePending: "Désinscription…",
     unsubscribeSuccess: "Votre désinscription est enregistrée : vous ne recevrez plus la lettre d'information.",
@@ -214,7 +214,7 @@ export const FORM_TEXT = {
       membership: "Demande d'adhésion",
       sponsorship: "Proposition de partenariat",
     },
-    newsletterSubject: "Confirmez votre inscription à la lettre d'information d'INA-AFRICA",
+    newsletterSubject: "Confirmez votre inscription à la lettre d'information de INA-AFRICA",
   },
 } as const;
 
@@ -249,7 +249,7 @@ export const DONATE_TEXT = {
     reachHint: "Indiquez au moins un email ou un numéro de téléphone (pour le reçu et le suivi du paiement).",
     anonymous: "Rester anonyme (votre nom ne sera jamais affiché publiquement)",
     message: "Un message pour l'équipe",
-    consent: "J'accepte qu'INA-AFRICA utilise ces informations pour traiter mon don (voir la ",
+    consent: "J'accepte que INA-AFRICA utilise ces informations pour traiter mon don (voir la ",
     submit: "Je fais un don",
     submitWithAmount: (amount: string) => `Je donne ${amount}`,
     submitting: "Préparation de votre don…",
@@ -297,8 +297,8 @@ export const DONATE_TEXT = {
     title: "Merci du fond du cœur !",
     text: (amount: string, cause: string | null) =>
       cause
-        ? `Votre don de ${amount} pour « ${cause} » est bien arrivé. Il rejoint l'action d'INA-AFRICA sur le terrain, au Bénin.`
-        : `Votre don de ${amount} est bien arrivé. Il rejoint l'action d'INA-AFRICA sur le terrain, au Bénin.`,
+        ? `Votre don de ${amount} pour « ${cause} » est bien arrivé. Il rejoint l'action de INA-AFRICA sur le terrain, au Bénin.`
+        : `Votre don de ${amount} est bien arrivé. Il rejoint l'action de INA-AFRICA sur le terrain, au Bénin.`,
     testNote: "Mode test : ce don n'était qu'un essai, aucun argent n'a été prélevé.",
     shareTitle: "Multipliez votre geste",
     shareText: "Un message à vos proches peut faire naître d'autres dons. Partagez en un clic :",
@@ -357,10 +357,10 @@ export const DONATE_TEXT = {
     share: "Partager",
     emptyTitle: "Les besoins de l'ONG seront publiés ici très bientôt",
     emptyText:
-      "En attendant, un don général soutient l'ensemble des actions d'INA-AFRICA : éducation, santé, autonomisation des femmes, jeunesse.",
+      "En attendant, un don général soutient l'ensemble des actions de INA-AFRICA : éducation, santé, autonomisation des femmes, jeunesse.",
     emptyAction: "Je fais un don",
     generalTitle: "Vous ne savez pas laquelle choisir ?",
-    generalText: "Un don général soutient l'ensemble des actions d'INA-AFRICA sur le terrain.",
+    generalText: "Un don général soutient l'ensemble des actions de INA-AFRICA sur le terrain.",
     generalAction: "Je fais un don général",
   },
 

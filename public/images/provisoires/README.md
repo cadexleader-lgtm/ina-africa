@@ -5,7 +5,7 @@ sont inconnues** (aucune information d'auteur, provenance non confirmée par l'O
 
 Règles tant qu'elles sont utilisées :
 - uniquement comme **illustrations** (accueil, domaines, sections générales) ;
-- **jamais** présentées comme une activité, un projet ou un bénéficiaire d'INA-AFRICA ;
+- **jamais** présentées comme une activité, un projet ou un bénéficiaire de INA-AFRICA ;
 - **jamais** dans un projet, un article ou la galerie (ces contenus viennent de l'administration).
 
 Avant la mise en ligne : remplacer par les vraies photos de l'ONG (ou des photos
@@ -23,4 +23,4 @@ sous licence vérifiée), puis supprimer ce dossier.
 ---
 Les photos de `public/images/illustrations/` sont différentes : licence libre connue
 (Wikimedia Commons, crédits dans `src/content/illustrations.ts` et sur /credits-photos).
-Elles restent des **illustrations** (jamais présentées comme des actions d'INA-AFRICA).
+Elles restent des **illustrations** (jamais présentées comme des actions de INA-AFRICA).

@@ -1,5 +1,5 @@
 /**
- * CONTENU OFFICIEL D'INA-AFRICA — source unique des textes de présentation.
+ * CONTENU OFFICIEL DE INA-AFRICA — source unique des textes de présentation.
  *
  * Tout ce fichier vient des documents transmis par l'ONG :
  *  - « PRÉSENTATION DE L'ORGANISATION » (historique, expériences,
@@ -49,7 +49,7 @@ export const SHORT_PRESENTATION =
 
 export const HISTORY = [
   "Face aux défis socio-économiques persistants que rencontrent les communautés africaines, notamment dans les domaines de l'éducation, de la santé, de l'autonomisation des femmes et de l'inclusion genre, l'ONG Initiative pour un Nouvel Avenir en Afrique (INA-AFRICA) a été créée en 2017. Elle agit au Bénin, là où les besoins humanitaires et sociaux l'exigent.",
-  "La création d'INA-AFRICA a été motivée par la volonté de promouvoir des initiatives locales, durables et inclusives, en mettant l'accent sur l'innovation sociale, le bien-être des jeunes et des adolescents qui constituent la relève de demain, et l'aide à la femme, à l'enfant et aux personnes en situation de handicap.",
+  "La création de INA-AFRICA a été motivée par la volonté de promouvoir des initiatives locales, durables et inclusives, en mettant l'accent sur l'innovation sociale, le bien-être des jeunes et des adolescents qui constituent la relève de demain, et l'aide à la femme, à l'enfant et aux personnes en situation de handicap.",
 ];
 
 export const EXPERIENCE = {
@@ -121,7 +121,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   {
     date: "2023-08-26",
     title: "Lancement officiel des activités de l'ONG",
-    text: "Lancement officiel des activités d'INA-AFRICA, suivi d'une distribution de vivres et d'enveloppes aux femmes vulnérables.",
+    text: "Lancement officiel des activités de INA-AFRICA, suivi d'une distribution de vivres et d'enveloppes aux femmes vulnérables.",
     audience: "Femmes vulnérables",
     place: "Zinvié et Djidjè (Cotonou)",
     areaSlug: "autonomisation-des-femmes",
@@ -226,10 +226,10 @@ export const AREAS: OfficialArea[] = [
     title: "Éducation",
     summary: "Former les jeunes et soutenir les enfants vulnérables, pour préparer la relève de demain.",
     problem:
-      "L'éducation fait partie des défis socio-économiques persistants qui ont conduit à la création d'INA-AFRICA. Former les jeunes et soutenir les enfants vulnérables, c'est préparer la relève de demain.",
+      "L'éducation fait partie des défis socio-économiques persistants qui ont conduit à la création de INA-AFRICA. Former les jeunes et soutenir les enfants vulnérables, c'est préparer la relève de demain.",
     audiences: ["Les jeunes et les adolescents", "Les enfants vulnérables"],
     description:
-      "L'éducation est l'un des défis qui ont conduit à la création d'INA-AFRICA. L'ONG s'engage pour la formation des jeunes et le soutien aux enfants vulnérables, avec une approche participative et centrée sur l'impact à long terme.",
+      "L'éducation est l'un des défis qui ont conduit à la création de INA-AFRICA. L'ONG s'engage pour la formation des jeunes et le soutien aux enfants vulnérables, avec une approche participative et centrée sur l'impact à long terme.",
     actions: ["Formation des jeunes", "Soutien aux enfants vulnérables", "Sessions de formation et de sensibilisation"],
   },
   {
@@ -317,7 +317,7 @@ export const AREAS: OfficialArea[] = [
       "Les défis des communautés appellent des réponses adaptées à chaque territoire. INA-AFRICA a été créée pour promouvoir des initiatives locales, durables et inclusives, construites avec les personnes concernées.",
     audiences: ["Les communautés locales", "Les bénévoles et partenaires engagés à leurs côtés"],
     description:
-      "L'innovation sociale est au cœur du projet d'INA-AFRICA depuis sa création. L'ONG s'appuie sur une approche participative, le développement de partenariats et la mobilisation du bénévolat pour construire, avec les communautés, des réponses durables à leurs besoins.",
+      "L'innovation sociale est au cœur du projet de INA-AFRICA depuis sa création. L'ONG s'appuie sur une approche participative, le développement de partenariats et la mobilisation du bénévolat pour construire, avec les communautés, des réponses durables à leurs besoins.",
     actions: [
       "Approche participative centrée sur l'impact à long terme",
       "Développement de partenariats",
@@ -551,7 +551,7 @@ export const ENGAGEMENT_OPTIONS = [
   {
     key: "partenaire",
     title: "Devenir partenaire",
-    text: "Soutenir les initiatives d'INA-AFRICA et construire des collaborations durables au service des communautés.",
+    text: "Soutenir les initiatives de INA-AFRICA et construire des collaborations durables au service des communautés.",
     href: "/nous-rejoindre/partenaire",
     action: "Proposer un partenariat",
   },
@@ -647,7 +647,7 @@ export const DIRECT_DONATIONS = {
   minAmount: 100,
   suggestedAmounts: [2000, 5000, 10000],
   instructions: [
-    { method: "mobile_money" as const, label: "Moov Money", number: "01 94 84 04 55" },
+    { method: "mobile_money" as const, label: "Moov Money", number: "01 94 34 04 55" },
     { method: "mobile_money" as const, label: "MTN Mobile Money", number: "01 90 00 32 74" },
   ],
 };

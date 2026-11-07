@@ -17,7 +17,7 @@ export const AUTH_TEXT = {
   login: {
     metaTitle: "Connexion",
     title: "Connexion à l'administration",
-    intro: "Espace réservé à l'équipe d'INA-AFRICA.",
+    intro: "Espace réservé à l'équipe de INA-AFRICA.",
     email: "Adresse email",
     password: "Mot de passe",
     submit: "Se connecter",
@@ -75,7 +75,7 @@ export const AUTH_TEXT = {
     metaTitle: "Lien reçu par email",
     title: "Continuer",
     recoveryIntro: "Cliquez sur le bouton pour choisir un nouveau mot de passe.",
-    inviteIntro: "Bienvenue dans l'équipe d'INA-AFRICA. Cliquez sur le bouton pour choisir votre mot de passe.",
+    inviteIntro: "Bienvenue dans l'équipe de INA-AFRICA. Cliquez sur le bouton pour choisir votre mot de passe.",
     submit: "Continuer",
     submitting: "Vérification…",
     invalid: "Ce lien n'est plus valable (déjà utilisé ou expiré). Demandez un nouveau lien.",
