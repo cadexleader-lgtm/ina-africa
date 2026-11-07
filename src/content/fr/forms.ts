@@ -261,7 +261,7 @@ export const DONATE_TEXT = {
     providerNote: (provider: string) => `Don sécurisé par ${provider}`,
     testTitle: "Paiement en ligne en phase de test",
     testText:
-      "Le paiement en ligne est en cours d'essai : aucun argent n'est prélevé et aucun don n'est enregistré. Pour faire un vrai don aujourd'hui, utilisez Mobile Money avec les numéros indiqués sur cette page.",
+      "Le paiement en ligne est en cours d'essai : aucun argent n'est prélevé et aucun don n'est enregistré. Pour faire un vrai don aujourd'hui, utilisez Mobile Money avec les numéros indiqués sur cette page. Pour essayer la fenêtre de paiement, seuls les numéros de test de KKiaPay fonctionnent (MTN 97000000, Moov 95000000) : un vrai numéro est refusé.",
     unavailable: "Le paiement en ligne n'est pas disponible pour le moment : aucun don n'a été créé.",
     providerFailed: "Le prestataire de paiement n'a pas répondu : aucun montant n'a été débité. Réessayez dans un instant.",
     rateLimited: "Plusieurs tentatives de don ont déjà été faites depuis cette connexion. Réessayez dans une heure.",
