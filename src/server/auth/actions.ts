@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 
+import { qrCodeDataUrl } from "@/lib/auth/qr-code";
 import { hasPublicSupabaseEnv } from "@/lib/public-env";
 import { absoluteUrl } from "@/lib/site-url";
 import {
@@ -146,14 +147,6 @@ async function challengeAndVerify(supabase: SessionClient, factorId: string, cod
 // Double authentification : activation
 // ---------------------------------------------------------------------------
 
-/** Ré-encode le QR code SVG renvoyé par Supabase pour un attribut src sûr. */
-function qrCodeDataUrl(value: string): string | null {
-  const prefix = "data:image/svg+xml;utf-8,";
-  const svg = value.startsWith(prefix) ? value.slice(prefix.length) : value;
-  if (!svg.trim().startsWith("<svg")) return null;
-  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
-}
-
 /** Étape 1 : crée un facteur TOTP non vérifié et renvoie son QR code. */
 export async function startTotpEnrollmentAction(_previous: EnrollState, formData: FormData): Promise<EnrollState> {
   const suite = safeAdminPath(field(formData, "suite"));
@@ -188,7 +181,11 @@ export async function startTotpEnrollmentAction(_previous: EnrollState, formData
     return errorState(T.common.unexpected);
   }
   const qrCode = qrCodeDataUrl(data.totp.qr_code);
-  if (!qrCode) return errorState(T.common.unexpected);
+  if (!qrCode) {
+    // Jamais le contenu (il contient le secret) : seulement son format.
+    console.error("[ina-africa] QR code de double authentification illisible, format :", String(data.totp.qr_code ?? "").slice(0, 30).replace(/[^a-z0-9:/+;=,<?-]/gi, ""));
+    return errorState(T.common.unexpected);
+  }
 
   return { status: "success", factorId: data.id, qrCode, secret: data.totp.secret, respondedAt: Date.now() };
 }
