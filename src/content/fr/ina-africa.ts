@@ -634,6 +634,8 @@ export const CONTACTS = {
   phone: "+229 01 94 34 04 55",
   /** Format international sans espace (lien wa.me). */
   whatsapp: "+2290194340455",
+  /** Siège (transmis le 07/11/2026). */
+  address: "Agla Petit-Château, Maison Zetomè, lot 272\nCotonou, Bénin",
   social: {
     facebook: "https://www.facebook.com/ong.ina.africa.2025",
     tiktok: "https://www.tiktok.com/@ina_africa",
