@@ -47,6 +47,8 @@ type PublicFormProps = {
   /** Bouton pleine largeur. */
   fullWidthSubmit?: boolean;
   className?: string;
+  /** Affiché à la place du formulaire quand l'action répond « checkout » (paiement à ouvrir). */
+  renderCheckout?: (state: FormState) => ReactNode;
   children: (field: FieldHelpers) => ReactNode;
 };
 
@@ -74,6 +76,7 @@ export function PublicForm({
   hideRequiredNote = false,
   fullWidthSubmit = false,
   className,
+  renderCheckout,
   children,
 }: PublicFormProps) {
   const [state, formAction, pending] = useActionState(action, INITIAL_FORM_STATE);
@@ -106,6 +109,10 @@ export function PublicForm({
     },
     pending,
   };
+
+  if (state.status === "checkout" && renderCheckout) {
+    return <div className={className}>{renderCheckout(state)}</div>;
+  }
 
   if (state.status === "success") {
     return (

@@ -118,13 +118,25 @@ Formulaires (contact, bénévole, adhésion, sponsor, newsletter) et dons en lig
 Turnstile) et limite d'envois par empreinte d'IP. Les visiteurs n'ont aucun
 droit d'écriture sur ces tables.
 
-## Paiement (Phase 4)
+## Paiement en ligne (KKiaPay)
 
-Interface commune aux prestataires (KKiaPay, CinetPay) : création du paiement,
-vérification auprès du prestataire, lecture des notifications. Un paiement n'est
-confirmé qu'après vérification côté serveur ; la base garantit qu'un don ne peut
-pas être encaissé deux fois (voir docs/database.md §3). Aucun prestataire n'est
-activé tant que le compte marchand n'est pas validé.
+- `src/server/payments/kkiapay.ts` : configuration (mode test `sandbox` avec la
+  seule clé publique, mode réel `live` avec les trois clés) et vérification d'un
+  paiement par l'API KKiaPay (`/api/v1/transactions/status`, mêmes en-têtes que
+  le SDK serveur officiel).
+- Formulaire de don → `startOnlineDonation` (`src/server/actions/donations.ts`) :
+  en mode test, **rien n'est écrit** ; en mode réel, don + transaction `pending`
+  (référence aléatoire, transmise à KKiaPay comme `partnerId`). Le navigateur
+  ouvre ensuite la fenêtre KKiaPay (`src/components/donate/KkiapayCheckout.tsx`,
+  script `cdn.kkiapay.me/k.js`, iframe `widget-v3.kkiapay.me`, autorisés dans la CSP).
+- Fin du paiement → `checkOnlinePayment` relit le paiement chez KKiaPay. En mode
+  réel, `src/server/payments/reconcile.ts` confirme par `confirm_payment_transaction()`
+  (référence, montant et identifiant unique revérifiés). Mêmes vérifications depuis
+  la page de suivi (`?transaction_id=`) et la notification
+  `POST /api/paiements/notification` (en-tête `x-kkiapay-secret`).
+- Un échec ne clôt pas la tentative : le visiteur peut réessayer dans la même fenêtre.
+- Frais KKiaPay : par défaut payés par le donateur (s'ajoutent au montant affiché
+  par KKiaPay) ; l'API renvoie le montant du don hors frais.
 
 ## Clés et secrets
 
@@ -140,6 +152,6 @@ navigateur : aucun secret. La clé secrète Supabase n'est lue que par
 | 1 | Base de données : tables, RLS, fonctions, tests locaux | ✅ (appliquée sur Supabase le 06/11/2026, projet `vzmkyegczqlzjtuntmvz`) |
 | 2 | Authentification admin, double authentification, protection des routes | à faire |
 | 3 | Opérations backend (contenus, formulaires, dons hors ligne, médias) | à faire |
-| 4 | Paiement en ligne (après validation du compte marchand) | à faire |
+| 4 | Paiement en ligne KKiaPay | mode test branché le 07/11/2026 ; mode réel après validation du compte marchand |
 | 5 | Tests et validation | à faire |
 | 6 | Site public (fait le 06/11/2026 : accueil, À propos, domaines, projets, galerie, actualités, pages légales, contact, nous rejoindre, newsletter, dons) ; administration à faire | en cours |

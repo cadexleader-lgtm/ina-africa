@@ -35,10 +35,10 @@ describe("next.config.ts (mise en ligne)", () => {
     const csp = header("Content-Security-Policy")!;
     expect(csp).not.toMatch(/nonce-/);
     expect(csp).not.toMatch(/unsafe-eval/);
-    expect(csp).toContain("script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com");
+    expect(csp).toContain("script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://cdn.kkiapay.me");
     expect(csp).toContain("img-src 'self' data: blob: https://abcdefgh.supabase.co");
     expect(csp).toContain("connect-src 'self' https://abcdefgh.supabase.co wss://abcdefgh.supabase.co");
-    expect(csp).toContain("frame-src https://www.youtube-nocookie.com https://www.facebook.com https://challenges.cloudflare.com");
+    expect(csp).toContain("frame-src https://www.youtube-nocookie.com https://www.facebook.com https://challenges.cloudflare.com https://widget-v3.kkiapay.me");
     for (const directive of ["frame-ancestors 'none'", "base-uri 'self'", "form-action 'self'", "object-src 'none'", "upgrade-insecure-requests"]) {
       expect(csp).toContain(directive);
     }

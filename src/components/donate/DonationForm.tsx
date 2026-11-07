@@ -8,6 +8,8 @@ import type { OrgContacts } from "@/components/forms/ContactAlternatives";
 import { LineField, TextAreaField } from "@/components/forms/fields";
 import { FORM_IDS } from "@/components/forms/ids";
 import { ConsentField, PublicForm, type FieldHelpers, type FormAction } from "@/components/forms/PublicForm";
+import { KkiapayCheckout } from "@/components/donate/KkiapayCheckout";
+import { Alert } from "@/components/ui/Alert";
 import { DONATE_TEXT } from "@/content/fr/forms";
 import { formatFcfa } from "@/lib/money";
 import { LIMITS } from "@/lib/validation/forms";
@@ -24,6 +26,8 @@ type DonationFormProps = {
   suggestedAmounts: number[];
   minAmount: number;
   providerLabel: string;
+  /** Paiements de TEST (sandbox KKiaPay) : bandeau explicite, rien n'est enregistré. */
+  testMode?: boolean;
   campaign?: { slug: string; title: string };
 };
 
@@ -89,7 +93,16 @@ function AmountField({ field, suggested, minAmount }: { field: FieldHelpers; sug
   );
 }
 
-export function DonationForm({ action, security, contacts, suggestedAmounts, minAmount, providerLabel, campaign }: DonationFormProps) {
+export function DonationForm({
+  action,
+  security,
+  contacts,
+  suggestedAmounts,
+  minAmount,
+  providerLabel,
+  testMode = false,
+  campaign,
+}: DonationFormProps) {
   const O = DONATE_TEXT.online;
   // Clé anti double-soumission : la même tant que la page est ouverte.
   const [idempotencyKey] = useState(() => crypto.randomUUID());
@@ -108,6 +121,14 @@ export function DonationForm({ action, security, contacts, suggestedAmounts, min
       submitLabel={O.submit}
       submittingLabel={O.submitting}
       submitIcon={<ArrowRight aria-hidden="true" />}
+      renderCheckout={(state) =>
+        state.checkout ? (
+          <KkiapayCheckout
+            checkout={state.checkout}
+            editHref={campaign ? `/faire-un-don/${encodeURIComponent(campaign.slug)}` : "/faire-un-don"}
+          />
+        ) : null
+      }
       security={
         <>
           {security}
@@ -119,6 +140,11 @@ export function DonationForm({ action, security, contacts, suggestedAmounts, min
     >
       {(field) => (
         <>
+          {testMode && (
+            <Alert tone="warning" title={O.testTitle} role="none">
+              <p>{O.testText}</p>
+            </Alert>
+          )}
           {campaign && <p className="rounded-field bg-brand-50 px-4 py-3 text-brand">{O.campaignNote(campaign.title)}</p>}
           <AmountField field={field} suggested={suggestedAmounts} minAmount={minAmount} />
           <fieldset className="flex flex-col gap-5">

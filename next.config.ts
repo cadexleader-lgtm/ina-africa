@@ -50,32 +50,30 @@ const indexable = isSiteIndexable() && (!process.env.VERCEL_ENV || process.env.V
 //    www.youtube-nocookie.com et www.facebook.com (src/lib/video.ts) ;
 //  - images et API du projet Supabase (https + wss pour le temps réel).
 //
-// PAIEMENT EN LIGNE — rien à ajouter avant l'activation du compte marchand.
-// Le jour de l'activation, ajouter les hôtes indiqués par la documentation du
-// prestataire, puis vérifier au navigateur (console sans erreur CSP).
-// À titre indicatif, à confirmer à ce moment-là :
-//  - KKiaPay  : script-src https://cdn.kkiapay.me ; frame-src https://widget-v3.kkiapay.me ;
-//               connect-src https://api.kkiapay.me
-//  - CinetPay : script-src https://cdn.cinetpay.com ; frame-src https://checkout.cinetpay.com ;
-//               form-action https://checkout.cinetpay.com (redirection après un formulaire)
-//  - Permissions-Policy : payment=(self "<hôte du widget>") si le widget le demande.
+//  - paiement KKiaPay (formulaire de don, seulement quand le visiteur paie) :
+//    script https://cdn.kkiapay.me/k.js + iframe https://widget-v3.kkiapay.me.
+//    La vérification des paiements se fait côté serveur (aucun connect-src).
+//    Si CinetPay est ajouté un jour : script-src https://cdn.cinetpay.com ;
+//    frame-src https://checkout.cinetpay.com ; form-action https://checkout.cinetpay.com.
 // ---------------------------------------------------------------------------
 
 const TURNSTILE = "https://challenges.cloudflare.com";
 const VIDEO_FRAMES = ["https://www.youtube-nocookie.com", "https://www.facebook.com"];
+const KKIAPAY_SCRIPT = "https://cdn.kkiapay.me";
+const KKIAPAY_FRAME = "https://widget-v3.kkiapay.me";
 
 const supabaseHttp = supabase ? [supabase] : [];
 const supabaseWs = supabase ? [supabase.replace(/^http/, "ws")] : [];
 
 const csp: Record<string, string[]> = {
   "default-src": ["'self'"],
-  "script-src": ["'self'", "'unsafe-inline'", ...(isDev ? ["'unsafe-eval'"] : []), TURNSTILE],
+  "script-src": ["'self'", "'unsafe-inline'", ...(isDev ? ["'unsafe-eval'"] : []), TURNSTILE, KKIAPAY_SCRIPT],
   "style-src": ["'self'", "'unsafe-inline'"],
   "img-src": ["'self'", "data:", "blob:", ...supabaseHttp],
   "font-src": ["'self'"],
   "connect-src": ["'self'", ...supabaseHttp, ...supabaseWs],
   "media-src": ["'self'", ...supabaseHttp],
-  "frame-src": [...VIDEO_FRAMES, TURNSTILE],
+  "frame-src": [...VIDEO_FRAMES, TURNSTILE, KKIAPAY_FRAME],
   "worker-src": ["'self'", "blob:"],
   "manifest-src": ["'self'"],
   "object-src": ["'none'"],

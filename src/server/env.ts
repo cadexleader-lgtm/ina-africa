@@ -52,8 +52,12 @@ const serverEnvSchema = z.object({
     .regex(/^([^<>\r\n]{1,100} <)?[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+>?$/)
     .optional()
     .or(z.literal("").transform(() => undefined)),
+  // KKiaPay (lues par src/server/payments/kkiapay.ts) : clé publique dans
+  // NEXT_PUBLIC_KKIAPAY_PUBLIC_KEY, mode test si KKIAPAY_SANDBOX=true.
   KKIAPAY_PRIVATE_KEY: optionalSecret,
   KKIAPAY_SECRET: optionalSecret,
+  // Secret choisi dans KKiaPay → Développeurs → Webhook (en-tête x-kkiapay-secret).
+  KKIAPAY_WEBHOOK_SECRET: optionalSecret,
   CINETPAY_API_KEY: optionalSecret,
   CINETPAY_SITE_ID: optionalSecret,
   CINETPAY_SECRET_KEY: optionalSecret,

@@ -111,7 +111,10 @@ Inventez-la une fois, ne la réutilisez nulle part ailleurs.
 |---|---|---|
 | `RESEND_API_KEY` et `EMAIL_FROM` | envoi des emails (notifications, newsletter). `EMAIL_FROM` ressemble à `INA-AFRICA <contact@votre-domaine.org>`, sur un domaine vérifié chez Resend | quand le compte Resend et le domaine sont prêts. Les **deux** sont nécessaires |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` et `TURNSTILE_SECRET_KEY` | anti-robot Cloudflare Turnstile sur les formulaires | quand le compte Cloudflare est créé. Les **deux** sont nécessaires |
-| `KKIAPAY_…`, `CINETPAY_…` | paiement en ligne | **uniquement** après validation du compte marchand et la mise à jour du site prévue à ce moment-là |
+| `NEXT_PUBLIC_KKIAPAY_PUBLIC_KEY` + `KKIAPAY_SANDBOX=true` | paiement KKiaPay **en mode test** (aucun argent réel, rien d'enregistré ; bandeau « phase de test » sur la page de don) | clé publique de l'onglet **Sandbox** de KKiaPay → Développeurs → API |
+| `KKIAPAY_PRIVATE_KEY`, `KKIAPAY_SECRET` (Sensitive) + clé publique **Live**, `KKIAPAY_SANDBOX` supprimée | vrais dons en ligne | **uniquement** après validation du compte marchand KKiaPay |
+| `KKIAPAY_WEBHOOK_SECRET` (Sensitive) | notifications KKiaPay (adresse `https://<site>/api/paiements/notification`, même secret saisi dans KKiaPay → Développeurs → Webhook) | avec le mode réel |
+| `CINETPAY_…` | non branché | — |
 
 Toutes les variables sont décrites dans le fichier `.env.example` du dépôt.
 

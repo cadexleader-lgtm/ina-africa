@@ -15,7 +15,7 @@ fonctionnalité hors périmètre sans accord.
 - **Aucune image générée par IA**, aucune photo de banque d'images présentée comme une action de l'ONG. Uniquement les vraies photos fournies par l'ONG.
 - **Photos provisoires** (`public/images/provisoires/`, `src/content/provisional-images.ts`) : origine inconnue, fournies par l'utilisateur pour le développement. Illustration seulement, toujours avec « Photo d'illustration », jamais dans un projet, un article ou la galerie, **à remplacer avant la mise en ligne**. Les photos de la maquette (générées par IA) ne sont jamais utilisées.
 - **Aucun faux contenu** : pas de faux partenaires, chiffres, témoignages, réalisations. Les textes viennent de l'ONG.
-- **Aucune clé inventée**, aucun paiement simulé présenté comme réel. Aucun prestataire activé avant validation du compte marchand.
+- **Aucune clé inventée**, aucun paiement simulé présenté comme réel. Paiements réels seulement après validation du compte marchand (le mode test KKiaPay, annoncé comme tel et sans écriture en base, est autorisé).
 - **Pas de migration appliquée sur Supabase sans accord explicite** de l'utilisateur. Projet Supabase : `vzmkyegczqlzjtuntmvz` (ina-africa) ; les 16 migrations actuelles y sont appliquées (voir `docs/database.md` §5).
 - Avancer **par étapes**, présenter le résultat avant de passer à la suivante. Phase 1 (base) faite ; frontend en cours selon `docs/frontend-plan.md` (validé) ; Phase 2 (connexion admin) avant le dashboard.
 - La maquette sert de référence de **mise en page** uniquement : ses logos de partenaires, chiffres, valeurs et articles ne sont pas des contenus réels.
@@ -35,6 +35,7 @@ fonctionnalité hors périmètre sans accord.
 | Variables d'environnement | `.env.example`, `src/lib/public-env.ts`, `src/server/env.ts` |
 | Clients Supabase | `src/server/supabase/server.ts` (session, RLS), `public.ts` (visiteur), `admin.ts` (clé secrète, usage restreint) |
 | Erreurs | `src/server/errors.ts` (`ActionResult`, messages FR, indice `ina-africa`) |
+| Paiement KKiaPay | `src/server/payments/kkiapay.ts` (modes test/réel), `reconcile.ts`, `src/components/donate/KkiapayCheckout.tsx`, webhook `src/app/api/paiements/notification/route.ts` — mode test : rien n'est enregistré (voir `docs/architecture.md`) |
 
 ## Conventions
 - Rôles : `editor` < `admin` < `super_admin` (`private.has_role()`). Admin/super_admin sans double authentification (aal2) = aucun droit.

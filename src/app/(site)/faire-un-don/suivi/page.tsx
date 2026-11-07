@@ -7,7 +7,10 @@ import { Section } from "@/components/ui/Section";
 import { FormCard, PageIntro } from "@/components/forms/PageParts";
 import { DONATE_TEXT } from "@/content/fr/forms";
 import { formatFcfa } from "@/lib/money";
+import { getKkiapayConfig } from "@/server/payments/kkiapay";
+import { reconcileKkiapayPayment } from "@/server/payments/reconcile";
 import { readPaymentTracking, type PaymentTracking } from "@/server/payments/tracking";
+import { getFormsBackend } from "@/server/security/forms-backend";
 
 import { AutoRefresh } from "./AutoRefresh";
 
@@ -48,8 +51,20 @@ function describe(tracking: PaymentTracking) {
  * référence aléatoire (?tx=), jamais déduit des autres paramètres de l'adresse.
  */
 export default async function TrackingPage({ searchParams }: PageProps<"/faire-un-don/suivi">) {
-  const { tx } = await searchParams;
-  const tracking = await readPaymentTracking(typeof tx === "string" ? tx.trim() : null);
+  const params = await searchParams;
+  const { tx } = params;
+  const reference = typeof tx === "string" ? tx.trim() : null;
+
+  // Retour de KKiaPay avec son identifiant de transaction : on revérifie AUPRÈS DE KKIAPAY
+  // (idempotent). L'identifiant seul ne prouve rien : seule la réponse de l'API compte.
+  const kkiapayId = params.transaction_id ?? params.transactionId;
+  const config = getKkiapayConfig();
+  const backend = getFormsBackend();
+  if (reference && typeof kkiapayId === "string" && config?.mode === "live" && backend) {
+    await reconcileKkiapayPayment(backend, config, reference, kkiapayId.trim());
+  }
+
+  const tracking = await readPaymentTracking(reference);
   const { Icon, tone, title, text } = describe(tracking);
   const pending = tracking.kind === "found" && tracking.status === "pending";
   const retry = tracking.kind === "found" && (tracking.status === "failed" || tracking.status === "cancelled");

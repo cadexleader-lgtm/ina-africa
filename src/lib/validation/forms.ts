@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { DEFAULT_MIN_DONATION, MAX_DONATION_AMOUNT, parseAmount } from "@/lib/money";
+import type { KkiapayCheckout } from "@/lib/payments/checkout";
 
 // Ces schémas tournent aussi dans le navigateur : sans ce réglage, Zod teste
 // `new Function()` au démarrage, ce que la Content-Security-Policy (sans
@@ -26,9 +27,10 @@ export type FormValues = Record<string, string | boolean>;
 export type FormState = {
   /**
    * idle : rien envoyé ; success : enregistré ; error : à corriger ou refusé ;
-   * unavailable : le service n'est pas encore configuré (RIEN n'a été enregistré).
+   * unavailable : le service n'est pas encore configuré (RIEN n'a été enregistré) ;
+   * checkout : don prêt, la fenêtre de paiement doit s'ouvrir (formulaire de don).
    */
-  status: "idle" | "success" | "error" | "unavailable";
+  status: "idle" | "success" | "error" | "unavailable" | "checkout";
   message?: string;
   /** Premier message d'erreur de chaque champ (nom du champ → message). */
   fieldErrors?: Record<string, string>;
@@ -36,6 +38,8 @@ export type FormState = {
   values?: FormValues;
   /** Horodatage de la réponse (réinitialise l'anti-robot, déplace le focus). */
   respondedAt?: number;
+  /** Paiement à ouvrir (status « checkout » seulement). */
+  checkout?: KkiapayCheckout;
 };
 
 export const INITIAL_FORM_STATE: FormState = { status: "idle" };

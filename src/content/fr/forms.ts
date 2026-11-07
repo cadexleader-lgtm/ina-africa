@@ -245,12 +245,38 @@ export const DONATE_TEXT = {
     message: "Un message pour l'équipe",
     consent: "J'accepte qu'INA-AFRICA utilise ces informations pour traiter mon don (voir la ",
     submit: "Continuer vers le paiement",
-    submitting: "Redirection vers le paiement…",
-    providerNote: (provider: string) => `Le paiement est réalisé sur la page sécurisée de ${provider}.`,
+    submitting: "Préparation du paiement…",
+    providerNote: (provider: string) =>
+      `Le paiement se fait dans la fenêtre sécurisée de ${provider} (Mobile Money ou carte bancaire). INA-AFRICA ne voit jamais vos codes.`,
+    testTitle: "Paiement en ligne en phase de test",
+    testText:
+      "Le paiement en ligne est en cours d'essai : aucun argent n'est prélevé et aucun don n'est enregistré. Pour faire un vrai don aujourd'hui, utilisez Mobile Money avec les numéros indiqués sur cette page.",
     unavailable: "Le paiement en ligne n'est pas disponible pour le moment : aucun don n'a été créé.",
     providerFailed: "Le prestataire de paiement n'a pas répondu : aucun montant n'a été débité. Réessayez dans un instant.",
     rateLimited: "Plusieurs tentatives de don ont déjà été faites depuis cette connexion. Réessayez dans une heure.",
     campaignInactive: "Cet appel aux dons n'est plus actif.",
+  },
+
+  checkout: {
+    title: "Finalisez votre don",
+    intro: (amount: string) => `Montant : ${amount}. La fenêtre de paiement KKiaPay s'ouvre sur cette page.`,
+    loading: "Ouverture de la fenêtre de paiement…",
+    open: "Ouvrir la fenêtre de paiement",
+    edit: "Modifier mon don",
+    closed: "La fenêtre de paiement a été fermée. Aucun montant n'a été débité tant que le paiement n'a pas été validé.",
+    scriptFailed:
+      "La fenêtre de paiement n'a pas pu s'ouvrir (connexion ou bloqueur de publicités). Réessayez, ou donnez par Mobile Money.",
+    checking: "Vérification du paiement auprès de KKiaPay…",
+    failed: "Le paiement n'a pas abouti : aucun montant n'a été débité. Vous pouvez réessayer.",
+    checkFailed: "Nous n'avons pas pu vérifier ce paiement pour le moment.",
+    unavailable: "Le paiement en ligne n'est pas disponible pour le moment.",
+    pendingTest: "KKiaPay n'a pas encore confirmé ce paiement de test. Réessayez la vérification dans un instant.",
+    retryCheck: "Vérifier à nouveau",
+    testSucceededTitle: "Paiement de test réussi",
+    testSucceededText: (amount: string) =>
+      `KKiaPay a confirmé ce paiement de test de ${amount}, vérifié par le serveur du site. C'était un essai : aucun argent n'a été prélevé et aucun don n'a été enregistré.`,
+    another: "Faire un autre essai",
+    testBadge: "Mode test",
   },
 
   offline: {

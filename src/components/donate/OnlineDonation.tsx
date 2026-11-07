@@ -9,9 +9,9 @@ import { startOnlineDonation } from "@/server/actions/donations";
 import { getActiveProvider } from "@/server/payments/provider";
 
 /**
- * Bloc « don en ligne » : le formulaire n'est rendu QUE si un prestataire
- * réel est actif. Aujourd'hui (aucun adaptateur, Phase 4) : message honnête
- * « le paiement en ligne arrive bientôt ».
+ * Bloc « don en ligne » : le formulaire n'est rendu QUE si KKiaPay est
+ * configuré (sinon : message honnête « le paiement en ligne arrive
+ * bientôt »). En mode test, un bandeau annonce qu'aucun argent n'est prélevé.
  */
 export function OnlineDonation({
   settings,
@@ -34,6 +34,7 @@ export function OnlineDonation({
       suggestedAmounts={settings.donationSuggestedAmounts.filter((amount) => Number.isSafeInteger(amount) && amount > 0)}
       minAmount={settings.donationMinAmount ?? DEFAULT_MIN_DONATION}
       providerLabel={provider.label}
+      testMode={provider.mode === "sandbox"}
       campaign={campaign}
     />
   );
