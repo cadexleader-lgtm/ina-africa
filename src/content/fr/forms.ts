@@ -221,10 +221,16 @@ export const FORM_TEXT = {
 export const DONATE_TEXT = {
   metaTitle: "Faire un don",
   metaDescription:
-    "Soutenir l'ONG INA-AFRICA par un don : Mobile Money, virement bancaire et appels aux dons en cours.",
+    "Soutenir l'ONG INA-AFRICA par un don : Mobile Money, carte bancaire, virement et besoins du moment.",
   eyebrow: "Faire un don",
-  title: "Soutenir INA-AFRICA",
-  intro: "Votre don aide l'ONG à mener ses actions auprès des communautés.",
+  title: "Offrez un nouvel avenir",
+  intro:
+    "Kits scolaires pour les élèves, kits vestimentaires, formations pour les femmes et les filles mères : chaque don, petit ou grand, permet à INA-AFRICA d'agir sur le terrain.",
+  formTitle: "Votre don",
+  formIntro: "Choisissez un montant, puis confirmez votre don en toute sécurité.",
+  proofTitle: "Ce que fait déjà INA-AFRICA",
+  proofIntro: "Des actions menées sur le terrain, au Bénin, et documentées par l'ONG.",
+  proofAction: "Voir toutes nos actions",
 
   online: {
     title: "Don en ligne",
@@ -244,10 +250,15 @@ export const DONATE_TEXT = {
     anonymous: "Rester anonyme (votre nom ne sera jamais affiché publiquement)",
     message: "Un message pour l'équipe",
     consent: "J'accepte qu'INA-AFRICA utilise ces informations pour traiter mon don (voir la ",
-    submit: "Continuer vers le paiement",
-    submitting: "Préparation du paiement…",
-    providerNote: (provider: string) =>
-      `Le paiement se fait dans la fenêtre sécurisée de ${provider} (Mobile Money ou carte bancaire). INA-AFRICA ne voit jamais vos codes.`,
+    submit: "Je fais un don",
+    submitWithAmount: (amount: string) => `Je donne ${amount}`,
+    submitting: "Préparation de votre don…",
+    trust: [
+      "Paiement sécurisé par KKiaPay",
+      "Mobile Money (MTN, Moov, Celtiis…) ou carte bancaire",
+      "INA-AFRICA ne voit jamais vos codes",
+    ],
+    providerNote: (provider: string) => `Don sécurisé par ${provider}`,
     testTitle: "Paiement en ligne en phase de test",
     testText:
       "Le paiement en ligne est en cours d'essai : aucun argent n'est prélevé et aucun don n'est enregistré. Pour faire un vrai don aujourd'hui, utilisez Mobile Money avec les numéros indiqués sur cette page.",
@@ -258,12 +269,14 @@ export const DONATE_TEXT = {
   },
 
   checkout: {
-    title: "Finalisez votre don",
-    intro: (amount: string) => `Montant : ${amount}. La fenêtre de paiement KKiaPay s'ouvre sur cette page.`,
-    loading: "Ouverture de la fenêtre de paiement…",
-    open: "Ouvrir la fenêtre de paiement",
+    title: "Plus qu'un geste",
+    intro: (amount: string) =>
+      `Votre don de ${amount} est prêt. Confirmez-le dans la fenêtre sécurisée KKiaPay, avec votre Mobile Money ou votre carte.`,
+    loading: "Ouverture de la fenêtre sécurisée…",
+    open: "Je confirme mon don",
     edit: "Modifier mon don",
-    closed: "La fenêtre de paiement a été fermée. Aucun montant n'a été débité tant que le paiement n'a pas été validé.",
+    closed:
+      "Vous avez fermé la fenêtre avant de confirmer : rien n'a été débité. Votre don vous attend, il suffit de le confirmer.",
     scriptFailed:
       "La fenêtre de paiement n'a pas pu s'ouvrir (connexion ou bloqueur de publicités). Réessayez, ou donnez par Mobile Money.",
     checking: "Vérification du paiement auprès de KKiaPay…",
@@ -277,6 +290,24 @@ export const DONATE_TEXT = {
       `KKiaPay a confirmé ce paiement de test de ${amount}, vérifié par le serveur du site. C'était un essai : aucun argent n'a été prélevé et aucun don n'a été enregistré.`,
     another: "Faire un autre essai",
     testBadge: "Mode test",
+  },
+
+  /** Écran de remerciement (après un don confirmé, et en mode test). */
+  thanks: {
+    title: "Merci du fond du cœur !",
+    text: (amount: string, cause: string | null) =>
+      cause
+        ? `Votre don de ${amount} pour « ${cause} » est bien arrivé. Il rejoint l'action d'INA-AFRICA sur le terrain, au Bénin.`
+        : `Votre don de ${amount} est bien arrivé. Il rejoint l'action d'INA-AFRICA sur le terrain, au Bénin.`,
+    testNote: "Mode test : ce don n'était qu'un essai, aucun argent n'a été prélevé.",
+    shareTitle: "Multipliez votre geste",
+    shareText: "Un message à vos proches peut faire naître d'autres dons. Partagez en un clic :",
+    shareMessage: (cause: string | null) =>
+      cause
+        ? `Je viens de soutenir « ${cause} » avec l'ONG INA-AFRICA. Vous aussi, vous pouvez aider :`
+        : "Je viens de soutenir l'ONG INA-AFRICA, qui agit au Bénin pour un nouvel avenir. Vous aussi, vous pouvez aider :",
+    next: "Découvrir les actions de l'ONG",
+    needs: "Voir les autres besoins",
   },
 
   offline: {
@@ -305,9 +336,32 @@ export const DONATE_TEXT = {
   },
 
   campaigns: {
-    title: "Nos appels aux dons",
-    intro: "Soutenez une action précise et partagez son lien autour de vous.",
-    action: "Voir l'appel aux dons",
+    title: "Nos besoins du moment",
+    intro: "Choisissez une cause précise : votre don va à cette action, et son lien se partage en un clic.",
+    action: "Voir ce besoin",
+    all: "Voir tous les besoins",
+  },
+
+  /** Page « Nos besoins » : les appels aux dons actifs, présentés comme des besoins. */
+  needs: {
+    metaTitle: "Nos besoins",
+    metaDescription:
+      "Les besoins actuels de l'ONG INA-AFRICA au Bénin : chaque carte indique l'objectif à atteindre. Choisissez une cause et faites un don.",
+    eyebrow: "Nos besoins",
+    title: "Les besoins d'aujourd'hui",
+    intro:
+      "Chaque carte est un besoin réel de l'ONG, avec l'objectif à atteindre. Choisissez la cause qui vous touche : votre don va directement à cette action.",
+    goal: "Objectif",
+    collected: (amount: string) => `${amount} déjà collectés`,
+    support: "Je soutiens cette cause",
+    share: "Partager",
+    emptyTitle: "Les besoins de l'ONG seront publiés ici très bientôt",
+    emptyText:
+      "En attendant, un don général soutient l'ensemble des actions d'INA-AFRICA : éducation, santé, autonomisation des femmes, jeunesse.",
+    emptyAction: "Je fais un don",
+    generalTitle: "Vous ne savez pas laquelle choisir ?",
+    generalText: "Un don général soutient l'ensemble des actions d'INA-AFRICA sur le terrain.",
+    generalAction: "Je fais un don général",
   },
 
   otherWays: {
@@ -323,7 +377,7 @@ export const DONATE_TEXT = {
     from: "Depuis le",
     until: "Jusqu'au",
     between: (start: string, end: string) => `Du ${start} au ${end}`,
-    supportTitle: "Soutenir cet appel",
+    supportTitle: "Je soutiens cette cause",
     shareTitle: "Partager cet appel",
     shareText: "Le lien de cette page est fait pour être partagé : il affiche un aperçu sur WhatsApp et Facebook.",
     shareLabel: "Partager",

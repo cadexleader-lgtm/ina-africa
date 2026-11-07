@@ -129,5 +129,6 @@ export const PAGE_BACKDROPS = {
   volunteer: PROVISIONAL_IMAGES.atelierCouture,
   partner: illustrationAsProvisional("/images/illustrations/alphabetisation.webp"),
   donate: PROVISIONAL_IMAGES.enfantsFauteuil,
+  needs: illustrationAsProvisional("/images/illustrations/eleves-lecture.webp"),
   newsletter: illustrationAsProvisional("/images/illustrations/eleves-lecture.webp"),
 } as const;

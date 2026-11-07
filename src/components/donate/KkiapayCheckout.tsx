@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { CreditCard, RotateCcw } from "lucide-react";
 
 import { Alert } from "@/components/ui/Alert";
+import { DonationThanks } from "@/components/donate/DonationThanks";
 import { Button } from "@/components/ui/Button";
 import { DONATE_TEXT } from "@/content/fr/forms";
 import { formatFcfa } from "@/lib/money";
@@ -61,9 +62,19 @@ type Phase =
   | { kind: "failed"; message: string }
   | { kind: "pending" }
   | { kind: "error"; message: string }
-  | { kind: "test_succeeded"; amount: number };
+  | { kind: "test_succeeded"; amount: number; shareUrl: string };
 
-export function KkiapayCheckout({ checkout, editHref }: { checkout: Checkout; editHref: string }) {
+export function KkiapayCheckout({
+  checkout,
+  editHref,
+  cause = null,
+}: {
+  checkout: Checkout;
+  /** Page du formulaire (recharge = nouveau don) ; c'est aussi l'adresse partagée après le don. */
+  editHref: string;
+  /** Titre du besoin soutenu, sinon don général. */
+  cause?: string | null;
+}) {
   const C = DONATE_TEXT.checkout;
   const [phase, setPhase] = useState<Phase>({ kind: "loading" });
   const [transactionId, setTransactionId] = useState<string | null>(null);
@@ -91,12 +102,12 @@ export function KkiapayCheckout({ checkout, editHref }: { checkout: Checkout; ed
       }
       if (result.status === "test_succeeded") {
         doneRef.current = true;
-        setPhase({ kind: "test_succeeded", amount: result.amount });
+        setPhase({ kind: "test_succeeded", amount: result.amount, shareUrl: new URL(editHref, window.location.origin).toString() });
       } else if (result.status === "failed") setPhase({ kind: "failed", message: result.message });
       else if (result.status === "error") setPhase({ kind: "error", message: result.message });
       else setPhase({ kind: "pending" });
     },
-    [checkout.reference, C.checkFailed],
+    [checkout.reference, editHref, C.checkFailed],
   );
 
   const open = useCallback(async () => {
@@ -159,11 +170,9 @@ export function KkiapayCheckout({ checkout, editHref }: { checkout: Checkout; ed
 
   if (phase.kind === "test_succeeded") {
     return (
-      <div ref={messageRef} tabIndex={-1} className="flex flex-col gap-5 focus:outline-none">
-        <Alert tone="success" title={C.testSucceededTitle} role="status">
-          <p>{C.testSucceededText(formatFcfa(phase.amount))}</p>
-        </Alert>
-        <p>
+      <div ref={messageRef} tabIndex={-1} className="flex flex-col gap-6 focus:outline-none" role="status">
+        <DonationThanks amount={phase.amount} cause={cause} shareUrl={phase.shareUrl} test headingLevel="h3" />
+        <p className="text-center">
           <a href={editHref} className="font-semibold text-link underline underline-offset-4 hover:text-link-strong">
             {C.another}
           </a>
@@ -178,7 +187,7 @@ export function KkiapayCheckout({ checkout, editHref }: { checkout: Checkout; ed
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-2">
         <div className="flex flex-wrap items-center gap-3">
-          <h2 className="text-h3">{C.title}</h2>
+          <h3 className="text-h3">{C.title}</h3>
           {checkout.sandbox && (
             <span className="inline-flex items-center rounded-full border border-gold bg-gold-50 px-3 py-0.5 text-small font-semibold text-brand">
               {C.testBadge}

@@ -20,6 +20,7 @@ export const STATIC_PUBLIC_PATHS = [
   "/actualites",
   "/galerie",
   "/faire-un-don",
+  "/nos-besoins",
   "/nous-rejoindre/benevole",
   "/nous-rejoindre/membre",
   "/nous-rejoindre/partenaire",

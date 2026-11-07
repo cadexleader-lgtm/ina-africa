@@ -41,6 +41,7 @@ export const ENGAGE_NAV: (NavItem & { description: string })[] = [
   { href: "/nous-rejoindre/membre", label: "Devenir membre", description: "Participer à la vie de l'organisation" },
   { href: "/nous-rejoindre/benevole", label: "Devenir bénévole", description: "Donner de son temps et de ses compétences" },
   { href: "/nous-rejoindre/partenaire", label: "Devenir partenaire", description: "Soutenir et construire des collaborations" },
+  { href: "/nos-besoins", label: "Nos besoins", description: "Les causes à soutenir et leurs objectifs" },
   { href: "/faire-un-don", label: "Faire un don", description: "Financer les actions sur le terrain" },
 ];
 
@@ -49,6 +50,7 @@ export const JOIN_NAV: NavItem[] = [
   { href: "/nous-rejoindre/benevole", label: "Devenir bénévole" },
   { href: "/nous-rejoindre/membre", label: "Devenir membre" },
   { href: "/nous-rejoindre/partenaire", label: "Devenir partenaire" },
+  { href: "/nos-besoins", label: "Nos besoins" },
   { href: "/faire-un-don", label: "Faire un don" },
 ];
 

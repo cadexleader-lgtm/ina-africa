@@ -644,7 +644,7 @@ export const CONTACTS = {
 
 /** Dons directs par Mobile Money, montant minimum et montants proposés (FCFA). */
 export const DIRECT_DONATIONS = {
-  minAmount: 2000,
+  minAmount: 100,
   suggestedAmounts: [2000, 5000, 10000],
   instructions: [
     { method: "mobile_money" as const, label: "Moov Money", number: "01 94 84 04 55" },

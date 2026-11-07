@@ -14,12 +14,12 @@ import { getFormsBackend } from "@/server/security/forms-backend";
 export type PaymentTracking =
   | { kind: "unavailable" }
   | { kind: "not_found" }
-  | { kind: "found"; status: TransactionStatus; amount: number; campaignTitle: string | null };
+  | { kind: "found"; status: TransactionStatus; amount: number; campaignTitle: string | null; campaignSlug: string | null };
 
 type Row = {
   status: TransactionStatus;
   amount: number | string;
-  donations: { donation_campaigns: { title: string } | { title: string }[] | null } | null;
+  donations: { donation_campaigns: { title: string; slug: string } | { title: string; slug: string }[] | null } | null;
 };
 
 const STATUSES: TransactionStatus[] = ["pending", "succeeded", "failed", "cancelled", "refunded"];
@@ -31,7 +31,7 @@ export async function readPaymentTracking(reference: unknown): Promise<PaymentTr
 
   const { data, error } = await backend.db
     .from("payment_transactions")
-    .select("status, amount, donations(donation_campaigns(title))")
+    .select("status, amount, donations(donation_campaigns(title, slug))")
     .eq("merchant_reference", reference)
     .maybeSingle<Row>();
   if (error) {
@@ -41,6 +41,12 @@ export async function readPaymentTracking(reference: unknown): Promise<PaymentTr
   if (!data || !STATUSES.includes(data.status)) return { kind: "not_found" };
 
   const campaign = data.donations?.donation_campaigns;
-  const campaignTitle = Array.isArray(campaign) ? (campaign[0]?.title ?? null) : (campaign?.title ?? null);
-  return { kind: "found", status: data.status, amount: Number(data.amount), campaignTitle };
+  const first = Array.isArray(campaign) ? campaign[0] : campaign;
+  return {
+    kind: "found",
+    status: data.status,
+    amount: Number(data.amount),
+    campaignTitle: first?.title ?? null,
+    campaignSlug: first?.slug ?? null,
+  };
 }

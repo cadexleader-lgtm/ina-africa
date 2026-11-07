@@ -5,8 +5,10 @@ import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { FormCard, PageIntro } from "@/components/forms/PageParts";
+import { DonationThanks } from "@/components/donate/DonationThanks";
 import { DONATE_TEXT } from "@/content/fr/forms";
 import { formatFcfa } from "@/lib/money";
+import { absoluteUrl } from "@/lib/site-url";
 import { getKkiapayConfig } from "@/server/payments/kkiapay";
 import { reconcileKkiapayPayment } from "@/server/payments/reconcile";
 import { readPaymentTracking, type PaymentTracking } from "@/server/payments/tracking";
@@ -68,6 +70,29 @@ export default async function TrackingPage({ searchParams }: PageProps<"/faire-u
   const { Icon, tone, title, text } = describe(tracking);
   const pending = tracking.kind === "found" && tracking.status === "pending";
   const retry = tracking.kind === "found" && (tracking.status === "failed" || tracking.status === "cancelled");
+
+  if (tracking.kind === "found" && tracking.status === "succeeded") {
+    const sharePath = tracking.campaignSlug ? `/faire-un-don/${tracking.campaignSlug}` : "/faire-un-don";
+    return (
+      <>
+        <PageIntro title={D.title} breadcrumbs={[{ label: DONATE_TEXT.eyebrow, href: "/faire-un-don" }, { label: D.title }]} />
+        <Section labelledBy="suivi-merci">
+          <Container size="reading">
+            <FormCard>
+              <div role="status">
+                <DonationThanks
+                  amount={tracking.amount}
+                  cause={tracking.campaignTitle}
+                  shareUrl={absoluteUrl(sharePath)}
+                  titleId="suivi-merci"
+                />
+              </div>
+            </FormCard>
+          </Container>
+        </Section>
+      </>
+    );
+  }
 
   return (
     <>

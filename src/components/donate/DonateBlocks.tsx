@@ -3,11 +3,8 @@ import { ArrowRight, Clock, HandCoins, Landmark, Smartphone } from "lucide-react
 
 import { Alert } from "@/components/ui/Alert";
 import { LinkButton } from "@/components/ui/Button";
-import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { ContactAlternatives, hasContacts, type OrgContacts } from "@/components/forms/ContactAlternatives";
 import { CopyValueButton } from "@/components/donate/CopyValueButton";
-import { CARD, CARD_IMAGE, CARD_LINK, CARD_MORE } from "@/components/site/card-styles";
-import { MediaTile } from "@/components/site/MediaTile";
 import { DONATE_TEXT } from "@/content/fr/forms";
 import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/format";
@@ -168,35 +165,6 @@ export function campaignPeriod(campaign: Pick<DonationCampaign, "startsOn" | "en
   if (end) return `${D.campaign.until} ${end}`;
   if (start) return `${D.campaign.from} ${start}`;
   return null;
-}
-
-/** Carte d'un appel aux dons → /faire-un-don/[slug]. Photo de couverture RÉELLE seulement. */
-export function CampaignCard({ campaign, headingLevel: Heading = "h3" }: { campaign: DonationCampaign; headingLevel?: "h2" | "h3" }) {
-  const period = campaignPeriod(campaign);
-  return (
-    <article className={cn(CARD, "flex-1 flex-col")}>
-      <div className="relative aspect-[16/10] shrink-0 overflow-hidden">
-        {campaign.cover ? (
-          <ResponsiveImage image={campaign.cover} fill sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" imgClassName={CARD_IMAGE} />
-        ) : (
-          <MediaTile icon={HandCoins} className="absolute inset-0" />
-        )}
-      </div>
-      <div className="flex flex-1 flex-col p-6">
-        {period && <p className="mb-3 text-small font-medium text-muted">{period}</p>}
-        <Heading className="text-h4">
-          <Link href={`/faire-un-don/${campaign.slug}`} className={CARD_LINK}>
-            {campaign.title}
-          </Link>
-        </Heading>
-        {campaign.summary && <p className="mt-3 line-clamp-3 text-muted">{campaign.summary}</p>}
-        <span aria-hidden="true" className={CARD_MORE}>
-          {D.campaigns.action}
-          <ArrowRight className="size-4 transition-transform duration-(--duration-fast) group-hover:translate-x-0.5" />
-        </span>
-      </div>
-    </article>
-  );
 }
 
 /**
