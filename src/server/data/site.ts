@@ -280,7 +280,7 @@ export async function listTeamMembers(): Promise<TeamMember[]> {
     position: row.position,
     group: isTeamGroup(row.team_group) ? row.team_group : DEFAULT_TEAM_GROUP,
     bio: row.bio,
-    photo: toImage(row.photo_path, null, `Portrait de ${row.full_name}`),
+    photo: toImage(row.photo_path, null, `Portrait de ${row.full_name}, ${row.position}, ONG INA-AFRICA (Bénin)`),
   }));
 }
 

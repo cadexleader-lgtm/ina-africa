@@ -12,6 +12,8 @@ import {
   AboutVision,
 } from "@/components/pages/about/AboutSections";
 import { AboutTeam } from "@/components/pages/about/AboutTeam";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { aboutJsonLd } from "@/lib/seo/structured-data";
 import { HomeJoin } from "@/components/home/HomeJoin";
 import { OnThisPage } from "@/components/pages/OnThisPage";
 import { PageHeader } from "@/components/pages/PageHeader";
@@ -92,6 +94,7 @@ export default async function AboutPage() {
       <AboutApproach items={approach.length > 0 ? approach : APPROACH} tone="white" />
       <AboutGovernance tone="ivory" />
       <AboutTeam members={team} tone="white" />
+      {team.length > 0 && <JsonLd data={aboutJsonLd(team)} />}
       <HomeJoin tone="ivory" id="rejoindre" />
     </>
   );

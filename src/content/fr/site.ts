@@ -135,7 +135,9 @@ export const T = {
     },
   },
   home: {
-    metaTitle: "INA-AFRICA — Initiative pour un Nouvel Avenir en Afrique",
+    metaTitle: "INA-AFRICA — ONG au Bénin pour les femmes, les jeunes et les enfants",
+    metaDescription:
+      "INA-AFRICA (Initiative pour un Nouvel Avenir en Afrique), ONG béninoise basée à Cotonou : éducation, santé, autonomisation des femmes, enfants vulnérables. Faites un don ou rejoignez-nous.",
     hero: {
       primary: "Découvrir notre organisation",
       secondary: "Rejoindre INA-AFRICA",

@@ -2,7 +2,8 @@ import { ORG } from "@/content/fr/site";
 import { absoluteMediaUrl } from "@/lib/seo/metadata";
 import { collapseWhitespace, countWords, metaDescription } from "@/lib/seo/text";
 import { absoluteUrl } from "@/lib/site-url";
-import type { Article, SiteSettings } from "@/lib/types/content";
+import { AREAS } from "@/content/fr/ina-africa";
+import type { Article, SiteSettings, TeamMember } from "@/lib/types/content";
 
 /**
  * Données structurées (schema.org) pour Google, à afficher avec <JsonLd>.
@@ -31,6 +32,10 @@ export const ORG_FACTS = {
   country: "BJ",
   /** Logo officiel fourni par l'ONG (public/brand/). */
   logoPath: "/brand/ina-africa-logo.png",
+  /** Présentation courte, fidèle aux statuts (domaines d'intervention). */
+  description:
+    "ONG béninoise fondée en 2017, INA-AFRICA agit pour l'éducation, la santé et les droits en santé sexuelle et reproductive, l'autonomisation des femmes et des filles mères, la jeunesse, l'inclusion et le développement local.",
+  areaServed: "Bénin",
 } as const;
 
 function logoUrl(): string {
@@ -62,11 +67,16 @@ export function organizationJsonLd(
     alternateName: ORG.fullName,
     url: absoluteUrl("/"),
     logo: logoUrl(),
+    description: ORG_FACTS.description,
     foundingDate: ORG_FACTS.foundingDate,
     address: compact({ "@type": "PostalAddress", streetAddress: address, addressCountry: ORG_FACTS.country }),
+    areaServed: { "@type": "Country", name: ORG_FACTS.areaServed },
+    knowsAbout: AREAS.map((area) => area.title),
     email: settings.contactEmail,
     telephone: settings.contactPhone,
     sameAs,
+    // Faire un don : action proposée par Google et les assistants.
+    potentialAction: { "@type": "DonateAction", name: "Faire un don", target: absoluteUrl("/faire-un-don") },
   });
 }
 
@@ -86,6 +96,34 @@ export function websiteJsonLd(): JsonLdObject {
 /** Accueil : l'organisation et le site, dans un seul bloc. */
 export function homeJsonLd(settings: Parameters<typeof organizationJsonLd>[0]): JsonLdObject {
   return { "@context": CONTEXT, "@graph": [organizationJsonLd(settings), websiteJsonLd()] };
+}
+
+/**
+ * Page « À propos » : l'ONG et les membres de son équipe publiés (nom,
+ * fonction, portrait). Aide Google à relier les personnes à l'ONG.
+ */
+export function aboutJsonLd(members: Pick<TeamMember, "fullName" | "position" | "photo">[]): JsonLdObject {
+  const url = absoluteUrl("/a-propos");
+  return {
+    "@context": CONTEXT,
+    "@graph": [
+      { "@type": "AboutPage", "@id": `${url}#page`, url, inLanguage: "fr-FR", about: { "@id": organizationId() } },
+      compact({
+        "@type": "NGO",
+        "@id": organizationId(),
+        name: ORG.name,
+        member: members.map((member) =>
+          compact({
+            "@type": "Person",
+            name: member.fullName,
+            jobTitle: member.position,
+            image: member.photo ? absoluteMediaUrl(member.photo.path) : null,
+            memberOf: { "@id": organizationId() },
+          }),
+        ),
+      }),
+    ],
+  };
 }
 
 export type BreadcrumbEntry = { name: string; path: string };

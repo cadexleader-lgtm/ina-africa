@@ -36,7 +36,7 @@ export const PAGES = {
   },
 
   about: {
-    metaTitle: "À propos",
+    metaTitle: "Qui sommes-nous ? Histoire, équipe et missions de l'ONG",
     metaDescription: "Présentation de l'ONG INA-AFRICA (Initiative pour un Nouvel Avenir en Afrique) : historique, vision, missions, objectifs et approche d'intervention.",
     label: "À propos",
     title: "Qui sommes-nous ?",
@@ -71,8 +71,9 @@ export const PAGES = {
   },
 
   areas: {
-    metaTitle: "Nos domaines d'action",
-    metaDescription: "Les domaines dans lesquels l'ONG INA-AFRICA intervient au Bénin.",
+    metaTitle: "Nos domaines d'action au Bénin",
+    metaDescription:
+      "Éducation, santé, autonomisation des femmes, jeunesse, égalité de genre, développement local : les domaines dans lesquels l'ONG INA-AFRICA agit au Bénin.",
     label: "Ce que nous faisons",
     title: "Nos domaines d'action",
     intro: "Découvrez les domaines dans lesquels INA-AFRICA intervient et les projets qui s'y rattachent.",
@@ -102,8 +103,9 @@ export const PAGES = {
   },
 
   projects: {
-    metaTitle: "Nos projets",
-    metaDescription: "Les projets et actions de l'ONG INA-AFRICA, par domaine d'action et par état d'avancement.",
+    metaTitle: "Nos projets et actions au Bénin",
+    metaDescription:
+      "Kits scolaires, kits vestimentaires, Journée de la femme, sensibilisation à la santé : les projets et actions de l'ONG INA-AFRICA au Bénin, classés par domaine.",
     label: "Nos projets",
     title: "Nos projets et actions",
     intro: "Parcourez les projets de INA-AFRICA par domaine d'action et par état d'avancement.",

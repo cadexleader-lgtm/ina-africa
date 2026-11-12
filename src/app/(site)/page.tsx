@@ -19,9 +19,9 @@ import { listLatestArticles } from "@/server/data/articles";
 import { listHomeProjects } from "@/server/data/projects";
 import { getSiteSettings, listActionAreas, listPartners, listTeamMembers } from "@/server/data/site";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const settings = await getSiteSettings();
-  const description = settings.heroText ?? settings.vision ?? `Site de l'ONG ${ORG.name} (${ORG.fullName}), au Bénin.`;
+export function generateMetadata(): Metadata {
+  // Description pensée pour Google (recherches « ONG Bénin », « faire un don Bénin »…).
+  const description = T.home.metaDescription;
   return {
     title: { absolute: T.home.metaTitle },
     description,

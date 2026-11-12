@@ -219,9 +219,9 @@ export const FORM_TEXT = {
 } as const;
 
 export const DONATE_TEXT = {
-  metaTitle: "Faire un don",
+  metaTitle: "Faire un don à une ONG au Bénin",
   metaDescription:
-    "Soutenir l'ONG INA-AFRICA par un don : Mobile Money, carte bancaire, virement et besoins du moment.",
+    "Soutenez l'ONG INA-AFRICA au Bénin par Mobile Money (MTN, Moov), dès 100 FCFA : kits scolaires, femmes, filles mères et enfants vulnérables.",
   eyebrow: "Faire un don",
   title: "Offrez un nouvel avenir",
   intro:
@@ -344,7 +344,7 @@ export const DONATE_TEXT = {
 
   /** Page « Nos besoins » : les appels aux dons actifs, présentés comme des besoins. */
   needs: {
-    metaTitle: "Nos besoins",
+    metaTitle: "Nos besoins : aider les enfants et les femmes au Bénin",
     metaDescription:
       "Les besoins actuels de l'ONG INA-AFRICA au Bénin : chaque carte indique l'objectif à atteindre. Choisissez une cause et faites un don.",
     eyebrow: "Nos besoins",

@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { JsonLd } from "@/components/seo/JsonLd";
-import { articleJsonLd, breadcrumbJsonLd, homeJsonLd, organizationJsonLd } from "@/lib/seo/structured-data";
+import { aboutJsonLd, articleJsonLd, breadcrumbJsonLd, homeJsonLd, organizationJsonLd } from "@/lib/seo/structured-data";
 import type { Article } from "@/lib/types/content";
 
 beforeEach(() => {
@@ -22,8 +22,12 @@ describe("organizationJsonLd", () => {
       alternateName: "Initiative pour un Nouvel Avenir en Afrique",
       url: "https://ina-africa.example/",
       logo: "https://ina-africa.example/brand/ina-africa-logo.png",
+      description: expect.stringContaining("ONG béninoise fondée en 2017"),
       foundingDate: "2017",
       address: { "@type": "PostalAddress", addressCountry: "BJ" },
+      areaServed: { "@type": "Country", name: "Bénin" },
+      knowsAbout: expect.arrayContaining(["Éducation", "Autonomisation des femmes"]),
+      potentialAction: { "@type": "DonateAction", name: "Faire un don", target: "https://ina-africa.example/faire-un-don" },
     });
   });
 
@@ -41,6 +45,18 @@ describe("organizationJsonLd", () => {
     for (const key of ["aggregateRating", "review", "numberOfEmployees"]) {
       expect(data).not.toHaveProperty(key);
     }
+  });
+});
+
+describe("aboutJsonLd", () => {
+  it("relie les membres publiés à l'ONG, avec leur portrait s'il existe", () => {
+    const data = aboutJsonLd([
+      { fullName: "Awa Test", position: "Présidente", photo: { path: "equipe/awa.webp", alt: "Portrait" } },
+      { fullName: "Koffi Test", position: "Trésorier", photo: null },
+    ]);
+    const ngo = (data["@graph"] as Record<string, unknown>[])[1] as { member: Record<string, unknown>[] };
+    expect(ngo.member[0]).toMatchObject({ "@type": "Person", name: "Awa Test", jobTitle: "Présidente", image: expect.stringContaining("equipe/awa.webp") });
+    expect(ngo.member[1]).not.toHaveProperty("image");
   });
 });
 
