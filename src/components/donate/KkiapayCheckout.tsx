@@ -85,8 +85,8 @@ export function KkiapayCheckout({
     async (transactionId: string) => {
       setPhase({ kind: "checking" });
       let result: PaymentCheckResult = { status: "pending" };
-      // KKiaPay met parfois quelques secondes à confirmer : jusqu'à 4 essais espacés.
-      for (let attempt = 0; attempt < 4; attempt++) {
+      // KKiaPay met parfois quelques secondes à confirmer : jusqu'à 8 essais espacés (environ 25 s).
+      for (let attempt = 0; attempt < 8; attempt++) {
         if (attempt > 0) await new Promise((resolve) => window.setTimeout(resolve, 3_000));
         try {
           result = await checkOnlinePayment(checkout.reference, transactionId);

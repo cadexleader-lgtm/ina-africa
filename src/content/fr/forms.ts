@@ -279,7 +279,7 @@ export const DONATE_TEXT = {
       "Vous avez fermé la fenêtre avant de confirmer : rien n'a été débité. Votre don vous attend, il suffit de le confirmer.",
     scriptFailed:
       "La fenêtre de paiement n'a pas pu s'ouvrir (connexion ou bloqueur de publicités). Réessayez, ou donnez par Mobile Money.",
-    checking: "Vérification du paiement auprès de KKiaPay…",
+    checking: "Confirmation de votre don auprès de KKiaPay… (quelques secondes)",
     failed: "Le paiement n'a pas abouti : aucun montant n'a été débité. Vous pouvez réessayer.",
     checkFailed: "Nous n'avons pas pu vérifier ce paiement pour le moment.",
     unavailable: "Le paiement en ligne n'est pas disponible pour le moment.",
