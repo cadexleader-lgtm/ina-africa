@@ -28,7 +28,8 @@ import { getSiteSettings } from "@/server/data/site";
 import { AppError, fromDatabaseError, runAction } from "@/server/errors";
 import { getKkiapayConfig, KKIAPAY_TRANSACTION_ID, verifyKkiapayTransaction, type KkiapayConfig } from "@/server/payments/kkiapay";
 import { reconcileKkiapayPayment } from "@/server/payments/reconcile";
-import { getFormsBackend } from "@/server/security/forms-backend";
+import { issueFormToken } from "@/server/security/form-token";
+import { getFormSecret, getFormsBackend } from "@/server/security/forms-backend";
 import { hashIp } from "@/server/security/ip";
 import { enforceRateLimit, RATE_LIMITS } from "@/server/security/rate-limit";
 import { generateMerchantReference } from "@/server/security/tokens";
@@ -88,6 +89,16 @@ function checkoutFor(
     email: donation.email || undefined,
     phone: widgetPhone(donation.phone),
   };
+}
+
+/**
+ * Horodatage signé du formulaire de don, demandé par le navigateur sur les
+ * pages entièrement statiques (page d'un appel aux dons). Ne donne accès à
+ * rien d'autre ; null si le don en ligne n'est pas disponible.
+ */
+export async function requestDonationToken(): Promise<string | null> {
+  const secret = getFormSecret();
+  return secret && getKkiapayConfig() ? issueFormToken(FORM_KEYS.donation, secret) : null;
 }
 
 export async function startOnlineDonation(_previous: FormState, formData: FormData): Promise<FormState> {

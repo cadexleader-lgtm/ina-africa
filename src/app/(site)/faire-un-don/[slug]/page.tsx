@@ -144,7 +144,7 @@ export default async function CampaignPage({ params }: PageProps<"/faire-un-don/
               <h2 id="appel-soutenir" className="text-h3">
                 {D.campaign.supportTitle}
               </h2>
-              <OnlineDonation settings={settings} contacts={contacts} campaign={{ slug: campaign.slug, title: campaign.title }} />
+              <OnlineDonation settings={settings} contacts={contacts} campaign={{ slug: campaign.slug, title: campaign.title }} staticPage />
               <SuggestedAmounts amounts={settings.donationSuggestedAmounts} headingLevel="h3" />
               <OfflineInstructions instructions={settings.offlineDonationInstructions} contacts={contacts} headingLevel="h3" compact />
             </section>
