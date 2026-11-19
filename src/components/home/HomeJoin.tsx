@@ -23,7 +23,17 @@ export function HomeJoin({ tone = "ivory", id = "rejoindre" }: { tone?: SectionT
             id={`${id}-titre`}
             label="Nous rejoindre"
             title="Pourquoi rejoindre INA-AFRICA ?"
-            intro="Chacun peut contribuer, à sa mesure, à un nouvel avenir pour les communautés. Choisissez la forme d'engagement qui vous ressemble."
+            intro={
+              // Texte transmis par l'ONG le 19/11/2026.
+              <>
+                <p className="font-semibold text-brand">Votre engagement, leur nouvel avenir.</p>
+                <p className="mt-3 text-body">
+                  Chacun a le pouvoir d&apos;agir à sa mesure pour transformer durablement la vie des communautés. Que ce soit par
+                  un don, du bénévolat ou un partenariat, choisissez la forme d&apos;engagement qui vous ressemble pour soutenir les
+                  enfants, les orphelins, les jeunes, les personnes en situation de handicap et les femmes vulnérables sur le terrain.
+                </p>
+              </>
+            }
           />
         </Reveal>
 

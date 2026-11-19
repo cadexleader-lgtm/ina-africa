@@ -25,7 +25,19 @@ export function HomeObjectives() {
             id="accueil-objectifs"
             label="Nos objectifs"
             title="Ce que nous nous engageons à faire"
-            intro="Les objectifs inscrits dans les statuts de INA-AFRICA guident chacune de ses actions."
+            intro={
+              // Texte transmis par l'ONG le 19/11/2026 (sans élision devant INA-AFRICA).
+              <>
+                <p className="font-semibold text-brand">Une vision statutaire claire, un engagement concret sur le terrain.</p>
+                <p className="mt-3 text-body">
+                  Les objectifs inscrits dans les statuts de INA-AFRICA constituent le socle de notre gouvernance et guident chacune de
+                  nos décisions. Bien plus que de simples textes fondateurs, ils représentent une boussole éthique qui oriente nos
+                  interventions en faveur des enfants, des orphelins, des jeunes, des femmes vulnérables, des veuves, des filles-mères et
+                  des personnes en situation de handicap. C&apos;est cette fidélité à notre mission originelle qui garantit la cohérence, la
+                  transparence et l&apos;impact durable de nos actions au service des communautés.
+                </p>
+              </>
+            }
           />
         </Reveal>
         <ul className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">

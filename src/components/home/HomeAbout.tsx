@@ -6,7 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/SectionHeading";
-import { AUDIENCES, ORGANISATION_INTRO } from "@/content/fr/ina-africa";
+import { AUDIENCES, ORGANISATION_INTRO, ORGANISATION_LEAD } from "@/content/fr/ina-africa";
 import { ILLUSTRATIONS, shortCredit } from "@/content/illustrations";
 import { T } from "@/content/fr/site";
 
@@ -27,6 +27,7 @@ export function HomeAbout() {
               {T.home.about.title}
             </h2>
             <div className="mt-6 space-y-4 text-body text-ink">
+              <p className="text-lead font-semibold text-brand">{ORGANISATION_LEAD}</p>
               {ORGANISATION_INTRO.map((paragraph) => (
                 <p key={paragraph.slice(0, 32)}>{paragraph}</p>
               ))}

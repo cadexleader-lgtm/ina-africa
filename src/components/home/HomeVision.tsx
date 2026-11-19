@@ -2,7 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/SectionHeading";
-import { MISSION_TITLES, MISSIONS, VISION, VISION_EXPLAINED } from "@/content/fr/ina-africa";
+import { MISSION_TITLES, MISSIONS, VISION_EXPLAINED, VISION_LEAD } from "@/content/fr/ina-africa";
 import type { SiteSettings } from "@/lib/types/content";
 import { splitLines } from "@/server/data/site";
 
@@ -11,7 +11,6 @@ import { splitLines } from "@/server/data/site";
  * les trois missions (art. 9). Textes de l'administration s'ils existent.
  */
 export function HomeVision({ settings }: { settings: SiteSettings }) {
-  const vision = settings.vision?.trim() || VISION;
   const fromSettings = splitLines(settings.mission);
   const missions = fromSettings.length > 0 ? fromSettings : MISSIONS;
 
@@ -27,7 +26,7 @@ export function HomeVision({ settings }: { settings: SiteSettings }) {
               Ce que nous voulons changer
             </h2>
             <blockquote className="mt-6 border-l-4 border-gold pl-5 font-heading text-h3 font-semibold text-white">
-              {vision}
+              {VISION_LEAD}
             </blockquote>
             <p className="mt-6 text-body text-muted-inverse">{VISION_EXPLAINED}</p>
           </Reveal>

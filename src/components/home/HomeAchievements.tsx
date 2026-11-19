@@ -33,7 +33,21 @@ export function HomeAchievements({
   groupByArea?: boolean;
 }) {
   const title = settings.impactTitle ?? EXPERIENCE.title;
-  const intro = settings.impactText ?? EXPERIENCE.intro;
+  // Texte saisi dans l'administration : une première ligne seule = accroche en gras.
+  const [introLead, ...introRest] = (settings.impactText ?? EXPERIENCE.intro).split(/\n+/).map((line) => line.trim()).filter(Boolean);
+  const intro =
+    introRest.length > 0 ? (
+      <>
+        <p className="font-semibold text-brand">{introLead}</p>
+        {introRest.map((line) => (
+          <p key={line.slice(0, 24)} className="mt-3 text-body">
+            {line}
+          </p>
+        ))}
+      </>
+    ) : (
+      introLead
+    );
   const photo = settings.impactImage;
 
   return (
@@ -77,7 +91,8 @@ export function HomeAchievements({
           <div className={cn("grid gap-8 p-6 sm:p-8 lg:p-10", photo ? "md:col-span-7" : "lg:grid-cols-2 lg:gap-12")}>
             <div>
               <h3 className="text-h3">{WOMEN_PROGRAM.title}</h3>
-              <p className="mt-4 text-body text-ink">{WOMEN_PROGRAM.text}</p>
+              <p className="mt-4 font-semibold text-brand">{WOMEN_PROGRAM.lead}</p>
+              <p className="mt-2 text-body text-ink">{WOMEN_PROGRAM.text}</p>
               <p className="mt-4 text-small text-muted">{EXPERIENCE.impact}</p>
             </div>
             <div>

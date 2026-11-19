@@ -18,7 +18,7 @@ import { HomeJoin } from "@/components/home/HomeJoin";
 import { OnThisPage } from "@/components/pages/OnThisPage";
 import { PageHeader } from "@/components/pages/PageHeader";
 import { excerpt, paragraphs } from "@/components/pages/page-helpers";
-import { HISTORY, MISSIONS, OBJECTIVES, APPROACH, ORGANISATION_INTRO, VISION, VISION_EXPLAINED } from "@/content/fr/ina-africa";
+import { ABOUT_VISION, HISTORY, MISSIONS, OBJECTIVES, APPROACH, ORGANISATION_INTRO, ORGANISATION_LEAD, VISION } from "@/content/fr/ina-africa";
 import { PAGES } from "@/content/fr/pages";
 import { illustrationAsProvisional, PAGE_BACKDROPS } from "@/content/provisional-images";
 import { ORG } from "@/content/fr/site";
@@ -48,7 +48,7 @@ export default async function AboutPage() {
   const [settings, areas, team] = await Promise.all([getSiteSettings(), listActionAreas(), listTeamMembers()]);
 
   const history = paragraphs(settings.aboutHistory);
-  const [creation, ...reasons] = history.length > 0 ? history : HISTORY;
+  const [creation] = history.length > 0 ? history : HISTORY;
   const vision = settings.vision?.trim() || VISION;
   const missions = splitLines(settings.mission);
   const objectives = splitLines(settings.objectives);
@@ -76,7 +76,16 @@ export default async function AboutPage() {
         breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: T.label }]}
         label={T.label}
         title={T.title}
-        intro={<p>{ORGANISATION_INTRO[0]}</p>}
+        intro={
+          <>
+            <p className="font-semibold text-brand">{ORGANISATION_LEAD}</p>
+            {ORGANISATION_INTRO.map((paragraph) => (
+              <p key={paragraph.slice(0, 24)} className="mt-4">
+                {paragraph}
+              </p>
+            ))}
+          </>
+        }
         aside={<AboutFacts areaCount={areas.length} address={settings.address} />}
       />
       <OnThisPage items={sections} />
@@ -86,8 +95,8 @@ export default async function AboutPage() {
         image={illustrationAsProvisional("/images/illustrations/eleves-lecture.webp")}
         tone="white"
       />
-      <AboutContext paragraphs={reasons} tone="ivory" />
-      <AboutVision text={vision} explanation={VISION_EXPLAINED} />
+      <AboutContext tone="ivory" />
+      <AboutVision text={vision} explanationLead={ABOUT_VISION.lead} explanation={ABOUT_VISION.text} />
       <AboutMissions items={missions.length > 0 ? missions : MISSIONS} tone="white" />
       <AboutObjectives items={objectives.length > 0 ? objectives : OBJECTIVES} tone="ivory" />
       {values.length > 0 && <AboutValues lines={values} tone="white" />}

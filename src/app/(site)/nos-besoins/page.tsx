@@ -36,7 +36,12 @@ export default async function NeedsPage() {
         backdrop={PAGE_BACKDROPS.needs}
         eyebrow={N.eyebrow}
         title={N.title}
-        intro={N.intro}
+        intro={
+          <>
+            <p className="font-semibold text-brand">{N.introLead}</p>
+            <p className="mt-3">{N.intro}</p>
+          </>
+        }
         breadcrumbs={[{ label: N.eyebrow }]}
       />
 

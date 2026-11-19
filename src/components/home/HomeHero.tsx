@@ -25,6 +25,7 @@ export function HomeHero({ settings }: { settings: SiteSettings }) {
       key: slide.key,
       kicker: slide.kicker,
       title: slide.title,
+      lead: "lead" in slide ? slide.lead : null,
       text: slide.text,
       image: HOME_PHOTOS.heroSlides[slide.key],
     })),

@@ -7,11 +7,29 @@ import { ResponsiveImage, type ImageSource } from "@/components/ui/ResponsiveIma
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { cn } from "@/lib/cn";
 
-export type HeroSlide = { key: string; kicker: string | null; title: string; text: string | null; image: ImageSource };
+export type HeroSlide = {
+  key: string;
+  kicker: string | null;
+  title: string;
+  /** Phrase d'accroche, en gras au-dessus du texte. */
+  lead?: string | null;
+  text: string | null;
+  image: ImageSource;
+};
+
+/**
+ * Durée d'affichage d'une diapositive : au moins `interval`, plus longtemps
+ * pour un long texte (environ 35 ms par caractère), 16 s au plus.
+ */
+export function slideDuration(slide: Pick<HeroSlide, "title" | "lead" | "text">, interval: number): number {
+  const length = slide.title.length + (slide.lead?.length ?? 0) + (slide.text?.length ?? 0);
+  return Math.min(16_000, Math.max(interval, length * 35));
+}
 
 /**
  * Hero de l'accueil : texte à gauche, photo à droite, qui changent ensemble
- * toutes les 5 secondes (fondu). Le titre de la page (h1, nom de l'ONG) et
+ * toutes les 5 secondes au moins (fondu ; plus longtemps pour un long texte,
+ * voir slideDuration). Le titre de la page (h1, nom de l'ONG) et
  * les boutons restent fixes.
  *
  * Accessibilité : pause au survol et au focus, bouton Pause/Lecture (WCAG
@@ -47,9 +65,13 @@ export function HeroSlideshow({
 
   useEffect(() => {
     if (!running) return;
-    const timer = window.setInterval(() => setIndex((i) => (i + 1) % slides.length), interval);
-    return () => window.clearInterval(timer);
-  }, [running, slides.length, interval]);
+    const current = slides[index];
+    const timer = window.setTimeout(
+      () => setIndex((i) => (i + 1) % slides.length),
+      current ? slideDuration(current, interval) : interval,
+    );
+    return () => window.clearTimeout(timer);
+  }, [running, slides, index, interval]);
 
   return (
     <section
@@ -85,7 +107,18 @@ export function HeroSlideshow({
                 {slide.kicker && <Eyebrow className="mb-4">{slide.kicker}</Eyebrow>}
                 <p className="font-heading text-h1 text-brand">{slide.title}</p>
                 <span aria-hidden="true" className="mt-5 block h-1 w-20 rounded-full bg-gold" />
-                {slide.text && <p className="mt-5 max-w-[34rem] text-lead text-ink">{slide.text}</p>}
+                {slide.lead && <p className="mt-5 max-w-[34rem] text-lead font-semibold text-brand">{slide.lead}</p>}
+                {slide.text && (
+                  // Sur téléphone, un long texte est limité à quelques lignes : le diaporama tient dans l'écran.
+                  <p
+                    className={cn(
+                      "max-w-[34rem] text-ink",
+                      slide.lead ? "mt-3 line-clamp-4 text-body md:line-clamp-none" : "mt-5 text-lead",
+                    )}
+                  >
+                    {slide.text}
+                  </p>
+                )}
               </div>
             ))}
           </div>

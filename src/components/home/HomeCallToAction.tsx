@@ -20,8 +20,7 @@ export function HomeCallToAction() {
                 Construisons ensemble un nouvel avenir en Afrique
               </h2>
               <p className="mt-4 max-w-measure text-lead text-muted-inverse">
-                Un don finance les actions de formation, de sensibilisation et d&apos;aide humanitaire. Comme membre ou
-                bénévole, vous donnez de votre temps et de vos compétences aux communautés qu&apos;accompagne INA-AFRICA.
+                Chacun a un rôle à jouer pour transformer des vies sur le terrain. Par un don, vous financez nos actions concrètes d&apos;éducation, de formation, de sensibilisation et d&apos;aide humanitaire auprès des plus vulnérables. En tant que membre ou bénévole, vous mettez votre temps, votre énergie et vos compétences au service des communautés que INA-AFRICA accompagne vers l&apos;autonomie.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <LinkButton href="/faire-un-don" variant="donate" size="lg" iconLeft={<Heart aria-hidden="true" />}>

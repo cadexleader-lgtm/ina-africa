@@ -48,10 +48,21 @@ export default async function DonatePage() {
 
   return (
     <>
-      <PageIntro backdrop={PAGE_BACKDROPS.donate} eyebrow={D.eyebrow} title={D.title} intro={D.intro} breadcrumbs={[{ label: D.eyebrow }]}>
+      <PageIntro
+        backdrop={PAGE_BACKDROPS.donate}
+        eyebrow={D.eyebrow}
+        title={D.title}
+        intro={
+          <>
+            <p className="font-semibold text-brand">{D.introLead}</p>
+            <p className="mt-3">{D.intro}</p>
+          </>
+        }
+        breadcrumbs={[{ label: D.eyebrow }]}
+      >
         <div className="mt-8 flex flex-wrap gap-3">
           <LinkButton href="#votre-don" variant="donate" size="lg" iconLeft={<Heart aria-hidden="true" />}>
-            {D.online.submit}
+            {D.heroAction}
           </LinkButton>
           <LinkButton href="/nos-besoins" variant="secondary" size="lg">
             {D.campaigns.all}

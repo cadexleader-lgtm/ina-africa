@@ -7,7 +7,7 @@ import { Section, type SectionTone } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { splitTerm } from "@/components/pages/page-helpers";
 import { formatAchievementDate } from "@/components/site/AchievementCard";
-import { ACHIEVEMENTS, AUDIENCES, EXPERIENCE, GOVERNANCE } from "@/content/fr/ina-africa";
+import { ABOUT_CONTEXT, ACHIEVEMENTS, AUDIENCES, EXPERIENCE, GOVERNANCE } from "@/content/fr/ina-africa";
 import { FOUNDING_YEAR, PAGES } from "@/content/fr/pages";
 import type { ProvisionalImage } from "@/content/provisional-images";
 import { cn } from "@/lib/cn";
@@ -115,7 +115,7 @@ export function AboutHistory({
 // Vision
 // ---------------------------------------------------------------------------
 
-export function AboutVision({ text, explanation }: { text: string; explanation?: string }) {
+export function AboutVision({ text, explanation, explanationLead }: { text: string; explanation?: string; explanationLead?: string }) {
   const id = T.vision.id;
   return (
     <Section id={id} tone="brand" labelledBy={`${id}-titre`} className="relative isolate overflow-hidden">
@@ -132,7 +132,10 @@ export function AboutVision({ text, explanation }: { text: string; explanation?:
             <p className="max-w-[36ch] border-l-[3px] border-gold pl-6 font-heading text-h3 font-semibold text-white md:pl-8">
               {text}
             </p>
-            {explanation && <p className="mt-6 max-w-measure text-lead text-muted-inverse">{explanation}</p>}
+            {explanationLead && <p className="mt-6 max-w-measure text-lead font-semibold text-white">{explanationLead}</p>}
+            {explanation && (
+              <p className={cn("max-w-measure text-muted-inverse", explanationLead ? "mt-3 text-body" : "mt-6 text-lead")}>{explanation}</p>
+            )}
           </div>
         </Reveal>
       </Container>
@@ -281,7 +284,7 @@ export function AboutApproach({ items, tone }: { items: string[]; tone: SectionT
 // Contexte et raison d'être (historique, expériences, publics)
 // ---------------------------------------------------------------------------
 
-export function AboutContext({ paragraphs, tone }: { paragraphs: string[]; tone: SectionTone }) {
+export function AboutContext({ tone }: { tone: SectionTone }) {
   const id = "raison-d-etre";
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
@@ -290,10 +293,10 @@ export function AboutContext({ paragraphs, tone }: { paragraphs: string[]; tone:
           <div className="lg:col-span-6">
             <Heading id={id} label="Contexte et raison d'être" title="Pourquoi INA-AFRICA existe" />
             <div className="mt-6 space-y-4 text-ink">
-              {paragraphs.map((paragraph) => (
+              <p className="text-lead font-semibold text-brand">{ABOUT_CONTEXT.lead}</p>
+              {ABOUT_CONTEXT.paragraphs.map((paragraph) => (
                 <p key={paragraph.slice(0, 40)}>{paragraph}</p>
               ))}
-              <p>{EXPERIENCE.impact}</p>
             </div>
             <h3 className="mt-8 text-h4">Les publics accompagnés</h3>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -348,8 +351,11 @@ export function AboutGovernance({ tone }: { tone: SectionTone }) {
         <Reveal className="max-w-reading">
           <Heading id={id} label="Gouvernance" title="Une organisation structurée" />
           <p className="mt-4 text-lead text-muted">
-            INA-AFRICA s&apos;appuie sur des instances aux rôles distincts, qui garantissent une direction claire et un
-            contrôle indépendant.
+            {/* Texte transmis par l'ONG le 19/11/2026. */}
+            INA-AFRICA s&apos;appuie sur des instances dirigeantes aux rôles clairement définis, garantissant une vision
+            stratégique solide et un contrôle financier indépendant. Cette transparence institutionnelle assure la bonne gestion
+            de chaque ressource mobilisée pour les enfants, les orphelins, les jeunes, les personnes en situation de handicap et
+            les femmes vulnérables sur le terrain.
           </p>
         </Reveal>
         <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

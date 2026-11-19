@@ -224,8 +224,11 @@ export const DONATE_TEXT = {
     "Soutenez l'ONG INA-AFRICA au Bénin par Mobile Money (MTN, Moov), dès 100 FCFA : kits scolaires, femmes, filles mères et enfants vulnérables.",
   eyebrow: "Faire un don",
   title: "Offrez un nouvel avenir",
+  /** Texte transmis par l'ONG le 20/11/2026. */
+  introLead: "Votre solidarité en action sur le terrain.",
   intro:
-    "Kits scolaires pour les élèves, kits vestimentaires, formations pour les femmes et les filles mères : chaque don, petit ou grand, permet à INA-AFRICA d'agir sur le terrain.",
+    "Avec INA-AFRICA, chaque contribution compte. Qu'il s'agisse d'équiper un élève ou un orphelin pour l'école, de vêtir les plus démunis ou d'accompagner vers l'autonomie les femmes vulnérables, les veuves, les filles-mères et les personnes en situation de handicap, votre soutien financier change durablement des vies. Rejoignez-nous pour redonner dignité et avenir à ceux qui en ont le plus besoin.",
+  heroAction: "Soutenir nos actions",
   formTitle: "Votre don",
   formIntro: "Choisissez un montant, puis confirmez votre don en toute sécurité.",
   proofTitle: "Ce que fait déjà INA-AFRICA",
@@ -349,8 +352,10 @@ export const DONATE_TEXT = {
       "Les besoins actuels de l'ONG INA-AFRICA au Bénin : chaque carte indique l'objectif à atteindre. Choisissez une cause et faites un don.",
     eyebrow: "Nos besoins",
     title: "Les besoins d'aujourd'hui",
+    /** Texte transmis par l'ONG (19/11/2026). */
+    introLead: "Votre générosité ciblée, une vie transformée sur le terrain.",
     intro:
-      "Chaque carte est un besoin réel de l'ONG, avec l'objectif à atteindre. Choisissez la cause qui vous touche : votre don va directement à cette action.",
+      "Derrière chaque carte se cache une réalité humaine, un besoin urgent identifié par INA-AFRICA et un objectif précis à atteindre. Équiper un élève ou un orphelin, former un jeune, autonomiser une femme rurale, soutenir une veuve, une fille-mère ou une personne en situation de handicap : choisissez le combat qui fait vibrer votre cœur. Suivez pas à pas l'avancement de votre solidarité : 100 % de votre don est directement affecté à l'action que vous sélectionnez pour redonner espoir et dignité.",
     goal: "Objectif",
     collected: (amount: string) => `${amount} déjà collectés`,
     support: "Je soutiens cette cause",
