@@ -12,6 +12,8 @@ import type { ImageRef } from "@/lib/types/content";
  */
 
 const SMALL_WIDTH = 800;
+/** Vraies photos d'actions transmises par l'ONG, dans le dépôt (`<nom>.webp` 2000 px + `<nom>-sm.webp` 800 px). */
+export const ACTION_PHOTOS_DIR = "/images/actions/";
 const LARGE_WIDTH = 2000;
 
 function supabaseUrl(): string | undefined {
@@ -38,7 +40,9 @@ export function responsiveImage(
   image: ImageRef,
   options: { hasSmall?: boolean; smallWidth?: number; largeWidth?: number } = {},
 ) {
-  const hasSmall = options.hasSmall ?? !image.path.startsWith("/");
+  // Envois de l'administration et photos d'actions de l'ONG (public/images/actions/,
+  // toujours fournies en deux tailles) : la petite version existe.
+  const hasSmall = options.hasSmall ?? (!image.path.startsWith("/") || image.path.startsWith(ACTION_PHOTOS_DIR));
   const small = hasSmall ? smallVariant(image.path) : null;
   const smallWidth = options.smallWidth ?? SMALL_WIDTH;
   const largeWidth = options.largeWidth ?? LARGE_WIDTH;

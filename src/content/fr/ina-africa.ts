@@ -104,7 +104,25 @@ export type Achievement = {
   audience?: string;
   place?: string;
   areaSlug?: string;
+  /** Vraies photos de l'action transmises par l'ONG (la première sert de couverture). */
+  photos?: { path: string; alt: string }[];
 };
+
+/** Photos du lancement officiel du 26 août 2023 (transmises par l'ONG le 20/11/2026). */
+const LAUNCH_DIR = "/images/actions/2023-08-26-lancement";
+const LAUNCH_PHOTOS: { file: string; alt: string }[] = [
+  { file: "photo-03", alt: "Les bénéficiaires et l'équipe de INA-AFRICA devant les sacs de riz et les paniers de vivres distribués lors du lancement des activités, le 26 août 2023" },
+  { file: "photo-06", alt: "Des femmes bénéficiaires, enveloppe en main, devant les vivres qui leur sont remis" },
+  { file: "photo-01", alt: "Une bénéficiaire reçoit une enveloppe et un panier de vivres des mains d'une représentante de INA-AFRICA" },
+  { file: "photo-02", alt: "Des membres de l'équipe de INA-AFRICA, en tenue aux couleurs de l'ONG, le jour du lancement" },
+  { file: "photo-04", alt: "Remise d'un panier de vivres à une bénéficiaire pendant la cérémonie" },
+  { file: "photo-05", alt: "Remise de vivres à une bénéficiaire, devant les paniers et les sacs de riz" },
+  { file: "photo-07", alt: "Une bénéficiaire reçoit un panier de vivres et une enveloppe" },
+  { file: "photo-10", alt: "Lecture d'un message devant les bénéficiaires pendant la cérémonie de lancement" },
+  { file: "photo-11", alt: "Des bénéficiaires en tee-shirt et casquette INA-AFRICA, pouce levé" },
+  { file: "photo-09", alt: "Un membre de INA-AFRICA répond aux questions de la presse lors du lancement" },
+  { file: "photo-08", alt: "L'équipe de INA-AFRICA et des bénéficiaires devant le Centre de promotion sociale de Sainte-Cécile" },
+];
 
 export const ACHIEVEMENTS: Achievement[] = [
   // Projets et réalisations datés (transmis par l'ONG le 06/11/2026), du plus récent au plus ancien.
@@ -136,6 +154,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     audience: "Femmes vulnérables",
     place: "Zinvié et Djidjè (Cotonou)",
     areaSlug: "autonomisation-des-femmes",
+    photos: LAUNCH_PHOTOS.map(({ file, alt }) => ({ path: `${LAUNCH_DIR}/${file}.webp`, alt })),
   },
   // Réalisations du document de présentation (non datées).
   {

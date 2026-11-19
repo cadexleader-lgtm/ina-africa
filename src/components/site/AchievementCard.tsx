@@ -3,6 +3,7 @@ import { ArrowRight, CalendarDays, FileCheck2, MapPin, Users } from "lucide-reac
 
 import { AREAS, type Achievement } from "@/content/fr/ina-africa";
 import { cn } from "@/lib/cn";
+import { AchievementPhotos } from "@/components/site/AchievementPhotos";
 
 /** « 26 août 2023 » à partir d'une date AAAA-MM-JJ (fuseau neutre). */
 export function formatAchievementDate(date: string): string {
@@ -20,7 +21,8 @@ export function AchievementCard({ achievement, showArea = true, className }: { a
   const area = showArea && achievement.areaSlug ? AREAS.find((item) => item.slug === achievement.areaSlug) : undefined;
   const hasFacts = Boolean(achievement.place || achievement.audience);
   return (
-    <article className={cn("flex w-full flex-col rounded-card border border-line bg-white p-6 shadow-card", className)}>
+    <article className={cn("flex w-full flex-col overflow-hidden rounded-card border border-line bg-white p-6 shadow-card", className)}>
+      {achievement.photos && achievement.photos.length > 0 && <AchievementPhotos title={achievement.title} photos={achievement.photos} />}
       {achievement.date ? (
         <p className="inline-flex items-center gap-1.5 self-start rounded-full bg-brand px-3 py-1 text-small font-semibold text-white">
           <CalendarDays aria-hidden="true" className="size-4" />
