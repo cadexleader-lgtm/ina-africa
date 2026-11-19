@@ -1,4 +1,4 @@
-import { Briefcase, HandCoins, HeartPulse, Landmark, Leaf, Scale, type LucideIcon } from "lucide-react";
+import { HandCoins, HeartPulse, Landmark, Leaf, Scale, type LucideIcon } from "lucide-react";
 
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
@@ -7,15 +7,14 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { OBJECTIVE_THEMES } from "@/content/fr/ina-africa";
 
 const ICONS: Record<(typeof OBJECTIVE_THEMES)[number]["key"], LucideIcon> = {
-  femmes: HandCoins,
-  jeunes: Briefcase,
+  "femmes-jeunes": HandCoins,
   genre: Scale,
   culture: Landmark,
   climat: Leaf,
   sante: HeartPulse,
 };
 
-/** Section 5 : objectifs statutaires (art. 10) en six thèmes. */
+/** Section 5 : les cinq objectifs statutaires (art. 10). */
 export function HomeObjectives() {
   return (
     <Section labelledBy="accueil-objectifs">

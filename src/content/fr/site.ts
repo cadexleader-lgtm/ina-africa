@@ -150,7 +150,7 @@ export const T = {
     },
     areas: {
       label: "Ce que nous faisons",
-      title: "Nos domaines d'intervention",
+      title: "Nos huit piliers d'action",
       all: "Tous nos domaines d'action",
     },
     projects: {

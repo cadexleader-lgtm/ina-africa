@@ -3,6 +3,7 @@ import {
   GraduationCap,
   HandCoins,
   HeartPulse,
+  Leaf,
   Lightbulb,
   Scale,
   Sprout,
@@ -20,6 +21,7 @@ const AREA_ICONS: Record<string, LucideIcon> = {
   "autonomisation-des-femmes": HandCoins,
   "jeunesse-et-adolescents": UsersRound,
   "inclusion-et-egalite-de-genre": Scale,
+  "environnement-et-resilience-climatique": Leaf,
   "developpement-local-durable": Sprout,
   "innovation-sociale": Lightbulb,
 };

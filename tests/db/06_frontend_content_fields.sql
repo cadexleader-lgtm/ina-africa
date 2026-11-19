@@ -5,8 +5,11 @@ select tests.ok(
   (select array_agg(slug order by display_order) from public.action_areas) = array[
     'education', 'sante-sexuelle-et-reproductive', 'autonomisation-des-femmes',
     'jeunesse-et-adolescents', 'inclusion-et-egalite-de-genre',
-    'developpement-local-durable', 'innovation-sociale'],
-  'Les 7 domaines confirmés sont créés, dans l''ordre');
+    'environnement-et-resilience-climatique', 'developpement-local-durable', 'innovation-sociale'],
+  'Les 8 piliers confirmés sont créés, dans l''ordre');
+select tests.ok(
+  (select title from public.action_areas where slug = 'education') = 'Éducation et soutien scolaire',
+  'Nouvel intitulé du pilier éducation');
 select tests.ok(
   (select bool_and(not is_active and description is null and summary is null) from public.action_areas),
   'Les domaines sont en brouillon et sans texte inventé');

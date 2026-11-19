@@ -105,7 +105,7 @@ export default async function AreaPage({ params }: PageProps<"/domaines/[slug]">
       <Section labelledBy="domaine-presentation">
         <Container>
           <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
-            {official && (
+            {official?.problem && (
               <Reveal className="lg:col-span-5">
                 <div className="h-full rounded-panel bg-ivory p-6 sm:p-8">
                   <p className="text-small font-semibold text-muted">La problématique</p>
@@ -114,7 +114,7 @@ export default async function AreaPage({ params }: PageProps<"/domaines/[slug]">
                 </div>
               </Reveal>
             )}
-            <Reveal delay={80} className={official ? "lg:col-span-7" : "lg:col-span-12"}>
+            <Reveal delay={80} className={official?.problem ? "lg:col-span-7" : "lg:col-span-12"}>
               <p className="text-small font-semibold text-muted">Notre engagement</p>
               <h2 id="domaine-presentation" className="mt-2 text-h2">
                 Ce que fait INA-AFRICA

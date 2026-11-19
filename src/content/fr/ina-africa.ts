@@ -221,7 +221,7 @@ export const AUDIENCES = [
 ];
 
 // ---------------------------------------------------------------------------
-// Les 7 domaines d'action (liste confirmée par l'ONG). Les textes reprennent
+// Les 8 piliers / domaines d'action (liste confirmée par l'ONG le 20/11/2026). Les textes reprennent
 // l'historique, les expériences, les statuts et les réalisations ci-dessus.
 // ---------------------------------------------------------------------------
 
@@ -232,8 +232,9 @@ export type OfficialArea = {
   /**
    * La problématique : reformulée à partir de l'historique, des statuts et
    * des réalisations. À FAIRE VALIDER par l'ONG (modifiable ici).
+   * Absente si l'ONG ne l'a pas encore transmise (rien d'inventé).
    */
-  problem: string;
+  problem?: string;
   /** Les publics concernés (tirés des documents). */
   audiences: string[];
   description: string;
@@ -244,8 +245,8 @@ export type OfficialArea = {
 export const AREAS: OfficialArea[] = [
   {
     slug: "education",
-    title: "Éducation",
-    summary: "Former les jeunes et soutenir les enfants vulnérables, pour préparer la relève de demain.",
+    title: "Éducation et soutien scolaire",
+    summary: "Garantir l'accès à une éducation de qualité pour tous les enfants, en particulier les orphelins et les plus démunis, à travers la distribution de kits scolaires et l'accompagnement éducatif.",
     problem:
       "L'éducation fait partie des défis socio-économiques persistants qui ont conduit à la création de INA-AFRICA. Former les jeunes et soutenir les enfants vulnérables, c'est préparer la relève de demain.",
     audiences: ["Les jeunes et les adolescents", "Les enfants vulnérables"],
@@ -255,8 +256,8 @@ export const AREAS: OfficialArea[] = [
   },
   {
     slug: "sante-sexuelle-et-reproductive",
-    title: "Santé et droits en santé sexuelle et reproductive",
-    summary: "Informer et sensibiliser sur les droits et la santé sexuels et reproductifs.",
+    title: "Santé et droits sexuels et reproductifs (DSSR)",
+    summary: "Informer, sensibiliser et faciliter l'accès aux soins pour permettre aux jeunes, aux filles-mères et aux femmes de faire des choix éclairés et libres pour leur santé.",
     problem:
       "La santé fait partie des défis persistants identifiés par l'ONG. Une information fiable sur les droits et la santé sexuels et reproductifs, sur les infections sexuellement transmissibles et sur la loi 2021-12, est essentielle pour que chacun puisse protéger sa santé.",
     audiences: ["Les artisans", "Les élèves et les jeunes", "Les chefs de quartier, leaders d'opinion et religieux"],
@@ -271,7 +272,7 @@ export const AREAS: OfficialArea[] = [
   {
     slug: "autonomisation-des-femmes",
     title: "Autonomisation des femmes",
-    summary: "Renforcer les compétences, l'estime de soi et l'indépendance économique des femmes et des filles mères.",
+    summary: "Renforcer les compétences, l'estime de soi et l'indépendance économique des femmes rurales, des veuves et des filles-mères par la formation professionnelle et l'entrepreneuriat.",
     problem:
       "Les femmes et les filles mères, en particulier celles issues de milieux ruraux et marginalisés, ont besoin de compétences et de ressources pour gagner en indépendance économique et en estime de soi.",
     audiences: ["Les femmes rurales", "Les filles mères", "Les femmes issues de milieux marginalisés"],
@@ -287,7 +288,7 @@ export const AREAS: OfficialArea[] = [
   {
     slug: "jeunesse-et-adolescents",
     title: "Jeunesse et adolescents",
-    summary: "Accompagner les jeunes, la relève de demain, vers le bien-être et le travail décent.",
+    summary: "Accompagner les jeunes vers l'âge adulte grâce à l'orientation, la formation aux métiers d'avenir, le leadership et l'insertion socio-professionnelle.",
     problem:
       "Les jeunes et les adolescents constituent la relève de demain. Leur formation, leur santé et leur accès à un travail décent conditionnent l'avenir des communautés.",
     audiences: ["Les jeunes en recherche d'insertion professionnelle", "Les adolescents et les élèves"],
@@ -302,7 +303,7 @@ export const AREAS: OfficialArea[] = [
   {
     slug: "inclusion-et-egalite-de-genre",
     title: "Inclusion et égalité de genre",
-    summary: "Réduire les inégalités entre les sexes et inclure les personnes vulnérables.",
+    summary: "Lutter contre toutes les formes de discrimination et garantir la pleine participation sociale et économique des femmes, des personnes en situation de handicap et des groupes marginalisés.",
     problem:
       "Les inégalités entre les sexes et la mise à l'écart des personnes vulnérables freinent le développement durable. L'ODD 5 fixe l'objectif de parvenir à l'égalité des sexes et d'autonomiser toutes les femmes et les filles.",
     audiences: ["Les femmes et les filles", "Les personnes en situation de handicap", "Les personnes vulnérables"],
@@ -315,9 +316,20 @@ export const AREAS: OfficialArea[] = [
     ],
   },
   {
+    // 8e pilier, transmis par l'ONG le 20/11/2026 (statuts, art. 10 : lutte contre le réchauffement climatique).
+    slug: "environnement-et-resilience-climatique",
+    title: "Environnement et résilience climatique",
+    summary:
+      "Protéger les écosystèmes locaux, sensibiliser aux enjeux écologiques et promouvoir des pratiques durables pour préserver l'avenir des générations futures.",
+    audiences: [],
+    description:
+      "INA-AFRICA participe à l'effort national de lutte contre le réchauffement climatique et à une gestion participative et durable des écosystèmes. L'ONG protège les écosystèmes locaux, sensibilise aux enjeux écologiques et promeut des pratiques durables pour préserver l'avenir des générations futures.",
+    actions: ["Sauvegarde de l'environnement", "Lutte contre le réchauffement climatique"],
+  },
+  {
     slug: "developpement-local-durable",
     title: "Développement local durable et inclusif",
-    summary: "Des initiatives locales et durables pour de meilleures conditions de vie.",
+    summary: "Co-construire avec les communautés rurales des infrastructures et des initiatives économiques qui améliorent durablement leurs conditions de vie.",
     problem:
       "Les couches défavorisées ont besoin de meilleures conditions de vie, à la fois socio-économiques et environnementales. Le réchauffement climatique et la gestion des écosystèmes sont aussi des enjeux pour les communautés.",
     audiences: ["Les communautés rurales", "Les populations défavorisées"],
@@ -333,7 +345,7 @@ export const AREAS: OfficialArea[] = [
   {
     slug: "innovation-sociale",
     title: "Innovation sociale",
-    summary: "Inventer avec les communautés des réponses locales à leurs besoins.",
+    summary: "Concevoir et déployer des solutions créatives, participatives et adaptées aux réalités locales pour relever efficacement les défis sociaux et communautaires.",
     problem:
       "Les défis des communautés appellent des réponses adaptées à chaque territoire. INA-AFRICA a été créée pour promouvoir des initiatives locales, durables et inclusives, construites avec les personnes concernées.",
     audiences: ["Les communautés locales", "Les bénévoles et partenaires engagés à leurs côtés"],
@@ -528,40 +540,46 @@ export const MISSION_TITLES = [
 ];
 
 /**
- * Objectifs (statuts, art. 10) présentés en six thèmes : le premier objectif
- * statutaire couvre à la fois les femmes et les jeunes, d'où deux cartes.
+ * Les cinq objectifs des statuts (art. 10), dans les termes transmis par
+ * l'ONG le 20/11/2026.
  */
 export const OBJECTIVE_THEMES = [
   {
-    key: "femmes",
-    title: "L'autonomisation économique des femmes",
-    text: "Contribuer à l'autonomisation économique des femmes et à leur bien-être social, pour qu'elles gagnent en indépendance.",
-  },
-  {
-    key: "jeunes",
-    title: "L'insertion professionnelle des jeunes",
-    text: "Favoriser l'accès des jeunes à un travail décent, notamment à travers le « Programme Jeune Professionnel » (PJP).",
+    key: "femmes-jeunes",
+    title: "L'autonomisation des femmes et l'insertion des jeunes",
+    text: "Contribuer à l'autonomisation économique des femmes et à leur bien-être social et à l'insertion socio-professionnelle des jeunes en favorisant leur accès au travail décent à travers la mise en œuvre d'un programme ambitieux dénommé « Programme Jeune Professionnel » (PJP).",
   },
   {
     key: "genre",
     title: "L'égalité entre les femmes et les hommes",
-    text: "Réduire les inégalités entre les sexes et promouvoir l'approche genre dans les pays en voie de développement.",
+    text: "Œuvrer à la réduction des inégalités entre les sexes et promouvoir l'approche genre dans tous les pays en voie de développement.",
   },
   {
     key: "culture",
     title: "Le patrimoine culturel béninois et africain",
-    text: "Promouvoir la culture béninoise et africaine par des projets structurants de valorisation du patrimoine culturel.",
+    text: "Promouvoir la culture béninoise et africaine par la mise en œuvre de projets structurants de valorisation du patrimoine culturel national et africain.",
   },
   {
     key: "climat",
-    title: "La gestion durable des écosystèmes",
-    text: "Participer à la lutte contre le réchauffement climatique et à une gestion participative et durable des écosystèmes.",
+    title: "Le climat et les écosystèmes",
+    text: "Participer à l'effort national de lutte contre le réchauffement climatique et assurer une bonne gestion participative et durable des écosystèmes.",
   },
   {
     key: "sante",
     title: "La santé et le bien-être des populations",
-    text: "Fournir aux populations les informations essentielles pour leur santé et contribuer à l'atteinte des objectifs de développement durable.",
+    text: "Contribuer à une bonne santé des populations en leur fournissant les informations essentielles pour leur bien tout en œuvrant de façon générale à l'atteinte des objectifs du développement durable.",
   },
+] as const;
+
+/** Domaines d'intervention (liste transmise par l'ONG le 20/11/2026). */
+export const INTERVENTION_DOMAINS = [
+  "Formation",
+  "Action d'intermédiation",
+  "Appui à l'autonomisation économique des femmes",
+  "Apprentissage et insertion socio-professionnelle des femmes, des jeunes et des personnes en situation de handicap",
+  "Lutte contre le travail des enfants dans les mines et carrières, les BTP et les activités marchandes",
+  "Sauvegarde de l'environnement",
+  "Lutte contre le réchauffement climatique",
 ] as const;
 
 /** Les trois façons de s'engager (accueil, À propos, Nous rejoindre). */

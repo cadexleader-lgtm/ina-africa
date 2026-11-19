@@ -67,9 +67,19 @@ export default async function ProjectsPage({ searchParams }: PageProps<"/projets
         <Container>
           <SectionHeading
             id="projets-domaines"
-            label="Nos domaines d'intervention"
-            title="Les sept domaines de l'ONG"
-            intro="Chaque projet et chaque action s'inscrit dans l'un des domaines d'intervention de INA-AFRICA."
+            label="Nos piliers d'action"
+            title="Huit piliers stratégiques"
+            intro={
+              // Texte transmis par l'ONG le 20/11/2026.
+              <>
+                <p className="font-semibold text-brand">Des actions ciblées pour un impact global et durable.</p>
+                <p className="mt-3 text-body">
+                  Chaque projet mené sur le terrain par INA-AFRICA s&apos;articule autour de huit piliers stratégiques. Cette
+                  approche intégrée nous permet d&apos;apporter des réponses concrètes, inclusives et pérennes aux besoins des
+                  communautés les plus vulnérables.
+                </p>
+              </>
+            }
           />
           <OtherAreas areas={areas} />
         </Container>

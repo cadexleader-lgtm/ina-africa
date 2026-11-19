@@ -18,6 +18,7 @@ import { cn } from "@/lib/cn";
 import { ORG } from "@/content/fr/site";
 import { listActionAreas } from "@/server/data/site";
 import { PAGE_BACKDROPS } from "@/content/provisional-images";
+import { InterventionDomains } from "@/components/site/InterventionDomains";
 
 const T = PAGES.areas;
 
@@ -112,6 +113,9 @@ export default async function AreasPage() {
               })}
             </ol>
           )}
+          <Reveal className="mt-10 lg:mt-12">
+            <InterventionDomains id="domaines-interventions" headingLevel="h2" />
+          </Reveal>
         </Container>
       </Section>
 

@@ -204,7 +204,7 @@ function toArea(row: AreaRow): ActionArea {
   };
 }
 
-/** Les 7 domaines officiels, affichés tant qu'aucun domaine n'est activé dans l'administration. */
+/** Les 8 piliers officiels, affichés tant qu'aucun domaine n'est activé dans l'administration. */
 const OFFICIAL_AREAS: ActionArea[] = AREAS.map((area, index) => ({
   id: `officiel-${area.slug}`,
   slug: area.slug,

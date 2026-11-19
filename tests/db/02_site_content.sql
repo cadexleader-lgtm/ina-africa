@@ -17,7 +17,7 @@ set local role authenticated;
 
 -- Éditeur
 select tests.login_as('00000000-0000-0000-0000-00000000000c', 'aal1');
-select tests.ok((select count(*) from public.action_areas) = 7, 'L''équipe voit les 7 domaines confirmés, en brouillon');
+select tests.ok((select count(*) from public.action_areas) = 8, 'L''équipe voit les 8 piliers confirmés, en brouillon');
 
 insert into public.articles (title, slug, content, author_id) values (
   'Premier article', 'premier-article',

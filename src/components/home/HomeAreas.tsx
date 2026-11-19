@@ -10,11 +10,15 @@ import { PROVISIONAL_AREA_IMAGES } from "@/content/provisional-images";
 import { T } from "@/content/fr/site";
 import { cn } from "@/lib/cn";
 import type { ActionArea } from "@/lib/types/content";
+import { InterventionDomains } from "@/components/site/InterventionDomains";
+import { MediaTile } from "@/components/site/MediaTile";
+import { areaIcon } from "@/components/site/domain-icons";
 
 /**
  * Section 4 : les domaines d'intervention en grandes cartes avec photo.
- * Grille de 3 colonnes ; le premier domaine occupe deux colonnes, la
- * dernière case mène à la page des domaines (3 lignes complètes pour 7 domaines).
+ * Grille de 3 colonnes ; la dernière case mène à la page des domaines. Le
+ * premier domaine occupe deux colonnes seulement si la grille reste complète
+ * (7 domaines : oui ; 8 piliers : non). Dessous, les domaines d'intervention.
  */
 export function HomeAreas({ areas }: { areas: ActionArea[] }) {
   if (areas.length === 0) return null;
@@ -27,13 +31,23 @@ export function HomeAreas({ areas }: { areas: ActionArea[] }) {
             id="accueil-domaines"
             label={T.home.areas.label}
             title={T.home.areas.title}
-            intro="Sept domaines complémentaires, pour agir à la fois sur les conditions de vie, l'égalité et l'avenir des communautés."
+            intro={
+              // Texte transmis par l'ONG le 20/11/2026.
+              <>
+                <p className="font-semibold text-brand">Des actions ciblées pour un impact global et durable.</p>
+                <p className="mt-3 text-body">
+                  Chaque projet mené sur le terrain par INA-AFRICA s&apos;articule autour de huit piliers stratégiques. Cette
+                  approche intégrée nous permet d&apos;apporter des réponses concrètes, inclusives et pérennes aux besoins des
+                  communautés les plus vulnérables.
+                </p>
+              </>
+            }
           />
         </Reveal>
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {areas.map((area, index) => {
             const image = area.image ?? PROVISIONAL_AREA_IMAGES[area.slug] ?? null;
-            const wide = index === 0;
+            const wide = index === 0 && (areas.length + 2) % 3 === 0;
             return (
               <li key={area.id} className={cn("flex", wide && "sm:col-span-2")}>
                 <Reveal delay={(index % 3) * 70} className="flex w-full">
@@ -42,7 +56,7 @@ export function HomeAreas({ areas }: { areas: ActionArea[] }) {
                     className="group flex w-full flex-col overflow-hidden rounded-card bg-white shadow-card transition-shadow duration-(--duration-base) hover:shadow-overlay"
                   >
                     <div className={cn("relative overflow-hidden bg-brand-50", wide ? "aspect-[16/9] sm:aspect-[21/9]" : "aspect-[16/10]")}>
-                      {image && (
+                      {image ? (
                         <ResponsiveImage
                           image={image}
                           fill
@@ -51,6 +65,8 @@ export function HomeAreas({ areas }: { areas: ActionArea[] }) {
                           imgClassName="transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
                           labelPosition="top-left"
                         />
+                      ) : (
+                        <MediaTile icon={areaIcon(area.slug)} size="responsive" className="absolute inset-0" />
                       )}
                     </div>
                     <div className="flex flex-1 flex-col p-5 sm:p-6">
@@ -92,6 +108,9 @@ export function HomeAreas({ areas }: { areas: ActionArea[] }) {
             </Reveal>
           </li>
         </ul>
+        <Reveal className="mt-10">
+          <InterventionDomains id="accueil-interventions" />
+        </Reveal>
       </Container>
     </Section>
   );
