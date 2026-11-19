@@ -126,6 +126,7 @@ Dans `supabase/migrations/`, à appliquer dans l'ordre :
 16. `20261107100000_ngo_head_office_address` — adresse du siège
 17. `20261107120000_donation_min_100` — don minimum ramené à 100 FCFA (tout montant accepté)
 18. `20261107130000_moov_number_and_wording` — numéro Moov Money corrigé (01 94 34 04 55), « de INA-AFRICA » sans élision
+19. `20261120090000_team_group_communication` — instance « Conseil de communication » (HOUNDO Koffi Zacharie) — **À APPLIQUER** (accès à la base perdu le 16/11/2026)
 
 Règles pour toute nouvelle migration :
 - ne jamais modifier une migration déjà appliquée : en créer une nouvelle ;

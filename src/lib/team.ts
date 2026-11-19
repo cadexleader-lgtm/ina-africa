@@ -1,6 +1,7 @@
 /**
  * Instances de l'ONG auxquelles appartient un membre de l'équipe
- * (colonne team_members.team_group, migration 20261106110000_team_groups).
+ * (colonne team_members.team_group, migrations 20261106110000_team_groups et
+ * 20261120090000_team_group_communication).
  * L'ordre ci-dessous est l'ordre d'affichage sur le site.
  */
 export const TEAM_GROUPS = [
@@ -13,6 +14,12 @@ export const TEAM_GROUPS = [
     value: "conseil_surveillance",
     label: "Conseil de surveillance",
     description: "Contrôle, suivi et bonne gouvernance, sans intervenir dans la gestion quotidienne.",
+  },
+  {
+    value: "conseil_communication",
+    label: "Conseil de communication",
+    description:
+      "Il veille à faire connaître l'ONG, à valoriser ses actions et à renforcer son image, sa notoriété et sa crédibilité auprès du public et des partenaires.",
   },
   {
     value: "adjoints",

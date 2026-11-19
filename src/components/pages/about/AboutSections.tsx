@@ -1,4 +1,4 @@
-import { Check, Gavel, Landmark, ShieldCheck, Wallet, type LucideIcon } from "lucide-react";
+import { Check, Gavel, Landmark, Megaphone, ShieldCheck, type LucideIcon } from "lucide-react";
 
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
@@ -340,7 +340,7 @@ const GOVERNANCE_ICONS: Record<(typeof GOVERNANCE)[number]["key"], LucideIcon> =
   assemblee: Landmark,
   administration: Gavel,
   surveillance: ShieldCheck,
-  finances: Wallet,
+  communication: Megaphone,
 };
 
 export function AboutGovernance({ tone }: { tone: SectionTone }) {

@@ -2,7 +2,9 @@
 begin;
 
 select tests.ok((select count(*) = 17 from public.team_members where is_active), '17 membres de l''équipe sont publiés');
-select tests.ok((select count(*) = 4 from public.team_members where team_group = 'conseil_surveillance'), '4 membres au conseil de surveillance');
+select tests.ok((select count(*) = 3 from public.team_members where team_group = 'conseil_surveillance'), '3 membres au conseil de surveillance');
+select tests.ok((select team_group = 'conseil_communication' from public.team_members where full_name = 'HOUNDO Koffi Zacharie'),
+  'HOUNDO Koffi Zacharie est au conseil de communication');
 select tests.ok((select count(*) = 3 from public.team_members where team_group = 'adjoints'), '3 adjoints aux membres de l''administration');
 select tests.ok((select count(*) = 1 from public.team_members where team_group = 'conseillers'), '1 conseiller');
 select tests.fails($$ update public.team_members set team_group = 'bureau' where full_name = 'BESSAN Guy' $$,

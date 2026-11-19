@@ -6,10 +6,11 @@ import { teamMemberInputSchema } from "@/lib/validation/admin/content";
 const base = { fullName: "DJOSSOU Wilfried", position: "Président", displayOrder: 10 };
 
 describe("instances de l'équipe", () => {
-  it("connaît les quatre instances, dans l'ordre d'affichage", () => {
+  it("connaît les cinq instances, dans l'ordre d'affichage", () => {
     expect(TEAM_GROUPS.map((group) => group.value)).toEqual([
       "conseil_administration",
       "conseil_surveillance",
+      "conseil_communication",
       "adjoints",
       "conseillers",
     ]);

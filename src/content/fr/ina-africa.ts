@@ -428,7 +428,7 @@ export const TEAM: OfficialTeamMember[] = [
     // Intitulé à confirmer par l'ONG (seule la mission a été transmise).
     position: "Information et porte-parole",
     bio: "Pilote la stratégie d'information de l'ONG, conçoit les contenus d'impact et incarne officiellement sa voix auprès des médias, des institutions et du public.",
-    group: "conseil_surveillance",
+    group: "conseil_communication",
   },
   {
     fullName: "OLYMPIO Maxylle Emmanuella",
@@ -600,9 +600,10 @@ export const GOVERNANCE = [
     text: "Il coordonne les activités de contrôle et de suivi, veille au respect des statuts et à la bonne gouvernance, sans intervenir dans la gestion quotidienne de l'ONG.",
   },
   {
-    key: "finances",
-    title: "Une gestion financière transparente",
-    text: "La trésorière générale est responsable de la gestion des fonds et du patrimoine de l'organisation. Elle tient une comptabilité régulière, transparente et sincère.",
+    // Remplace « Une gestion financière transparente » (demande de l'ONG, 20/11/2026).
+    key: "communication",
+    title: "Le conseil de communication",
+    text: "Il veille à faire connaître l'ONG, à valoriser ses actions et à renforcer son image, sa notoriété et sa crédibilité auprès du public et des partenaires.",
   },
 ] as const;
 
