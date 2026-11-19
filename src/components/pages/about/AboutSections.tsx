@@ -9,7 +9,7 @@ import { splitTerm } from "@/components/pages/page-helpers";
 import { formatAchievementDate } from "@/components/site/AchievementCard";
 import { ABOUT_CONTEXT, ACHIEVEMENTS, AUDIENCES, EXPERIENCE, GOVERNANCE } from "@/content/fr/ina-africa";
 import { FOUNDING_YEAR, PAGES } from "@/content/fr/pages";
-import type { ProvisionalImage } from "@/content/provisional-images";
+import type { SiteImage } from "@/content/provisional-images";
 import { cn } from "@/lib/cn";
 
 const T = PAGES.about;
@@ -56,7 +56,7 @@ export function AboutHistory({
 }: {
   paragraphs: string[];
   /** Illustration provisoire (mention « Photo d'illustration » automatique), ou null. */
-  image: ProvisionalImage | null;
+  image: SiteImage | null;
   tone: SectionTone;
 }) {
   const [lead, ...rest] = paragraphs;

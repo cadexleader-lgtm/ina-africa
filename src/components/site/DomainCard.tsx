@@ -34,7 +34,7 @@ export function DomainCard({
   className,
 }: DomainCardProps) {
   const image = area.image ?? (allowProvisional ? PROVISIONAL_AREA_IMAGES[area.slug] : undefined) ?? null;
-  const provisional = Boolean(image && !area.image);
+  const provisional = Boolean(image && !area.image && "provisional" in image && image.provisional);
 
   return (
     <article className={cn(CARD, "flex-row items-center gap-4 p-3 sm:flex-col sm:items-stretch sm:gap-0 sm:p-0", className)}>

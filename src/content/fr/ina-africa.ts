@@ -17,6 +17,8 @@
  * rien n'est publié, ou si la base ne répond pas, ce contenu s'affiche.
  */
 
+import { CLOTHING_KITS_2026_PHOTOS, LAUNCH_2023_PHOTOS, SCHOOL_KITS_2025_PHOTOS } from "@/content/action-photos";
+
 import type { TeamGroup } from "@/lib/team";
 
 export const IDENTITY = {
@@ -108,29 +110,17 @@ export type Achievement = {
   photos?: { path: string; alt: string }[];
 };
 
-/** Photos du lancement officiel du 26 août 2023 (transmises par l'ONG le 20/11/2026). */
-const LAUNCH_DIR = "/images/actions/2023-08-26-lancement";
-const LAUNCH_PHOTOS: { file: string; alt: string }[] = [
-  { file: "photo-03", alt: "Les bénéficiaires et l'équipe de INA-AFRICA devant les sacs de riz et les paniers de vivres distribués lors du lancement des activités, le 26 août 2023" },
-  { file: "photo-06", alt: "Des femmes bénéficiaires, enveloppe en main, devant les vivres qui leur sont remis" },
-  { file: "photo-01", alt: "Une bénéficiaire reçoit une enveloppe et un panier de vivres des mains d'une représentante de INA-AFRICA" },
-  { file: "photo-02", alt: "Des membres de l'équipe de INA-AFRICA, en tenue aux couleurs de l'ONG, le jour du lancement" },
-  { file: "photo-04", alt: "Remise d'un panier de vivres à une bénéficiaire pendant la cérémonie" },
-  { file: "photo-05", alt: "Remise de vivres à une bénéficiaire, devant les paniers et les sacs de riz" },
-  { file: "photo-07", alt: "Une bénéficiaire reçoit un panier de vivres et une enveloppe" },
-  { file: "photo-10", alt: "Lecture d'un message devant les bénéficiaires pendant la cérémonie de lancement" },
-  { file: "photo-11", alt: "Des bénéficiaires en tee-shirt et casquette INA-AFRICA, pouce levé" },
-  { file: "photo-09", alt: "Un membre de INA-AFRICA répond aux questions de la presse lors du lancement" },
-  { file: "photo-08", alt: "L'équipe de INA-AFRICA et des bénéficiaires devant le Centre de promotion sociale de Sainte-Cécile" },
-];
-
 export const ACHIEVEMENTS: Achievement[] = [
   // Projets et réalisations datés (transmis par l'ONG le 06/11/2026), du plus récent au plus ancien.
   {
     date: "2026-03-21",
     title: "Distribution de kits vestimentaires à Tanmey",
-    text: "Distribution de kits vestimentaires à Tanmey, dans l'arrondissement de Zinvié.",
+    // Précisions tirées du bandeau des photos transmises par l'ONG (20/11/2026).
+    text: "Distribution de kits vestimentaires (sous-vêtements) aux femmes vulnérables à Tanmey, dans l'arrondissement de Zinvié.",
+    audience: "Femmes vulnérables",
     place: "Tanmey (arrondissement de Zinvié)",
+    areaSlug: "autonomisation-des-femmes",
+    photos: CLOTHING_KITS_2026_PHOTOS,
   },
   {
     date: "2026-03-08",
@@ -146,6 +136,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     audience: "Élèves de trois écoles",
     place: "Abomey-Calavi, Sèmè-Aïfa et Zinvié",
     areaSlug: "education",
+    photos: SCHOOL_KITS_2025_PHOTOS,
   },
   {
     date: "2023-08-26",
@@ -154,7 +145,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     audience: "Femmes vulnérables",
     place: "Zinvié et Djidjè (Cotonou)",
     areaSlug: "autonomisation-des-femmes",
-    photos: LAUNCH_PHOTOS.map(({ file, alt }) => ({ path: `${LAUNCH_DIR}/${file}.webp`, alt })),
+    photos: LAUNCH_2023_PHOTOS,
   },
   // Réalisations du document de présentation (non datées).
   {

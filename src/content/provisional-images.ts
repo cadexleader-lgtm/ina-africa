@@ -10,7 +10,13 @@
  *    de INA-AFRICA ; jamais dans un projet, un article ou la galerie.
  */
 
+import { REAL_PHOTOS } from "@/content/action-photos";
+import type { ImageRef } from "@/lib/types/content";
+
 import { ILLUSTRATIONS } from "@/content/illustrations";
+
+/** Image d'un emplacement du site : vraie photo de l'ONG ou illustration provisoire. */
+export type SiteImage = ImageRef | ProvisionalImage;
 
 export type ProvisionalImage = {
   path: string;
@@ -89,10 +95,15 @@ export const PROVISIONAL_IMAGES = {
 // Chaque domaine a une illustration tant que l'administration n'a pas choisi
 // de photo : photos provisoires, ou photos libres du Bénin (Wikimedia
 // Commons, crédits sur /credits-photos). Toujours « Photo d'illustration ».
-export const PROVISIONAL_AREA_IMAGES: Partial<Record<string, ProvisionalImage>> = {
-  education: PROVISIONAL_IMAGES.eleveEnClasse,
+/**
+ * Photo d'un domaine quand l'administration n'en a pas mis : une VRAIE photo
+ * d'action de l'ONG si elle existe (src/content/action-photos.ts), sinon une
+ * illustration provisoire (mention « Photo d'illustration »).
+ */
+export const PROVISIONAL_AREA_IMAGES: Partial<Record<string, SiteImage>> = {
+  education: REAL_PHOTOS.kitsClassroom,
   "sante-sexuelle-et-reproductive": illustrationAsProvisional("/images/illustrations/femmes-cotonou.webp"),
-  "autonomisation-des-femmes": PROVISIONAL_IMAGES.atelierCouture,
+  "autonomisation-des-femmes": REAL_PHOTOS.clothingWomen,
   "jeunesse-et-adolescents": PROVISIONAL_IMAGES.salleDeClasse,
   "inclusion-et-egalite-de-genre": illustrationAsProvisional("/images/illustrations/egalite-femme-moto.webp"),
   "developpement-local-durable": illustrationAsProvisional("/images/illustrations/alphabetisation.webp"),
@@ -103,32 +114,56 @@ export const PROVISIONAL_AREA_IMAGES: Partial<Record<string, ProvisionalImage>> 
  * Photos des sections de l'accueil (une photo n'apparaît qu'une fois sur la
  * page). Remplacées par les vraies photos de l'ONG dès qu'elles arrivent.
  */
-export const HOME_PHOTOS = {
-  hero: PROVISIONAL_IMAGES.groupeDeFemmes,
+export const HOME_PHOTOS: {
+  hero: SiteImage;
+  heroSlides: Record<"femmes" | "jeunes" | "sante" | "inclusion", SiteImage>;
+  presentation: SiteImage;
+  callToAction: SiteImage;
+} = {
+  // Vraies photos de l'ONG (action-photos.ts) dès qu'il y en a une qui correspond.
+  hero: REAL_PHOTOS.kitsGroup,
   /** Photos des diapositives suivantes du hero (clés de HERO_SLIDES). */
   heroSlides: {
-    femmes: PROVISIONAL_IMAGES.atelierCouture,
+    femmes: REAL_PHOTOS.launchWomen,
     jeunes: PROVISIONAL_IMAGES.formationTechnique,
     sante: illustrationAsProvisional("/images/illustrations/femmes-cotonou.webp"),
     inclusion: PROVISIONAL_IMAGES.enfantsFauteuil,
   },
   presentation: PROVISIONAL_IMAGES.enfantsFauteuil,
-  callToAction: illustrationAsProvisional("/images/illustrations/chemin-ecole.webp"),
-} as const;
+  callToAction: REAL_PHOTOS.kitsHandOver,
+};
 
-/** Photo d'illustration en fond de l'en-tête de chaque page intérieure. */
-export const PAGE_BACKDROPS = {
-  about: illustrationAsProvisional("/images/illustrations/nouvelles-classes.webp"),
-  areas: PROVISIONAL_IMAGES.groupeDeFemmes,
-  projects: PROVISIONAL_IMAGES.formationTechnique,
-  news: illustrationAsProvisional("/images/illustrations/chemin-ecole.webp"),
-  contact: PROVISIONAL_IMAGES.eleveEnClasse,
-  gallery: illustrationAsProvisional("/images/illustrations/femmes-cotonou.webp"),
-  join: illustrationAsProvisional("/images/illustrations/egalite-femme-moto.webp"),
-  member: PROVISIONAL_IMAGES.groupeDeFemmes,
-  volunteer: PROVISIONAL_IMAGES.atelierCouture,
+/**
+ * Photo en fond de l'en-tête de chaque page intérieure : une vraie photo de
+ * l'ONG quand il y en a une qui correspond, sinon une illustration provisoire.
+ */
+export const PAGE_BACKDROPS: Record<
+  | "about"
+  | "areas"
+  | "projects"
+  | "news"
+  | "contact"
+  | "gallery"
+  | "join"
+  | "member"
+  | "volunteer"
+  | "partner"
+  | "donate"
+  | "needs"
+  | "newsletter",
+  SiteImage
+> = {
+  about: REAL_PHOTOS.launchTeam,
+  areas: REAL_PHOTOS.launchGroup,
+  projects: REAL_PHOTOS.kitsSchoolFront,
+  news: REAL_PHOTOS.kitsExchange,
+  contact: REAL_PHOTOS.clothingTeam,
+  gallery: REAL_PHOTOS.kitsOtherSchool,
+  join: REAL_PHOTOS.kitsTeam,
+  member: REAL_PHOTOS.launchThumbsUp,
+  volunteer: REAL_PHOTOS.kitsVolunteers,
   partner: illustrationAsProvisional("/images/illustrations/alphabetisation.webp"),
-  donate: PROVISIONAL_IMAGES.enfantsFauteuil,
-  needs: illustrationAsProvisional("/images/illustrations/eleves-lecture.webp"),
+  donate: REAL_PHOTOS.kitsGirlBackpack,
+  needs: REAL_PHOTOS.kitsGirlClass,
   newsletter: illustrationAsProvisional("/images/illustrations/eleves-lecture.webp"),
-} as const;
+};

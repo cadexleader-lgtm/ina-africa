@@ -20,7 +20,8 @@ import { PageHeader } from "@/components/pages/PageHeader";
 import { excerpt, paragraphs } from "@/components/pages/page-helpers";
 import { ABOUT_VISION, HISTORY, MISSIONS, OBJECTIVES, APPROACH, ORGANISATION_INTRO, ORGANISATION_LEAD, VISION } from "@/content/fr/ina-africa";
 import { PAGES } from "@/content/fr/pages";
-import { illustrationAsProvisional, PAGE_BACKDROPS } from "@/content/provisional-images";
+import { REAL_PHOTOS } from "@/content/action-photos";
+import { PAGE_BACKDROPS } from "@/content/provisional-images";
 import { ORG } from "@/content/fr/site";
 import { getSiteSettings, listActionAreas, listTeamMembers, splitLines } from "@/server/data/site";
 
@@ -92,7 +93,7 @@ export default async function AboutPage() {
 
       <AboutHistory
         paragraphs={[creation]}
-        image={illustrationAsProvisional("/images/illustrations/eleves-lecture.webp")}
+        image={REAL_PHOTOS.kitsGroup}
         tone="white"
       />
       <AboutContext tone="ivory" />
