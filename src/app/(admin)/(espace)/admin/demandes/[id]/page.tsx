@@ -44,7 +44,7 @@ async function RequestDetail({ id }: { id: string }) {
 
   const type = REQUEST_TYPE_LABELS[request.type];
   const status = REQUEST_STATUS[request.status];
-  const replySubject = request.subject ? `Re : ${request.subject}` : `Votre demande (${type.toLowerCase()}) — INA-AFRICA`;
+  const replySubject = request.subject ? `Re : ${request.subject}` : `Votre demande (${type.toLowerCase()}) | INA-AFRICA`;
   const email = mailtoHref(request.email, replySubject);
   const phone = telHref(request.phone);
   const details = requestDetails(request.details);

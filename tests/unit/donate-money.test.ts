@@ -63,7 +63,7 @@ describe("emails en texte brut", () => {
       details: [["Compétences", "Animation"]],
       receivedAt: new Date("2026-11-05T10:00:00Z"),
     });
-    expect(subject).toBe("[INA-AFRICA] Candidature de bénévole — Awa <b>Dossou</b>");
+    expect(subject).toBe("[INA-AFRICA] Candidature de bénévole : Awa <b>Dossou</b>");
     expect(text).toContain("Compétences : Animation");
     expect(text).toContain("Message :\nMa motivation");
   });

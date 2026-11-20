@@ -80,7 +80,7 @@ export function ProofUploadField({
           <FileCheck2 aria-hidden="true" className="size-5 shrink-0 text-success" />
           <p className="min-w-0 flex-1 text-body break-words text-ink">
             <span className="font-semibold">{state.proof.fileName}</span>{" "}
-            <span className="text-small text-muted">({formatFileSize(state.proof.fileSize)}) — envoyé et vérifié</span>
+            <span className="text-small text-muted">({formatFileSize(state.proof.fileSize)}), envoyé et vérifié</span>
           </p>
           <Button
             variant="ghost"

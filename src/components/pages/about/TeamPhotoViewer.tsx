@@ -27,7 +27,7 @@ export function TeamPhotoProvider({ members, children }: { members: TeamMember[]
           id: member.id,
           type: "photo",
           image: member.photo!,
-          caption: `${member.fullName} — ${member.position}`,
+          caption: `${member.fullName}, ${member.position}`,
           takenOn: null,
         })),
     [members],

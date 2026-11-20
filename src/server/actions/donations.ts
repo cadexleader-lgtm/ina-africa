@@ -84,7 +84,7 @@ function checkoutFor(
     amount,
     publicKey: config.publicKey,
     sandbox: config.mode === "sandbox",
-    reason: campaignTitle ? `Don à INA-AFRICA — ${campaignTitle}`.slice(0, 120) : "Don à INA-AFRICA",
+    reason: campaignTitle ? `Don à INA-AFRICA : ${campaignTitle}`.slice(0, 120) : "Don à INA-AFRICA",
     name: donation.donorName || undefined,
     email: donation.email || undefined,
     phone: widgetPhone(donation.phone),

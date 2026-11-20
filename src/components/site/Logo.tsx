@@ -39,7 +39,7 @@ export function Logo({ inverse = false, size = "md", link = true, className }: L
       sizes="(min-width: 640px) 130px, 100px"
       width={LOGO_WIDTH}
       height={LOGO_HEIGHT}
-      alt={`${ORG.name} — ${ORG.fullName}`}
+      alt={`${ORG.name} : ${ORG.fullName}`}
       decoding="async"
       className={cn(HEIGHTS[size], "w-auto")}
     />
@@ -51,7 +51,7 @@ export function Logo({ inverse = false, size = "md", link = true, className }: L
   return (
     <Link href="/" className={cn("inline-flex rounded-field", className)}>
       {content}
-      <span className="sr-only"> — Accueil</span>
+      <span className="sr-only"> (accueil)</span>
     </Link>
   );
 }

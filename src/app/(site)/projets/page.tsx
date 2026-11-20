@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "fr_FR",
     siteName: ORG.name,
-    title: `${T.metaTitle} — ${ORG.name}`,
+    title: `${T.metaTitle} | ${ORG.name}`,
     description: T.metaDescription,
     url: "/projets",
   },

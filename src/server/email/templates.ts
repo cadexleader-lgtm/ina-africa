@@ -41,7 +41,7 @@ function block(label: string, value: string | null | undefined): string | null {
 
 export function requestNotificationEmail(request: RequestNotification): { subject: string; text: string } {
   const typeLabel = FORM_TEXT.emails.requestTypes[request.type];
-  const subject = safeSubject(`[${ORG.name}] ${typeLabel} — ${request.fullName}`);
+  const subject = safeSubject(`[${ORG.name}] ${typeLabel} : ${request.fullName}`);
 
   const sections = [
     `Nouvelle demande reçue sur le site ${ORG.name}.`,

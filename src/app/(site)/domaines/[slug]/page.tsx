@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: PageProps<"/domaines/[slug]">
       type: "website",
       locale: "fr_FR",
       siteName: ORG.name,
-      title: `${area.title} — ${ORG.name}`,
+      title: `${area.title} | ${ORG.name}`,
       description,
       url,
       // Uniquement la vraie photo du domaine (jamais une illustration provisoire).

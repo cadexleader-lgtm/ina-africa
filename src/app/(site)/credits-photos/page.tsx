@@ -39,7 +39,7 @@ export default function PhotoCreditsPage() {
                 <div className="min-w-0 text-body">
                   <p className="font-semibold text-brand">« {item.credit.title} »</p>
                   <p className="text-muted">
-                    {item.credit.author} —{" "}
+                    {item.credit.author},{" "}
                     {item.credit.licenseUrl ? (
                       <a href={item.credit.licenseUrl} className="text-link underline underline-offset-4 hover:text-link-strong">
                         {item.credit.license}

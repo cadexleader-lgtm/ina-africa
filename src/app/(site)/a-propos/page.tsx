@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: T.metaTitle,
     description,
     alternates: { canonical: "/a-propos" },
-    openGraph: { type: "website", locale: "fr_FR", siteName: ORG.name, title: `${T.metaTitle} — ${ORG.name}`, description, url: "/a-propos" },
+    openGraph: { type: "website", locale: "fr_FR", siteName: ORG.name, title: `${T.metaTitle} | ${ORG.name}`, description, url: "/a-propos" },
   };
 }
 

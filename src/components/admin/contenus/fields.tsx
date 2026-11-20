@@ -232,7 +232,7 @@ export function TitleSlugFields({
               {publicPrefix}
               {slug || "…"}
             </span>
-            {locked && " — la modifier casserait les liens déjà partagés."}
+            {locked && " : la modifier casserait les liens déjà partagés."}
           </>
         }
         max={120}

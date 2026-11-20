@@ -48,7 +48,7 @@ export function VideoEmbed({ provider, url, title, poster, aspect = "16/9", clas
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 font-semibold text-link underline underline-offset-4 hover:text-link-strong"
       >
-        {label} — voir sur {name}
+        {label} : voir sur {name}
         <ExternalLink aria-hidden="true" className="size-4" />
         <span className="sr-only"> {T.a11y.newTab}</span>
       </a>
@@ -84,7 +84,7 @@ export function VideoEmbed({ provider, url, title, poster, aspect = "16/9", clas
           <span className="absolute bottom-0 left-0 max-w-full p-4 text-left text-small font-semibold">
             <span className="sr-only">{T.a11y.playVideo} : </span>
             {title && <span className="block truncate">{title}</span>}
-            <span className="block font-normal text-muted-inverse">{name} — chargé au clic</span>
+            <span className="block font-normal text-muted-inverse">{name}, chargé au clic</span>
           </span>
         </button>
       )}

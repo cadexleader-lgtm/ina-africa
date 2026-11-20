@@ -51,7 +51,7 @@ export const NEWS_T = {
     firstPage: "Revenir à la première page",
     pageSuffix: (page: number) => ` (page ${page})`,
     searchMetaTitle: (query: string) => `Recherche ${quote(query)} dans les actualités`,
-    categoryMetaTitle: (name: string) => `${name} — Actualités`,
+    categoryMetaTitle: (name: string) => `${name} | Actualités`,
     categoryMetaDescription: (name: string) => `Les actualités de INA-AFRICA dans la catégorie ${quote(name)}.`,
     paginationLabel: "Pagination des actualités",
   },

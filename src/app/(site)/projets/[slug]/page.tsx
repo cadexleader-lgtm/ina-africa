@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: PageProps<"/projets/[slug]">)
       type: "article",
       locale: "fr_FR",
       siteName: ORG.name,
-      title: `${title} — ${ORG.name}`,
+      title: `${title} | ${ORG.name}`,
       description: description ?? undefined,
       url,
       publishedTime: project.publishedAt ?? undefined,

@@ -8,7 +8,7 @@ import type { Metadata } from "next";
  *  - (espace) : espace connecté (en-tête avec nom, rôle, déconnexion).
  */
 export const metadata: Metadata = {
-  title: { default: "Administration — INA-AFRICA", template: "%s — Administration INA-AFRICA" },
+  title: { default: "Administration | INA-AFRICA", template: "%s | Administration INA-AFRICA" },
   robots: { index: false, follow: false },
   // Les adresses peuvent porter un chemin interne (?suite=) : jamais transmises aux sites liés.
   referrer: "same-origin",

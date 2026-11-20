@@ -24,8 +24,8 @@ function siteUrl(): URL | undefined {
 export const metadata: Metadata = {
   metadataBase: siteUrl(),
   title: {
-    default: `${ORG.name} — ${ORG.fullName}`,
-    template: `%s — ${ORG.name}`,
+    default: `${ORG.name} : ${ORG.fullName}`,
+    template: `%s | ${ORG.name}`,
   },
   description: `Site de l'ONG ${ORG.name} (${ORG.fullName}), au Bénin.`,
   applicationName: ORG.name,

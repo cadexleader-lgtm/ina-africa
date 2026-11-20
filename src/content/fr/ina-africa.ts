@@ -38,7 +38,7 @@ export const IDENTITY = {
 export const HERO = {
   kicker: "ONG béninoise, depuis 2017",
   title: "Un avenir meilleur commence par l'action.",
-  text: "INA-AFRICA : agir au cœur des communautés pour libérer les potentiels et bâtir un avenir juste, inclusif et durable en Afrique.",
+  text: "INA-AFRICA : agir au cœur des communautés pour libérer les potentiels et bâtir un avenir juste, inclusif et durable en Afrique, en particulier au Bénin.",
 };
 
 /** Présentation courte, réutilisable (accueil, pied de page, partage). */
@@ -58,7 +58,7 @@ export const HISTORY = [
 export const ABOUT_CONTEXT = {
   lead: "Répondre aux urgences sociales par l'innovation et l'inclusion.",
   paragraphs: [
-    "La création de INA-AFRICA est née d'une conviction forte : le développement durable de l'Afrique passe par des initiatives locales, solidaires et inclusives. Nous plaçons au cœur de notre action l'innovation sociale, la protection de l'environnement et l'épanouissement des jeunes et des adolescents — véritable relève de demain — tout en apportant un soutien vital aux femmes, aux enfants et aux personnes en situation de handicap.",
+    "La création de INA-AFRICA est née d'une conviction forte : le développement durable de l'Afrique passe par des initiatives locales, solidaires et inclusives. Nous plaçons au cœur de notre action l'innovation sociale, la protection de l'environnement et l'épanouissement des jeunes et des adolescents, véritable relève de demain, tout en apportant un soutien vital aux femmes, aux enfants et aux personnes en situation de handicap.",
     "Depuis ses débuts au Bénin, l'ONG démontre son impact concret sur le terrain à travers des programmes ciblés d'éducation, de formation et de santé reproductive. Jour après jour, nous transformons durablement le quotidien des enfants vulnérables, des orphelins, des femmes rurales, des veuves, des filles-mères et des personnes en situation de handicap.",
   ],
 } as const;
@@ -522,7 +522,7 @@ export const ORGANISATION_INTRO = [
 /** Explication de la vision sur la page À propos. Texte transmis par l'ONG le 19/11/2026. */
 export const ABOUT_VISION = {
   lead: "De spectateurs à acteurs du développement durable.",
-  text: "INA-AFRICA refuse que les enfants, les orphelins, les jeunes, les personnes en situation de handicap ainsi que les femmes — rurales, veuves et filles-mères — restent en marge du progrès. Nous agissons concrètement sur le terrain pour leur offrir un avenir et en faire de véritables moteurs du changement. En protégeant les plus jeunes, en améliorant le quotidien des plus vulnérables et en renforçant la place des femmes dans les prises de décision, nous bâtissons ensemble un monde plus juste, digne et durable.",
+  text: "INA-AFRICA refuse que les enfants, les orphelins, les jeunes, les personnes en situation de handicap ainsi que les femmes rurales, les veuves et les filles-mères restent en marge du progrès. Nous agissons concrètement sur le terrain pour leur offrir un avenir et en faire de véritables moteurs du changement. En protégeant les plus jeunes, en améliorant le quotidien des plus vulnérables et en renforçant la place des femmes dans les prises de décision, nous bâtissons ensemble un monde plus juste, digne et durable.",
 } as const;
 
 /** Accroche de la vision (section « Notre vision » de l'accueil). Texte transmis par l'ONG le 19/11/2026. */
@@ -530,7 +530,7 @@ export const VISION_LEAD = "Une place pour chacun, un avenir bâti par tous.";
 
 /** Ce que la vision cherche à changer. Texte transmis par l'ONG le 19/11/2026. */
 export const VISION_EXPLAINED =
-  "INA-AFRICA œuvre pour l'inclusion et la participation active des femmes — notamment les femmes rurales, les veuves et les filles-mères —, des jeunes et des personnes en situation de handicap au cœur des initiatives de développement durable. Convaincus qu'ils ne doivent plus rester en marge du progrès, nous agissons pour en faire de véritables acteurs du changement. En améliorant leurs conditions de vie, en renforçant la voix des femmes dans les prises de décision et en levant les barrières sociales, nous bâtissons avec et pour les populations vulnérables un avenir plus juste, digne et durable.";
+  "INA-AFRICA œuvre pour l'inclusion et la participation active des femmes (notamment les femmes rurales, les veuves et les filles-mères), des jeunes et des personnes en situation de handicap au cœur des initiatives de développement durable. Convaincus qu'ils ne doivent plus rester en marge du progrès, nous agissons pour en faire de véritables acteurs du changement. En améliorant leurs conditions de vie, en renforçant la voix des femmes dans les prises de décision et en levant les barrières sociales, nous bâtissons avec et pour les populations vulnérables un avenir plus juste, digne et durable.";
 
 /** Titres courts des trois missions (statuts, art. 9), dans l'ordre de MISSIONS. */
 export const MISSION_TITLES = [
@@ -664,7 +664,7 @@ export const HERO_SLIDES = [
     title: "Former la relève de demain",
     // Texte transmis par l'ONG le 19/11/2026.
     lead: "Propulser la jeunesse vers l'emploi et l'entrepreneuriat durable.",
-    text: "INA-AFRICA fait de l'avenir des jeunes une priorité absolue en favorisant leur formation pratique et leur insertion socio-professionnelle. À travers son initiative phare, le « Programme Jeune Professionnel » (PJP), l'ONG accompagne les jeunes — y compris les plus vulnérables, les filles-mères et les jeunes en situation de handicap — dans l'acquisition de compétences recherchées, le mentorat et l'accès à des opportunités concrètes d'emploi ou de création d'entreprise.",
+    text: "INA-AFRICA fait de l'avenir des jeunes une priorité absolue en favorisant leur formation pratique et leur insertion socio-professionnelle. À travers son initiative phare, le « Programme Jeune Professionnel » (PJP), l'ONG accompagne les jeunes, y compris les plus vulnérables, les filles-mères et les jeunes en situation de handicap, dans l'acquisition de compétences recherchées, le mentorat et l'accès à des opportunités concrètes d'emploi ou de création d'entreprise.",
   },
   {
     key: "sante",
@@ -678,7 +678,7 @@ export const HERO_SLIDES = [
     title: "Une place pour chacun",
     // Texte transmis par l'ONG le 19/11/2026.
     lead: "Une place pour chacun, un avenir bâti par tous.",
-    text: "INA-AFRICA œuvre activement pour l'inclusion et la pleine participation des femmes — notamment les femmes rurales, les veuves et les filles-mères —, des jeunes et des personnes en situation de handicap au cœur des initiatives de développement durable. Convaincus qu'aucun progrès n'est véritable s'il laisse des citoyens de côté, nous levons les barrières sociales et économiques pour valoriser leurs talents, amplifier leur voix et leur permettre d'être des acteurs à part entière du changement au sein de leurs communautés.",
+    text: "INA-AFRICA œuvre activement pour l'inclusion et la pleine participation des femmes (notamment les femmes rurales, les veuves et les filles-mères), des jeunes et des personnes en situation de handicap au cœur des initiatives de développement durable. Convaincus qu'aucun progrès n'est véritable s'il laisse des citoyens de côté, nous levons les barrières sociales et économiques pour valoriser leurs talents, amplifier leur voix et leur permettre d'être des acteurs à part entière du changement au sein de leurs communautés.",
   },
 ] as const;
 

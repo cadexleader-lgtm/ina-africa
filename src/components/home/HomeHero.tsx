@@ -34,7 +34,7 @@ export function HomeHero({ settings }: { settings: SiteSettings }) {
   return (
     <HeroSlideshow
       slides={slides}
-      identity={`${ORG.name} — ${ORG.fullName}`}
+      identity={`${ORG.name} : ${ORG.fullName}`}
       actions={
         <>
           <LinkButton href="/a-propos" size="lg" iconRight={<ArrowRight aria-hidden="true" />}>

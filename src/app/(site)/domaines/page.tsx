@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: T.metaTitle,
     description,
     alternates: { canonical: "/domaines" },
-    openGraph: { type: "website", locale: "fr_FR", siteName: ORG.name, title: `${T.metaTitle} — ${ORG.name}`, description, url: "/domaines" },
+    openGraph: { type: "website", locale: "fr_FR", siteName: ORG.name, title: `${T.metaTitle} | ${ORG.name}`, description, url: "/domaines" },
   };
 }
 
