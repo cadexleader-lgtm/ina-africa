@@ -150,20 +150,6 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
   // Réalisations du document de présentation (non datées).
   {
-    title: "Sensibilisation des artisans aux droits et à la santé sexuels et reproductifs",
-    text: "Des activités de sensibilisation sur les droits et la santé sexuels et reproductifs, organisées à l'endroit des artisans.",
-    audience: "Artisans",
-    place: "Commune d'Abomey-Calavi",
-    areaSlug: "formation",
-  },
-  {
-    title: "Causerie sur les infections sexuellement transmissibles au CEG Godomey",
-    text: "À l'occasion de la Saint-Valentin, une causerie sur les maladies sexuellement transmissibles avec les élèves du collège.",
-    audience: "Élèves du CEG Godomey",
-    place: "Godomey",
-    areaSlug: "formation",
-  },
-  {
     title: "Expliquer la loi 2021-12 sur la santé sexuelle et reproductive",
     text: "Une séance d'échanges avec les chefs de quartier, les leaders d'opinion et les leaders religieux pour expliquer la loi 2021-12 sur la santé sexuelle et reproductive.",
     audience: "Chefs de quartier, leaders d'opinion et religieux",
