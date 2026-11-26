@@ -40,6 +40,9 @@ export function ImageUploader({
   const [errors, setErrors] = useState<FieldErrorsMap>({});
   const [message, setMessage] = useState<{ tone: "error" | "info"; text: string } | null>(null);
   const [pending, startTransition] = useTransition();
+  // Logo de INA-AFRICA sur la photo : par défaut, sauf pour les logos des partenaires.
+  const [watermark, setWatermark] = useState(folder !== "partenaires");
+  const sourceRef = useRef<File | null>(null);
 
   // Libère l'aperçu local quand il change ou quand le composant disparaît.
   useEffect(() => {
@@ -48,14 +51,15 @@ export function ImageUploader({
     };
   }, [preview]);
 
-  async function onFileChange(file: File | undefined) {
+  async function onFileChange(file: File | undefined, withLogo = watermark) {
+    sourceRef.current = file ?? null;
     setErrors({});
     setMessage(null);
     setPrepared(null);
     setPreview(null);
     if (!file) return;
     setPreparing(true);
-    const result = await prepareImage(file);
+    const result = await prepareImage(file, { watermark: withLogo });
     setPreparing(false);
     if (!result.ok) {
       setErrors({ file: [result.message] });
@@ -144,6 +148,23 @@ export function ImageUploader({
           className="block w-full rounded-field border border-line-strong bg-white p-2 text-body text-ink file:mr-4 file:rounded-full file:border-0 file:bg-brand-50 file:px-4 file:py-2 file:font-semibold file:text-brand hover:file:bg-brand-50 aria-invalid:border-danger"
         />
         {fileError && <FieldError id={fileErrorId}>{fileError}</FieldError>}
+        <label className="mt-1 flex items-start gap-3 text-body text-ink">
+          <input
+            type="checkbox"
+            checked={watermark}
+            onChange={(event) => {
+              const next = event.target.checked;
+              setWatermark(next);
+              // Photo déjà choisie : on la prépare à nouveau, avec ou sans le logo.
+              if (sourceRef.current) void onFileChange(sourceRef.current, next);
+            }}
+            className="mt-1 size-5 shrink-0 accent-brand"
+          />
+          <span>
+            Ajouter le logo de INA-AFRICA sur la photo
+            <span className="block text-small text-muted">Posé en bas à droite, pour montrer que la photo vient de l&apos;ONG.</span>
+          </span>
+        </label>
       </div>
 
       <div role="status" aria-live="polite">

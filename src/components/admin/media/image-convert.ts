@@ -48,6 +48,36 @@ export function fitsUploadBudget(...sizes: number[]): boolean {
   return sizes.reduce((total, size) => total + size, 0) <= UPLOAD_BUDGET_BYTES;
 }
 
+/** Logo officiel posé sur les photos envoyées (fond transparent, jamais recoloré). */
+export const WATERMARK_SRC = "/brand/ina-africa-logo.webp";
+
+/**
+ * Place du logo sur une photo : en bas à droite, ≈ 16 % de la largeur
+ * (entre 80 et 340 px), marge ≈ 2,5 %. Proportions du logo gardées.
+ */
+export function watermarkBox(
+  photoWidth: number,
+  photoHeight: number,
+  logoWidth: number,
+  logoHeight: number,
+): { x: number; y: number; width: number; height: number } {
+  const width = Math.round(Math.min(340, Math.max(80, photoWidth * 0.16), photoWidth * 0.5));
+  const height = Math.round((width * logoHeight) / logoWidth);
+  const margin = Math.round(Math.max(8, photoWidth * 0.025));
+  return { x: photoWidth - width - margin, y: photoHeight - height - margin, width, height };
+}
+
+let logoPromise: Promise<ImageBitmap | null> | null = null;
+
+/** Logo chargé une seule fois (même site : la photo reste exportable). */
+function loadWatermark(): Promise<ImageBitmap | null> {
+  logoPromise ??= fetch(WATERMARK_SRC)
+    .then((response) => (response.ok ? response.blob() : null))
+    .then((blob) => (blob ? createImageBitmap(blob) : null))
+    .catch(() => null);
+  return logoPromise;
+}
+
 export function isAcceptedImageType(type: string): boolean {
   return (ACCEPTED_IMAGE_TYPES as readonly string[]).includes(type);
 }
@@ -68,7 +98,7 @@ function baseName(name: string): string {
   return name.replace(/\.[^.]+$/, "").slice(0, 200) || "photo";
 }
 
-async function drawToWebp(bitmap: ImageBitmap, maxWidth: number, quality: number): Promise<Blob | null> {
+async function drawToWebp(bitmap: ImageBitmap, maxWidth: number, quality: number, logo: ImageBitmap | null = null): Promise<Blob | null> {
   const size = scaledSize(bitmap.width, bitmap.height, maxWidth);
   const canvas = document.createElement("canvas");
   canvas.width = size.width;
@@ -78,6 +108,16 @@ async function drawToWebp(bitmap: ImageBitmap, maxWidth: number, quality: number
   context.imageSmoothingEnabled = true;
   context.imageSmoothingQuality = "high";
   context.drawImage(bitmap, 0, 0, size.width, size.height);
+  if (logo) {
+    const box = watermarkBox(size.width, size.height, logo.width, logo.height);
+    // Halo blanc discret : le logo reste lisible sur une photo sombre.
+    context.save();
+    context.shadowColor = "rgba(255, 255, 255, 0.85)";
+    context.shadowBlur = Math.max(6, box.width * 0.06);
+    context.globalAlpha = 0.95;
+    context.drawImage(logo, box.x, box.y, box.width, box.height);
+    context.restore();
+  }
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/webp", quality));
   canvas.width = 0;
   canvas.height = 0;
@@ -96,8 +136,9 @@ function readableSize(bytes: number): string {
  *  2. lecture (orientation de l'appareil photo respectée) ;
  *  3. WebP ≈ 2000 px + ≈ 800 px, qualité réduite si besoin pour tenir dans 4 Mo ;
  *  4. sans WebP possible : l'original s'il tient dans la limite (sans petite version).
+ * `watermark` : le logo de INA-AFRICA est posé en bas à droite des deux versions.
  */
-export async function prepareImage(source: File): Promise<PrepareResult> {
+export async function prepareImage(source: File, { watermark = false }: { watermark?: boolean } = {}): Promise<PrepareResult> {
   if (!isAcceptedImageType(source.type)) return { ok: false, message: CONVERT_MESSAGES.badType };
 
   let bitmap: ImageBitmap;
@@ -108,12 +149,13 @@ export async function prepareImage(source: File): Promise<PrepareResult> {
   }
 
   try {
+    const logo = watermark ? await loadWatermark() : null;
     const name = baseName(source.name);
     let lastSize = 0;
     for (const quality of WEBP_QUALITIES) {
-      const large = await drawToWebp(bitmap, LARGE_WIDTH, quality);
+      const large = await drawToWebp(bitmap, LARGE_WIDTH, quality, logo);
       if (!large) break;
-      const small = needsSmallVersion(bitmap.width) ? await drawToWebp(bitmap, SMALL_WIDTH, quality) : null;
+      const small = needsSmallVersion(bitmap.width) ? await drawToWebp(bitmap, SMALL_WIDTH, quality, logo) : null;
       lastSize = large.size + (small?.size ?? 0);
       if (fitsUploadBudget(large.size, small?.size ?? 0)) {
         const size = scaledSize(bitmap.width, bitmap.height, LARGE_WIDTH);

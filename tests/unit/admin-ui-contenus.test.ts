@@ -212,3 +212,16 @@ describe("paramètres d'adresse des pages", () => {
     expect(firstParam({ q: ["a", "b"] }, "q")).toBe("a");
   });
 });
+
+describe("logo posé sur les photos envoyées", () => {
+  it("en bas à droite, environ 16 % de la largeur, proportions gardées", async () => {
+    const { watermarkBox } = await import("@/components/admin/media/image-convert");
+    const box = watermarkBox(2000, 1333, 800, 594);
+    expect(box.width).toBe(320);
+    expect(box.height).toBe(Math.round((320 * 594) / 800));
+    expect(box.x + box.width).toBe(2000 - 50);
+    expect(box.y + box.height).toBe(1333 - 50);
+    expect(watermarkBox(400, 300, 800, 594).width).toBe(80);
+    expect(watermarkBox(4000, 3000, 800, 594).width).toBe(340);
+  });
+});
