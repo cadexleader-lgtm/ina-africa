@@ -5,10 +5,11 @@ import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
-import { HOME_PHOTOS } from "@/content/provisional-images";
+import type { ResolvedSection } from "@/lib/page-content/resolve";
 
 /** Section 10 : appel à l'action, panneau bleu avec photo, trois actions. */
-export function HomeCallToAction() {
+export function HomeCallToAction({ s }: { s: ResolvedSection }) {
+  const photo = s.image("image");
   return (
     <Section spacing="compact" labelledBy="accueil-agir">
       <Container>
@@ -17,26 +18,28 @@ export function HomeCallToAction() {
             <div className="px-6 py-10 sm:px-10 md:py-14 lg:col-span-7 lg:px-14">
               <span aria-hidden="true" className="mb-6 block h-1 w-12 rounded-full bg-gold" />
               <h2 id="accueil-agir" className="text-h2">
-                Construisons ensemble un nouvel avenir en Afrique
+                {s.line("title")}
               </h2>
-              <p className="mt-4 max-w-measure text-lead text-muted-inverse">
-                Chacun a un rôle à jouer pour transformer des vies sur le terrain. Par un don, vous financez nos actions concrètes d&apos;éducation, de formation, de sensibilisation et d&apos;aide humanitaire auprès des plus vulnérables. En tant que membre ou bénévole, vous mettez votre temps, votre énergie et vos compétences au service des communautés que INA-AFRICA accompagne vers l&apos;autonomie.
-              </p>
+              {s.paragraphs("text").map((paragraph, index) => (
+                <p key={index} className="mt-4 max-w-measure text-lead text-muted-inverse">
+                  {paragraph}
+                </p>
+              ))}
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <LinkButton href="/faire-un-don" variant="donate" size="lg" iconLeft={<Heart aria-hidden="true" />}>
-                  Faire un don
+                  {s.line("donate")}
                 </LinkButton>
                 <LinkButton href="/nous-rejoindre/membre" variant="inverse" size="lg" iconLeft={<UserPlus aria-hidden="true" />}>
-                  Devenir membre
+                  {s.line("member")}
                 </LinkButton>
                 <LinkButton href="/nous-rejoindre/benevole" variant="inverse" size="lg" iconLeft={<HandHeart aria-hidden="true" />}>
-                  Devenir bénévole
+                  {s.line("volunteer")}
                 </LinkButton>
               </div>
             </div>
             <div className="relative min-h-[16rem] lg:col-span-5">
               <ResponsiveImage
-                image={HOME_PHOTOS.callToAction}
+                image={photo!}
                 fill
                 focus="50% 50%"
                 sizes="(min-width: 1024px) 480px, 100vw"

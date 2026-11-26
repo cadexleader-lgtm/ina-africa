@@ -5,11 +5,12 @@ import { ArrowRight, Heart } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { JOIN_PATHS } from "@/components/forms/JoinLayout";
+import { joinPaths } from "@/components/forms/JoinLayout";
 import { PageIntro } from "@/components/forms/PageParts";
 import { CARD, CARD_LINK, CARD_MORE } from "@/components/site/card-styles";
 import { FORM_TEXT } from "@/content/fr/forms";
-import { PAGE_BACKDROPS } from "@/content/provisional-images";
+import { JOIN_PAGE } from "@/content/page-sections/nous-rejoindre";
+import { getPageContent } from "@/server/data/page-sections";
 
 const J = FORM_TEXT.join;
 
@@ -24,11 +25,20 @@ const TEXT_LINK =
   "inline-flex items-center gap-1.5 font-semibold text-white underline decoration-gold decoration-2 underline-offset-[6px] transition-colors duration-(--duration-fast) hover:decoration-white";
 
 /** Accueil des trois parcours : bénévole, membre, partenaire (+ don). */
-export default function JoinPage() {
+export default async function JoinPage() {
+  const content = await getPageContent(JOIN_PAGE);
+  const header = content.section("en-tete");
+  const paths = content.section("parcours");
+  const support = content.section("don");
   return (
     <>
       <PageIntro
-        backdrop={PAGE_BACKDROPS.join} eyebrow={J.eyebrow} title={J.title} intro={J.intro} breadcrumbs={[{ label: J.breadcrumb }]} />
+        backdrop={header.image("image") ?? undefined}
+        eyebrow={header.line("label")}
+        title={header.line("title")}
+        intro={header.text("intro")}
+        breadcrumbs={[{ label: header.line("label") }]}
+      />
 
       <Section labelledBy="rejoindre-parcours">
         <Container>
@@ -36,7 +46,7 @@ export default function JoinPage() {
             {J.pathsTitle}
           </h2>
           <ul className="grid gap-6 md:grid-cols-3">
-            {JOIN_PATHS.map((path) => (
+            {joinPaths(content).map((path) => (
               <li key={path.key} className="flex">
                 <article className={`${CARD} flex-1 flex-col p-6 sm:p-8`}>
                   <span aria-hidden="true" className="mb-6 flex size-14 items-center justify-center rounded-full bg-brand-50">
@@ -48,7 +58,7 @@ export default function JoinPage() {
                     </Link>
                   </h3>
                   <p className="mt-3 text-muted">{path.text}</p>
-                  <p className="mt-4 text-small font-medium text-brand">{J.formLength}</p>
+                  <p className="mt-4 text-small font-medium text-brand">{paths.line("formLength")}</p>
                   <span aria-hidden="true" className={CARD_MORE}>
                     {path.action}
                     <ArrowRight className="size-4 transition-transform duration-(--duration-fast) group-hover:translate-x-0.5" />
@@ -62,15 +72,15 @@ export default function JoinPage() {
             <div className="grid items-center gap-8 lg:grid-cols-[1fr_auto] lg:gap-16">
               <div>
                 <span aria-hidden="true" className="mb-5 block h-1 w-12 rounded-full bg-gold" />
-                <h2 className="text-h3">{J.donateTitle}</h2>
-                <p className="mt-3 max-w-measure text-muted-inverse">{J.donateText}</p>
+                <h2 className="text-h3">{support.line("title")}</h2>
+                <p className="mt-3 max-w-measure text-muted-inverse">{support.text("donateText")}</p>
               </div>
               <div className="flex flex-col items-start gap-5">
                 <LinkButton href="/faire-un-don" variant="donate" size="lg" iconLeft={<Heart aria-hidden="true" />}>
-                  {J.donateAction}
+                  {support.line("donateAction")}
                 </LinkButton>
                 <Link href="/contact" className={TEXT_LINK}>
-                  {J.contactAction}
+                  {support.line("contactAction")}
                   <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </div>

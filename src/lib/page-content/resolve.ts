@@ -32,6 +32,18 @@ function storedItems(value: unknown, field: Extract<FieldDef, { kind: "items" }>
     .map((item) => Object.fromEntries(field.fields.map((sub) => [sub.key, isText(item[sub.key]) ? (item[sub.key] as string).trim() : ""])));
 }
 
+/** Éléments enregistrés d'une liste fixe à clés stables (`_key` → textes). */
+function storedByKey(value: unknown): Map<string, Record<string, unknown>> {
+  const map = new Map<string, Record<string, unknown>>();
+  if (!Array.isArray(value)) return map;
+  for (const item of value) {
+    if (item && typeof item === "object" && !Array.isArray(item) && typeof (item as Record<string, unknown>)._key === "string") {
+      map.set((item as Record<string, unknown>)._key as string, item as Record<string, unknown>);
+    }
+  }
+  return map;
+}
+
 /** Valeur affichée d'un champ. */
 export function fieldValue(field: FieldDef, stored: StoredContent): unknown {
   const value = stored[field.key];
@@ -47,9 +59,16 @@ export function fieldValue(field: FieldDef, stored: StoredContent): unknown {
       const items = storedItems(value, field);
       if (field.fixed) {
         // Même nombre d'éléments que l'origine ; chaque texte vide reprend celui d'origine.
-        return field.default.map((original, index) =>
-          Object.fromEntries(field.fields.map((sub) => [sub.key, items[index]?.[sub.key] || original[sub.key] || ""])),
-        );
+        const keyed = field.keys ? storedByKey(value) : null;
+        return field.default.map((original, index) => {
+          const saved = keyed ? keyed.get(field.keys![index] ?? "") : items[index];
+          return Object.fromEntries(
+            field.fields.map((sub) => {
+              const text = saved?.[sub.key];
+              return [sub.key, typeof text === "string" && text.trim() ? text.trim() : original[sub.key] || ""];
+            }),
+          );
+        });
       }
       const filled = items.filter((item) => Object.values(item).some(Boolean));
       return filled.length > 0 ? filled : field.default;

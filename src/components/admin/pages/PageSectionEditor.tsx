@@ -44,7 +44,8 @@ export function PageSectionEditor({ pageKey, pagePath, number, section, stored, 
   const [customized, setCustomized] = useState(stored !== null);
 
   const anchorId = `section-${section.key}`;
-  const siteHref = section.anchor ? `${pagePath}#${section.anchor}` : pagePath;
+  const sitePath = section.path ?? pagePath;
+  const siteHref = section.anchor ? `${sitePath}#${section.anchor}` : sitePath;
   const e = (key: string) => fieldError(form.errors, `content.${key}`);
   const shownKeys = Object.keys(form.errors ?? {}).filter((key) => key.startsWith("content."));
 

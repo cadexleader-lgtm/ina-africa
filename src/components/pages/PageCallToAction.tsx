@@ -5,16 +5,12 @@ import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
-import { PAGES } from "@/content/fr/pages";
+import { COMMON_PAGE } from "@/content/page-sections/commun";
 import { DONATE_LINK, JOIN_NAV } from "@/content/fr/site";
 import { cn } from "@/lib/cn";
+import { getPageContent } from "@/server/data/page-sections";
 
-const T = PAGES.callToAction;
-
-const EXPLORE = {
-  areas: { href: "/domaines", title: T.areasTitle, text: T.areasText, link: T.areasLink },
-  projects: { href: "/projets", title: T.projectsTitle, text: T.projectsText, link: T.projectsLink },
-} as const;
+const EXPLORE = { areas: "/domaines", projects: "/projets" } as const;
 
 type PageCallToActionProps = {
   /** Lien de découverte affiché à côté du don ; `none` = appel au don seul (page projet). */
@@ -31,10 +27,22 @@ const TEXT_LINK =
 
 /**
  * Fin de page sobre : un lien de découverte (domaines ou projets) et UN appel
- * au don (bouton or). Textes d'interface neutres, aucun chiffre.
+ * au don (bouton or). Textes : Pages du site → Blocs communs → « Soutenir INA-AFRICA ».
  */
-export function PageCallToAction({ explore = "areas", id, flushTop = false, className }: PageCallToActionProps) {
-  const next = explore === "none" ? null : EXPLORE[explore];
+export async function PageCallToAction({ explore = "areas", id, flushTop = false, className }: PageCallToActionProps) {
+  const s = (await getPageContent(COMMON_PAGE)).section("soutenir");
+  const T = {
+    donateTitle: s.line("donateTitle"),
+    donateText: s.text("donateText"),
+    donateLink: s.line("donateLink"),
+    joinLink: s.line("joinLink"),
+  };
+  const next =
+    explore === "none"
+      ? null
+      : explore === "areas"
+        ? { href: EXPLORE.areas, title: s.line("areasTitle"), text: s.text("areasText"), link: s.line("areasLink") }
+        : { href: EXPLORE.projects, title: s.line("projectsTitle"), text: s.text("projectsText"), link: s.line("projectsLink") };
   const volunteer = JOIN_NAV.find((item) => item.href.endsWith("/benevole"));
 
   return (

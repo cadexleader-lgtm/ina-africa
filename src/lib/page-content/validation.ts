@@ -11,18 +11,24 @@ import type { FieldDef, SectionDef, StoredContent } from "./types";
  */
 
 function itemsSchema(field: Extract<FieldDef, { kind: "items" }>) {
-  const item = z.object(
-    Object.fromEntries(field.fields.map((sub) => [sub.key, sub.kind === "line" ? optionalLine(sub.max) : optionalText(sub.max)])),
-  );
+  const item = z.object({
+    ...Object.fromEntries(field.fields.map((sub) => [sub.key, sub.kind === "line" ? optionalLine(sub.max) : optionalText(sub.max)])),
+    // Identifiant stable d'un élément de liste fixe (jamais affiché).
+    ...(field.keys ? { _key: z.enum(field.keys as [string, ...string[]]) } : {}),
+  });
   return z
     .array(item)
     .max(field.maxItems, `${field.maxItems} éléments au plus.`)
-    .refine((items) => !field.fixed || items.length === field.default.length, "Le nombre d'éléments de cette liste ne peut pas changer.")
+    .refine(
+      (items) => !field.fixed || field.keys !== undefined || items.length === field.default.length,
+      "Le nombre d'éléments de cette liste ne peut pas changer.",
+    )
     .transform((items) => {
       const cleaned = items.map((entry) =>
         Object.fromEntries(Object.entries(entry).filter((pair): pair is [string, string] => typeof pair[1] === "string")),
       );
-      // Liste fixe : on garde la position de chaque élément (même vide).
+      // Liste fixe à clés : seuls les éléments modifiés ; sans clés : la position de chaque élément (même vide).
+      if (field.fixed && field.keys) return cleaned.filter((entry) => Object.keys(entry).length > 1);
       return field.fixed ? cleaned : cleaned.filter((entry) => Object.keys(entry).length > 0);
     });
 }

@@ -4,7 +4,7 @@ begin;
 -- Visiteur : lecture seule.
 set local role anon;
 select tests.logout();
-select tests.ok((select count(*) = 0 from public.page_sections), 'Aucune section modifiée au départ : le site affiche ses textes d''origine');
+select tests.ok((select count(*) = 0 from public.page_sections where id like 'a-propos.%'), 'Aucune section modifiée au départ : le site affiche ses textes d''origine');
 select tests.fails($$insert into public.page_sections (id, content) values ('a-propos.vision', '{}')$$,
   'Un visiteur ne peut pas modifier une page', '42501');
 reset role;

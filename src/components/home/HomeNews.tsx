@@ -6,17 +6,17 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ArticleCard } from "@/components/site/ArticleCard";
-import { T } from "@/content/fr/site";
+import type { ResolvedSection } from "@/lib/page-content/resolve";
 import type { ArticleSummary } from "@/lib/types/content";
 
 /**
  * Section 9 : les 3 dernières actualités publiées. Sans article, un bandeau
  * compact invite à suivre l'ONG (newsletter) et à découvrir ses actions.
  */
-export function HomeNews({ articles }: { articles: ArticleSummary[] }) {
+export function HomeNews({ s, articles }: { s: ResolvedSection; articles: ArticleSummary[] }) {
   if (articles.length === 0) {
     return (
-      <Section spacing="compact" aria-label={T.home.news.label}>
+      <Section spacing="compact" aria-label={s.line("label")}>
         <Container>
           <Reveal>
             <div className="flex flex-col gap-6 rounded-card border border-line bg-white p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
@@ -25,11 +25,8 @@ export function HomeNews({ articles }: { articles: ArticleSummary[] }) {
                   <Newspaper className="size-6" strokeWidth={1.75} />
                 </span>
                 <div>
-                  <h2 className="text-h4">Suivez les actualités d&apos;INA-AFRICA</h2>
-                  <p className="mt-1 max-w-measure text-small text-muted">
-                    Les nouvelles de l&apos;ONG, ses actions et ses appels aux dons paraîtront ici. Inscrivez-vous à la lettre
-                    d&apos;information pour les recevoir dès leur publication.
-                  </p>
+                  <h2 className="text-h4">{s.line("emptyTitle")}</h2>
+                  <p className="mt-1 max-w-measure text-small text-muted">{s.text("emptyText")}</p>
                 </div>
               </div>
               <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
@@ -53,11 +50,11 @@ export function HomeNews({ articles }: { articles: ArticleSummary[] }) {
         <Reveal>
           <SectionHeading
             id="accueil-actualites"
-            label={T.home.news.label}
-            title={T.home.news.title}
+            label={s.line("label")}
+            title={s.line("title")}
             action={
               <LinkButton href="/actualites" variant="link" iconRight={<ArrowRight aria-hidden="true" />}>
-                {T.home.news.all}
+                {s.line("all")}
               </LinkButton>
             }
           />

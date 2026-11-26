@@ -7,8 +7,8 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PROVISIONAL_AREA_IMAGES } from "@/content/provisional-images";
-import { T } from "@/content/fr/site";
 import { cn } from "@/lib/cn";
+import type { ResolvedSection } from "@/lib/page-content/resolve";
 import type { ActionArea } from "@/lib/types/content";
 import { InterventionDomains } from "@/components/site/InterventionDomains";
 import { MediaTile } from "@/components/site/MediaTile";
@@ -20,7 +20,7 @@ import { areaIcon } from "@/components/site/domain-icons";
  * premier domaine occupe deux colonnes seulement si la grille reste complète
  * (7 domaines : oui ; 8 piliers : non). Dessous, les domaines d'intervention.
  */
-export function HomeAreas({ areas }: { areas: ActionArea[] }) {
+export function HomeAreas({ s, interventions, areas }: { s: ResolvedSection; interventions: ResolvedSection; areas: ActionArea[] }) {
   if (areas.length === 0) return null;
 
   return (
@@ -29,17 +29,16 @@ export function HomeAreas({ areas }: { areas: ActionArea[] }) {
         <Reveal>
           <SectionHeading
             id="accueil-domaines"
-            label={T.home.areas.label}
-            title={T.home.areas.title}
+            label={s.line("label")}
+            title={s.line("title")}
             intro={
-              // Texte transmis par l'ONG le 20/11/2026.
               <>
-                <p className="font-semibold text-brand">Des actions ciblées pour un impact global et durable.</p>
-                <p className="mt-3 text-body">
-                  Chaque projet mené sur le terrain par INA-AFRICA s&apos;articule autour de huit piliers stratégiques. Cette
-                  approche intégrée nous permet d&apos;apporter des réponses concrètes, inclusives et pérennes aux besoins des
-                  communautés les plus vulnérables.
-                </p>
+                <p className="font-semibold text-brand">{s.line("lead")}</p>
+                {s.paragraphs("text").map((paragraph, index) => (
+                  <p key={index} className="mt-3 text-body">
+                    {paragraph}
+                  </p>
+                ))}
               </>
             }
           />
@@ -88,10 +87,10 @@ export function HomeAreas({ areas }: { areas: ActionArea[] }) {
                 href="/domaines"
                 className="group flex w-full flex-col justify-between gap-6 rounded-card bg-brand p-6 text-white transition-colors duration-(--duration-base) hover:bg-brand-strong"
               >
-                <span className="font-heading text-h3">{T.home.areas.all}</span>
-                <span className="text-small text-muted-inverse">Pour chaque domaine, découvrez :</span>
+                <span className="font-heading text-h3">{s.line("all")}</span>
+                <span className="text-small text-muted-inverse">{s.line("allIntro")}</span>
                 <ul className="-mt-3 space-y-2 text-body text-white">
-                  {["La problématique", "Notre engagement", "Nos interventions", "Les publics concernés"].map((item) => (
+                  {s.list("allItems").map((item) => (
                     <li key={item} className="flex items-center gap-2">
                       <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-gold" />
                       {item}
@@ -109,7 +108,7 @@ export function HomeAreas({ areas }: { areas: ActionArea[] }) {
           </li>
         </ul>
         <Reveal className="mt-10">
-          <InterventionDomains id="accueil-interventions" />
+          <InterventionDomains s={interventions} id="accueil-interventions" />
         </Reveal>
       </Container>
     </Section>

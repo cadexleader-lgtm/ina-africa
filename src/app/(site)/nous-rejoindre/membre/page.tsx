@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 
 import { FormGuard } from "@/components/forms/FormGuard";
 import { FORM_IDS, FORM_KEYS } from "@/components/forms/ids";
-import { JoinLayout } from "@/components/forms/JoinLayout";
+import { JoinLayout, joinPageTexts } from "@/components/forms/JoinLayout";
 import { MembershipIntro } from "@/components/forms/MembershipIntro";
 import { contactsFrom } from "@/components/forms/PageParts";
 import { MembershipForm } from "@/components/forms/RequestForms";
 import { FORM_TEXT } from "@/content/fr/forms";
 import { submitMembership } from "@/server/actions/requests";
 import { getSiteSettings } from "@/server/data/site";
-import { PAGE_BACKDROPS } from "@/content/provisional-images";
+import { JOIN_PAGE } from "@/content/page-sections/nous-rejoindre";
+import { getPageContent } from "@/server/data/page-sections";
 
 const M = FORM_TEXT.member;
 
@@ -21,16 +22,17 @@ export const metadata: Metadata = {
 };
 
 export default async function MembershipPage() {
-  const contacts = contactsFrom(await getSiteSettings());
+  const [settings, page, content] = await Promise.all([getSiteSettings(), joinPageTexts("membre"), getPageContent(JOIN_PAGE)]);
+  const contacts = contactsFrom(settings);
   return (
     <JoinLayout
-        backdrop={PAGE_BACKDROPS.member}
+      backdrop={page.backdrop}
       current="member"
-      title={M.title}
-      intro={M.intro}
-      formTitle={M.formTitle}
-      formNote={M.conditionsNote}
-      before={<MembershipIntro />}
+      title={page.title}
+      intro={page.intro}
+      formTitle={page.formTitle}
+      formNote={page.s.text("conditionsNote")}
+      before={<MembershipIntro s={content.section("adhesion")} />}
     >
       <MembershipForm
         action={submitMembership}

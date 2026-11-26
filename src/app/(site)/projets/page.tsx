@@ -6,12 +6,15 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { HomeAchievements } from "@/components/home/HomeAchievements";
 import { OtherAreas } from "@/components/pages/areas/OtherAreas";
 import { PageCallToAction } from "@/components/pages/PageCallToAction";
+import { Paragraphs } from "@/components/pages/Paragraphs";
+import { getPageContent } from "@/server/data/page-sections";
+import { HOME_PAGE } from "@/content/page-sections/accueil";
+import { PROJECTS_PAGE } from "@/content/page-sections/projets";
 import { PageHeader } from "@/components/pages/PageHeader";
 import { ProjectResults } from "@/components/pages/projects/ProjectResults";
 import { PAGES } from "@/content/fr/pages";
 import { ORG } from "@/content/fr/site";
-import { getSiteSettings, listActionAreas } from "@/server/data/site";
-import { PAGE_BACKDROPS } from "@/content/provisional-images";
+import { listActionAreas } from "@/server/data/site";
 
 const T = PAGES.projects;
 
@@ -45,39 +48,37 @@ export const instant = false;
  * présentée comme preuve) et les domaines d'intervention.
  */
 export default async function ProjectsPage({ searchParams }: PageProps<"/projets">) {
-  const [params, settings, areas] = await Promise.all([searchParams, getSiteSettings(), listActionAreas()]);
+  const [params, content, home, areas] = await Promise.all([searchParams, getPageContent(PROJECTS_PAGE), getPageContent(HOME_PAGE), listActionAreas()]);
+  const header = content.section("en-tete");
+  const published = content.section("publies");
+  const pillars = content.section("piliers");
   return (
     <>
       <PageHeader
-        backdrop={PAGE_BACKDROPS.projects}
+        backdrop={header.image("image") ?? undefined}
         id="projets-titre"
-        breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: T.label }]}
-        label={T.label}
-        title={T.title}
-        intro={<p>{T.intro}</p>}
+        breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: header.line("label") }]}
+        label={header.line("label")}
+        title={header.line("title")}
+        intro={<Paragraphs items={header.paragraphs("intro")} />}
       />
       <Section labelledBy="projets-publies">
         <Container>
-          <SectionHeading id="projets-publies" label="Projets" title="Projets publiés" />
+          <SectionHeading id="projets-publies" label={published.line("label")} title={published.line("title")} />
           <ProjectResults searchParams={params} />
         </Container>
       </Section>
-      <HomeAchievements settings={settings} tone="ivory" id="actions-documentees" groupByArea />
+      <HomeAchievements s={home.section("actions")} tone="ivory" id="actions-documentees" groupByArea />
       <Section labelledBy="projets-domaines">
         <Container>
           <SectionHeading
             id="projets-domaines"
-            label="Nos piliers d'action"
-            title="Huit piliers stratégiques"
+            label={pillars.line("label")}
+            title={pillars.line("title")}
             intro={
-              // Texte transmis par l'ONG le 20/11/2026.
               <>
-                <p className="font-semibold text-brand">Des actions ciblées pour un impact global et durable.</p>
-                <p className="mt-3 text-body">
-                  Chaque projet mené sur le terrain par INA-AFRICA s&apos;articule autour de huit piliers stratégiques. Cette
-                  approche intégrée nous permet d&apos;apporter des réponses concrètes, inclusives et pérennes aux besoins des
-                  communautés les plus vulnérables.
-                </p>
+                <p className="font-semibold text-brand">{pillars.line("lead")}</p>
+                <Paragraphs items={pillars.paragraphs("text")} className="mt-3 text-body" spacing="" />
               </>
             }
           />

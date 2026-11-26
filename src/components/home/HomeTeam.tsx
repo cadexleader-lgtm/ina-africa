@@ -8,10 +8,11 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { initials } from "@/components/pages/page-helpers";
 import { TeamPhotoButton, TeamPhotoProvider } from "@/components/pages/about/TeamPhotoViewer";
+import type { ResolvedSection } from "@/lib/page-content/resolve";
 import type { TeamMember } from "@/lib/types/content";
 
 /** Aperçu de l'équipe : les premiers membres du conseil d'administration, lien vers la page complète. */
-export function HomeTeam({ members }: { members: TeamMember[] }) {
+export function HomeTeam({ s, members }: { s: ResolvedSection; members: TeamMember[] }) {
   // Les quatre responsables principaux : président(e), vice-président(e),
   // secrétaire et trésorier(ère) généraux (les adjoints figurent sur « À propos »).
   const board = members.filter((member) => member.group === "conseil_administration" && !/adjoint/i.test(member.position)).slice(0, 4);
@@ -23,12 +24,12 @@ export function HomeTeam({ members }: { members: TeamMember[] }) {
         <Reveal>
           <SectionHeading
             id="accueil-equipe"
-            label="Les personnes"
-            title="Une équipe engagée"
-            intro={`${members.length} membres, répartis entre le conseil d'administration, le conseil de surveillance, les adjoints et les conseillers, font vivre INA-AFRICA.`}
+            label={s.line("label")}
+            title={s.line("title")}
+            intro={s.line("intro").replaceAll("{nombre}", String(members.length))}
             action={
               <LinkButton href="/a-propos#equipe" variant="link" iconRight={<ArrowRight aria-hidden="true" />}>
-                Découvrir toute l&apos;équipe
+                {s.line("all")}
               </LinkButton>
             }
           />

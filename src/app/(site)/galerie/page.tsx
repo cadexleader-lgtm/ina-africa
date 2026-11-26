@@ -8,12 +8,14 @@ import { Pagination } from "@/components/ui/Pagination";
 import { Section } from "@/components/ui/Section";
 import { MediaGallery } from "@/components/pages/gallery/MediaGallery";
 import { PageCallToAction } from "@/components/pages/PageCallToAction";
+import { Paragraphs } from "@/components/pages/Paragraphs";
+import { getPageContent } from "@/server/data/page-sections";
+import { GALLERY_PAGE } from "@/content/page-sections/galerie";
 import { PageHeader } from "@/components/pages/PageHeader";
 import { parsePage } from "@/components/pages/page-helpers";
 import { PAGES } from "@/content/fr/pages";
 import { ORG } from "@/content/fr/site";
 import { listGalleryItems } from "@/server/data/site";
-import { PAGE_BACKDROPS } from "@/content/provisional-images";
 
 const T = PAGES.gallery;
 
@@ -39,16 +41,17 @@ export const instant = false;
 
 /** Galerie : photos et vidéos publiées, visionneuse accessible, pagination (?page=). */
 export default async function GalleryPage({ searchParams }: PageProps<"/galerie">) {
-  const page = parsePage((await searchParams).page);
+  const [page, content] = await Promise.all([searchParams.then((params) => parsePage(params.page)), getPageContent(GALLERY_PAGE)]);
+  const header = content.section("en-tete");
   return (
     <>
       <PageHeader
-        backdrop={PAGE_BACKDROPS.gallery}
+        backdrop={header.image("image") ?? undefined}
         id="galerie-titre"
-        breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: T.label }]}
-        label={T.label}
-        title={T.title}
-        intro={<p>{T.intro}</p>}
+        breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: header.line("label") }]}
+        label={header.line("label")}
+        title={header.line("title")}
+        intro={<Paragraphs items={header.paragraphs("intro")} />}
       />
       <Section spacing="compact">
         <Container>

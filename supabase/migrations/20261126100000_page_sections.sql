@@ -52,3 +52,26 @@ create policy "page_sections : gestion admin"
   on public.page_sections for all to authenticated
   using ((select private.has_role('admin')))
   with check ((select private.has_role('admin')));
+
+-- Reprise des textes déjà saisis dans Paramètres → Page d'accueil (haut de
+-- l'accueil, section « Impact ») : ils se modifient désormais dans
+-- Pages du site → Accueil. Seuls les champs remplis sont repris.
+insert into public.page_sections (id, content)
+select 'accueil.haut', c from (
+  select jsonb_strip_nulls(jsonb_build_object(
+    'kicker', hero_kicker, 'title', hero_title, 'text', hero_text,
+    'image', case when hero_image_path is not null and hero_image_alt is not null
+      then jsonb_build_object('path', hero_image_path, 'alt', hero_image_alt) end)) as c
+  from public.site_settings where id = 1) s
+where c <> '{}'::jsonb
+on conflict (id) do nothing;
+
+insert into public.page_sections (id, content)
+select 'accueil.actions', c from (
+  select jsonb_strip_nulls(jsonb_build_object(
+    'title', impact_title, 'text', impact_text,
+    'image', case when impact_image_path is not null and impact_image_alt is not null
+      then jsonb_build_object('path', impact_image_path, 'alt', impact_image_alt) end)) as c
+  from public.site_settings where id = 1) s
+where c <> '{}'::jsonb
+on conflict (id) do nothing;

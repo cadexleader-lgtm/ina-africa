@@ -9,13 +9,15 @@ import { NewsListView, describeNewsList, type NewsListState } from "@/components
 import { NewsSearchForm } from "@/components/news/NewsSearchForm";
 import { PageIntro } from "@/components/news/PageIntro";
 import { newsHref, parseNewsParams } from "@/components/news/news-params";
+import { HOME_PAGE } from "@/content/page-sections/accueil";
+import { NEWS_PAGE } from "@/content/page-sections/actualites";
+import { getPageContent } from "@/server/data/page-sections";
 import { NEWS_T } from "@/content/fr/news";
 import type { SearchParamsRecord } from "@/lib/pagination";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { breadcrumbJsonLd } from "@/lib/seo/structured-data";
 import { listArticleCategories, listArticles, sanitizeSearch } from "@/server/data/articles";
-import { getSiteSettings } from "@/server/data/site";
-import { PAGE_BACKDROPS } from "@/content/provisional-images";
+
 
 /**
  * /actualites : article le plus récent mis en avant, puis grille ; filtres par
@@ -70,7 +72,8 @@ export async function generateMetadata({ searchParams }: PageProps<"/actualites"
 
 export default async function NewsPage({ searchParams }: PageProps<"/actualites">) {
   const state = await loadNewsList(searchParams);
-  const [categories, settings] = await Promise.all([listArticleCategories(), getSiteSettings()]);
+  const [categories, content, home] = await Promise.all([listArticleCategories(), getPageContent(NEWS_PAGE), getPageContent(HOME_PAGE)]);
+  const header = content.section("en-tete");
   const active = state.category?.slug;
   // Aucun article publié (ni recherche ni catégorie) : les actions documentées remplissent la page.
   const nothingPublished = describeNewsList(state).empty && !state.search && !state.category && !state.unknownCategory;
@@ -84,11 +87,11 @@ export default async function NewsPage({ searchParams }: PageProps<"/actualites"
         ])}
       />
       <PageIntro
-        backdrop={PAGE_BACKDROPS.news}
+        backdrop={header.image("image") ?? undefined}
         breadcrumbs={[{ label: NEWS_T.article.home, href: "/" }, { label: NEWS_T.article.news }]}
-        label={NEWS_T.list.label}
-        title={NEWS_T.list.title}
-        intro={NEWS_T.list.intro}
+        label={header.line("label")}
+        title={header.line("title")}
+        intro={header.text("intro")}
         aside={<NewsSearchForm q={state.params.q} category={active} />}
       >
         <NewsCategoryNav categories={categories} active={active} q={state.params.q || undefined} />
@@ -99,7 +102,7 @@ export default async function NewsPage({ searchParams }: PageProps<"/actualites"
           <NewsListView state={state} />
         </Container>
       </Section>
-      {nothingPublished && <HomeAchievements settings={settings} tone="ivory" id="actions-documentees" />}
+      {nothingPublished && <HomeAchievements s={home.section("actions")} tone="ivory" id="actions-documentees" />}
     </>
   );
 }

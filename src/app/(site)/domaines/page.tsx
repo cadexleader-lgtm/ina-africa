@@ -10,6 +10,9 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { AreaVisualFill } from "@/components/pages/areas/AreaVisual";
 import { PageCallToAction } from "@/components/pages/PageCallToAction";
+import { Paragraphs } from "@/components/pages/Paragraphs";
+import { AREAS_PAGE } from "@/content/page-sections/domaines";
+import { getPageContent } from "@/server/data/page-sections";
 import { PageHeader } from "@/components/pages/PageHeader";
 import { excerpt } from "@/components/pages/page-helpers";
 import { AREAS } from "@/content/fr/ina-africa";
@@ -17,7 +20,6 @@ import { PAGES } from "@/content/fr/pages";
 import { cn } from "@/lib/cn";
 import { ORG } from "@/content/fr/site";
 import { listActionAreas } from "@/server/data/site";
-import { PAGE_BACKDROPS } from "@/content/provisional-images";
 import { InterventionDomains } from "@/components/site/InterventionDomains";
 
 const T = PAGES.areas;
@@ -38,17 +40,18 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** Grille des domaines d'action publiés (+ accès aux projets). État vide si aucun domaine n'est actif. */
 export default async function AreasPage() {
-  const areas = await listActionAreas();
+  const [areas, content] = await Promise.all([listActionAreas(), getPageContent(AREAS_PAGE)]);
+  const header = content.section("en-tete");
 
   return (
     <>
       <PageHeader
-        backdrop={PAGE_BACKDROPS.areas}
+        backdrop={header.image("image") ?? undefined}
         id="domaines-titre"
-        breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: T.title }]}
-        label={T.label}
-        title={T.title}
-        intro={<p>{T.intro}</p>}
+        breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: header.line("title") }]}
+        label={header.line("label")}
+        title={header.line("title")}
+        intro={<Paragraphs items={header.paragraphs("intro")} />}
         meta={
           areas.length > 0 && (
             <p className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-small font-semibold text-brand shadow-card">
@@ -102,7 +105,7 @@ export default async function AreasPage() {
                             className="mt-6"
                             iconRight={<ArrowRight aria-hidden="true" />}
                           >
-                            Découvrir ce domaine
+                            {content.section("liste").line("button")}
                             <span className="sr-only"> : {area.title}</span>
                           </LinkButton>
                         </div>
@@ -114,7 +117,7 @@ export default async function AreasPage() {
             </ol>
           )}
           <Reveal className="mt-10 lg:mt-12">
-            <InterventionDomains id="domaines-interventions" headingLevel="h2" />
+            <InterventionDomains s={content.section("interventions")} id="domaines-interventions" headingLevel="h2" />
           </Reveal>
         </Container>
       </Section>

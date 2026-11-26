@@ -7,15 +7,31 @@ import { Section } from "@/components/ui/Section";
 import { AsideCard, FormCard, PageIntro, StepList } from "@/components/forms/PageParts";
 import type { ImageSource } from "@/components/ui/ResponsiveImage";
 import { FORM_TEXT } from "@/content/fr/forms";
+import { JOIN_PAGE } from "@/content/page-sections/nous-rejoindre";
+import type { PageContent } from "@/server/data/page-sections";
+import { getPageContent } from "@/server/data/page-sections";
 
 export type JoinPath = "volunteer" | "member" | "partner";
 
-/** Les trois parcours « Nous rejoindre » (accueil des parcours et liens croisés). */
-export const JOIN_PATHS: { key: JoinPath; href: string; icon: LucideIcon; title: string; text: string; action: string }[] = [
-  { key: "volunteer", href: "/nous-rejoindre/benevole", icon: HandHeart, ...FORM_TEXT.join.volunteer },
-  { key: "member", href: "/nous-rejoindre/membre", icon: Users, ...FORM_TEXT.join.member },
-  { key: "partner", href: "/nous-rejoindre/partenaire", icon: Handshake, ...FORM_TEXT.join.partner },
+type JoinPathLink = { key: JoinPath; href: string; icon: LucideIcon; title: string; text: string; action: string };
+
+const PATHS: { key: JoinPath; href: string; icon: LucideIcon }[] = [
+  { key: "volunteer", href: "/nous-rejoindre/benevole", icon: HandHeart },
+  { key: "member", href: "/nous-rejoindre/membre", icon: Users },
+  { key: "partner", href: "/nous-rejoindre/partenaire", icon: Handshake },
 ];
+
+/** Les trois parcours « Nous rejoindre », avec leurs textes (Pages du site → Nous rejoindre). */
+export function joinPaths(content: PageContent): JoinPathLink[] {
+  const texts = content.section("parcours").items("paths");
+  return PATHS.map((path, index) => ({ ...path, title: texts[index]!.title, text: texts[index]!.text, action: texts[index]!.action }));
+}
+
+/** Textes et photo d'une des trois pages de formulaire. */
+export async function joinPageTexts(key: "benevole" | "membre" | "partenaire") {
+  const s = (await getPageContent(JOIN_PAGE)).section(key);
+  return { s, title: s.line("title"), intro: s.text("intro"), formTitle: s.line("formTitle"), backdrop: s.image("image") ?? undefined };
+}
 
 const LINK = "inline-flex items-center gap-1.5 font-semibold text-link underline-offset-4 hover:text-link-strong hover:underline";
 
@@ -34,9 +50,22 @@ type JoinLayoutProps = {
 };
 
 /** Mise en page commune des formulaires « Nous rejoindre » : formulaire + encadrés (étapes, confidentialité, autres parcours). */
-export function JoinLayout({ current, title, intro, formTitle, formNote, before, backdrop, children }: JoinLayoutProps) {
-  const J = FORM_TEXT.join;
-  const others = JOIN_PATHS.filter((path) => path.key !== current);
+export async function JoinLayout({ current, title, intro, formTitle, formNote, before, backdrop, children }: JoinLayoutProps) {
+  const content = await getPageContent(JOIN_PAGE);
+  const aside = content.section("formulaires");
+  const support = content.section("don");
+  const header = content.section("en-tete");
+  const J = {
+    eyebrow: header.line("label"),
+    breadcrumb: header.line("label"),
+    stepsTitle: aside.line("stepsTitle"),
+    steps: aside.list("steps"),
+    privacyNote: aside.text("privacyNote"),
+    otherPathsTitle: aside.line("otherPathsTitle"),
+    donateAction: support.line("donateAction"),
+    contactAction: support.line("contactAction"),
+  };
+  const others = joinPaths(content).filter((path) => path.key !== current);
   return (
     <>
       <PageIntro

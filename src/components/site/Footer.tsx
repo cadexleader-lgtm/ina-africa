@@ -6,6 +6,8 @@ import { CopyrightYear } from "@/components/site/CopyrightYear";
 import { Logo } from "@/components/site/Logo";
 import { socialLinks, telHref, whatsappHref } from "@/components/site/social";
 import { FOOTER_NAV, JOIN_NAV, LEGAL_NAV, ORG, T } from "@/content/fr/site";
+import { COMMON_PAGE } from "@/content/page-sections/commun";
+import { getPageContent } from "@/server/data/page-sections";
 import { getSiteSettings, listActionAreas } from "@/server/data/site";
 
 type FooterProps = {
@@ -36,10 +38,21 @@ type FooterContactsProps = {
   phone: string | null;
   whatsapp: string | null;
   social: Record<string, string>;
+  /** Titres (Pages du site → Blocs communs → Pied de page). */
+  contactTitle?: string;
+  socialTitle?: string;
 };
 
 /** Coordonnées et réseaux RÉELLEMENT renseignés (rien n'est affiché pour un champ vide). */
-export function FooterContacts({ address, email, phone, whatsapp, social }: FooterContactsProps) {
+export function FooterContacts({
+  address,
+  email,
+  phone,
+  whatsapp,
+  social,
+  contactTitle = T.footer.contactTitle,
+  socialTitle = T.footer.socialTitle,
+}: FooterContactsProps) {
   const socials = socialLinks(social);
   const whatsappLink = whatsapp ? whatsappHref(whatsapp) : null;
   const hasContact = Boolean(address || email || phone || whatsappLink);
@@ -49,7 +62,7 @@ export function FooterContacts({ address, email, phone, whatsapp, social }: Foot
     <>
       {hasContact && (
         <>
-          <h2 className="sr-only">{T.footer.contactTitle}</h2>
+          <h2 className="sr-only">{contactTitle}</h2>
           <ul className="mt-8 flex flex-col gap-3">
             {address && (
               <li className="flex gap-3 text-white/90">
@@ -87,7 +100,7 @@ export function FooterContacts({ address, email, phone, whatsapp, social }: Foot
       )}
       {socials.length > 0 && (
         <>
-          <h2 className="mt-8 mb-4 text-small font-semibold text-white">{T.footer.socialTitle}</h2>
+          <h2 className="mt-8 mb-4 text-small font-semibold text-white">{socialTitle}</h2>
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
             {socials.map((item) => (
               <li key={item.key}>
@@ -106,7 +119,8 @@ export function FooterContacts({ address, email, phone, whatsapp, social }: Foot
 
 /** Pied de page : présentation, navigation, domaines actifs, coordonnées et réseaux renseignés, liens légaux. */
 export async function Footer({ newsletter }: FooterProps) {
-  const [settings, areas] = await Promise.all([getSiteSettings(), listActionAreas()]);
+  const [settings, areas, common] = await Promise.all([getSiteSettings(), listActionAreas(), getPageContent(COMMON_PAGE)]);
+  const f = common.section("pied-de-page");
 
   return (
     <footer className="on-dark bg-brand text-small">
@@ -116,7 +130,7 @@ export async function Footer({ newsletter }: FooterProps) {
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
           <div className="sm:col-span-2 lg:col-span-4">
             <Logo inverse size="lg" />
-            {settings.heroText && <p className="mt-6 max-w-sm text-body text-muted-inverse">{settings.heroText}</p>}
+            <p className="mt-6 max-w-sm text-body text-muted-inverse">{f.text("text")}</p>
 
             {!settings.address && !settings.contactEmail && !settings.contactPhone && !settings.whatsappNumber && (
               <p className="mt-6">
@@ -132,11 +146,13 @@ export async function Footer({ newsletter }: FooterProps) {
               phone={settings.contactPhone}
               whatsapp={settings.whatsappNumber}
               social={settings.socialLinks}
+              contactTitle={f.line("contactTitle")}
+              socialTitle={f.line("socialTitle")}
             />
           </div>
 
           <nav aria-label={T.a11y.footerNav} className="grid grid-cols-2 gap-8 sm:col-span-2 lg:col-span-4 lg:gap-10">
-            <Column title={T.footer.navTitle}>
+            <Column title={f.line("navTitle")}>
               <ul className="flex flex-col gap-3">
                 {FOOTER_NAV.map((item) => (
                   <li key={item.href}>
@@ -147,7 +163,7 @@ export async function Footer({ newsletter }: FooterProps) {
                 ))}
               </ul>
             </Column>
-            <Column title={T.footer.joinTitle}>
+            <Column title={f.line("joinTitle")}>
               <ul className="flex flex-col gap-3">
                 {JOIN_NAV.map((item) => (
                   <li key={item.href}>
@@ -162,7 +178,7 @@ export async function Footer({ newsletter }: FooterProps) {
 
           {areas.length > 0 && (
             <div className="sm:col-span-2 lg:col-span-4">
-              <Column title={T.footer.areasTitle}>
+              <Column title={f.line("areasTitle")}>
                 <ul className="flex flex-col gap-3">
                   {areas.map((area) => (
                     <li key={area.id}>
@@ -179,7 +195,7 @@ export async function Footer({ newsletter }: FooterProps) {
 
         <div className="mt-14 flex flex-col gap-4 border-t border-white/15 pt-8 md:flex-row md:items-center md:justify-between">
           <p className="text-muted-inverse">
-            © <CopyrightYear /> {ORG.name}. {T.footer.rights}
+            © <CopyrightYear /> {ORG.name}. {f.line("rights")}
           </p>
           <nav aria-label={T.a11y.legalNav}>
             <ul className="flex flex-wrap gap-x-6 gap-y-2">

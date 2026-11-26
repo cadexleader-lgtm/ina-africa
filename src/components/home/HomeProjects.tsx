@@ -8,13 +8,14 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/site/ProjectCard";
 import { T } from "@/content/fr/site";
+import type { ResolvedSection } from "@/lib/page-content/resolve";
 import type { ProjectSummary } from "@/lib/types/content";
 
 /**
  * Projets publiés : 1 mis en avant + 2 compacts. Aucun projet → état vide
  * honnête (jamais de projet fictif).
  */
-export function HomeProjects({ projects }: { projects: ProjectSummary[] }) {
+export function HomeProjects({ s, projects }: { s: ResolvedSection; projects: ProjectSummary[] }) {
   const [featured, ...others] = projects;
 
   return (
@@ -23,12 +24,12 @@ export function HomeProjects({ projects }: { projects: ProjectSummary[] }) {
         <Reveal>
           <SectionHeading
             id="accueil-projets"
-            label={T.home.projects.label}
-            title={T.home.projects.title}
+            label={s.line("label")}
+            title={s.line("title")}
             action={
               projects.length > 0 && (
                 <LinkButton href="/projets" variant="link" iconRight={<ArrowRight aria-hidden="true" />}>
-                  {T.home.projects.all}
+                  {s.line("all")}
                 </LinkButton>
               )
             }

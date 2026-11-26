@@ -77,7 +77,13 @@ export function toSubmission(section: SectionDef, values: SectionFormValues): St
               }),
             ),
           );
-          if (changed.some((item) => Object.values(item).some((text) => norm(text)))) content[field.key] = changed;
+          if (field.keys) {
+            // Rattaché par identifiant stable : seuls les éléments modifiés sont envoyés.
+            const keyed = changed
+              .map((item, index): Record<string, string> => ({ ...item, _key: field.keys![index] ?? "" }))
+              .filter((item) => field.fields.some((sub) => norm(item[sub.key] ?? "")));
+            if (keyed.length > 0) content[field.key] = keyed;
+          } else if (changed.some((item) => Object.values(item).some((text) => norm(text)))) content[field.key] = changed;
         } else if (!sameItems(field, items, field.default)) {
           content[field.key] = items;
         }

@@ -45,6 +45,13 @@ export type FieldDef =
       fields: SubFieldDef[];
       maxItems: number;
       fixed?: boolean;
+      /**
+       * Liste fixe seulement : identifiant stable de chaque élément d'origine
+       * (même ordre que `default`). La saisie est rattachée à l'élément par
+       * cet identifiant, pas par sa position : ajouter un élément dans le code
+       * ne décale pas les textes déjà modifiés.
+       */
+      keys?: string[];
       default: Record<string, string>[];
     })
   /** Photo de la médiathèque (texte alternatif obligatoire). */
@@ -61,11 +68,18 @@ export type SectionDef = {
   description?: string;
   /** Ancre de la section sur la page (lien « Voir sur le site »), ou null pour le haut de page. */
   anchor: string | null;
+  /** Adresse de la page où se trouve la section, si ce n'est pas celle de la page (ex. sous-page). */
+  path?: string;
   fields: FieldDef[];
   /** Éléments de la section gérés ailleurs dans l'administration. */
   elsewhere?: { label: string; href: string }[];
   /** Autres pages où la même section apparaît (une modification vaut partout). */
   alsoOn?: string[];
+  /**
+   * Section identique à celle d'une autre page : elle se modifie là-bas
+   * (l'administration affiche un lien, `fields` est vide).
+   */
+  sharedWith?: { page: string; section: string };
 };
 
 export type PageDef = {

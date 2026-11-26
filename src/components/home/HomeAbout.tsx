@@ -6,9 +6,8 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/SectionHeading";
-import { AUDIENCES, ORGANISATION_INTRO, ORGANISATION_LEAD } from "@/content/fr/ina-africa";
 import { ILLUSTRATIONS, shortCredit } from "@/content/illustrations";
-import { T } from "@/content/fr/site";
+import type { ResolvedSection } from "@/lib/page-content/resolve";
 
 /** Photos libres du Bénin qui défilent dans la carte (crédits sur /credits-photos). */
 const MAP_SLIDES: MapSlide[] = ILLUSTRATIONS.map((item) => ({ src: item.path, alt: item.alt, credit: shortCredit(item) }));
@@ -16,29 +15,29 @@ const MAP_SLIDES: MapSlide[] = ILLUSTRATIONS.map((item) => ({ src: item.path, al
 const AUDIENCE_ICONS: LucideIcon[] = [HeartHandshake, GraduationCap, Baby, Accessibility];
 
 /** Section 2 : présentation de l'organisation, publics accompagnés, carte de l'Afrique animée (photos du Bénin). */
-export function HomeAbout() {
+export function HomeAbout({ s }: { s: ResolvedSection }) {
   return (
     <Section labelledBy="accueil-presentation">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-7">
-            <Eyebrow className="mb-4">{T.home.about.label}</Eyebrow>
+            <Eyebrow className="mb-4">{s.line("label")}</Eyebrow>
             <h2 id="accueil-presentation" className="text-h2">
-              {T.home.about.title}
+              {s.line("title")}
             </h2>
             <div className="mt-6 space-y-4 text-body text-ink">
-              <p className="text-lead font-semibold text-brand">{ORGANISATION_LEAD}</p>
-              {ORGANISATION_INTRO.map((paragraph) => (
-                <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+              <p className="text-lead font-semibold text-brand">{s.line("lead")}</p>
+              {s.paragraphs("text").map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
               ))}
             </div>
 
-            <h3 className="mt-8 text-h4">Les publics que nous accompagnons</h3>
+            <h3 className="mt-8 text-h4">{s.line("audiencesTitle")}</h3>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-              {AUDIENCES.map((audience, index) => {
+              {s.items("audiences").map((audience, index) => {
                 const Icon = AUDIENCE_ICONS[index % AUDIENCE_ICONS.length];
                 return (
-                  <li key={audience.title} className="flex gap-3 rounded-card bg-ivory p-4">
+                  <li key={index} className="flex gap-3 rounded-card bg-ivory p-4">
                     <span aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white text-brand-2">
                       <Icon className="size-5" strokeWidth={1.75} />
                     </span>
@@ -52,7 +51,7 @@ export function HomeAbout() {
             </ul>
 
             <LinkButton href="/a-propos" variant="secondary" className="mt-8" iconRight={<ArrowRight aria-hidden="true" />}>
-              {T.home.about.more}
+              {s.line("more")}
             </LinkButton>
           </Reveal>
 

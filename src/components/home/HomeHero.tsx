@@ -3,31 +3,30 @@ import { ArrowRight, Users } from "lucide-react";
 import { HeroSlideshow, type HeroSlide } from "@/components/home/HeroSlideshow";
 import { LinkButton } from "@/components/ui/Button";
 import { HERO_SLIDES } from "@/content/fr/ina-africa";
-import { HOME_PHOTOS } from "@/content/provisional-images";
-import { ORG, T } from "@/content/fr/site";
-import type { SiteSettings } from "@/lib/types/content";
+import { ORG } from "@/content/fr/site";
+import type { ResolvedSection } from "@/lib/page-content/resolve";
 
 /**
- * Hero de l'accueil : la première diapositive reprend les paramètres du site
- * (titre, texte, photo choisis dans l'administration), les suivantes
- * présentent les grands axes d'action (contenu officiel).
+ * Hero de l'accueil : première image puis diaporama des grands axes d'action.
+ * Textes et photos : Pages du site → Accueil (sections « Haut de la page » et « Diaporama »).
  */
-export function HomeHero({ settings }: { settings: SiteSettings }) {
+export function HomeHero({ top, slideshow }: { top: ResolvedSection; slideshow: ResolvedSection }) {
+  const texts = slideshow.items("slides");
   const slides: HeroSlide[] = [
     {
       key: "accueil",
-      kicker: settings.heroKicker,
-      title: settings.heroTitle ?? ORG.name,
-      text: settings.heroText,
-      image: settings.heroImage ?? HOME_PHOTOS.hero,
+      kicker: top.line("kicker") || null,
+      title: top.line("title") || ORG.name,
+      text: top.text("text") || null,
+      image: top.image("image")!,
     },
-    ...HERO_SLIDES.map((slide) => ({
+    ...HERO_SLIDES.map((slide, index) => ({
       key: slide.key,
-      kicker: slide.kicker,
-      title: slide.title,
-      lead: "lead" in slide ? slide.lead : null,
-      text: slide.text,
-      image: HOME_PHOTOS.heroSlides[slide.key],
+      kicker: texts[index]?.kicker || null,
+      title: texts[index]?.title ?? slide.title,
+      lead: texts[index]?.lead || null,
+      text: texts[index]?.text || null,
+      image: slideshow.image(`image-${slide.key}`)!,
     })),
   ];
 
@@ -38,10 +37,10 @@ export function HomeHero({ settings }: { settings: SiteSettings }) {
       actions={
         <>
           <LinkButton href="/a-propos" size="lg" iconRight={<ArrowRight aria-hidden="true" />}>
-            {T.home.hero.primary}
+            {top.line("primary")}
           </LinkButton>
           <LinkButton href="/nous-rejoindre" variant="secondary" size="lg" iconLeft={<Users aria-hidden="true" />}>
-            {T.home.hero.secondary}
+            {top.line("secondary")}
           </LinkButton>
         </>
       }

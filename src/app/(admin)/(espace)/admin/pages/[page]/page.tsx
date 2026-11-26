@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { MigrationMissing } from "@/components/admin/pages/MigrationMissing";
@@ -70,6 +71,22 @@ export default async function EditSitePage({ params }: PageProps<"/admin/pages/[
       {stored !== null &&
         page.sections.map((section, index) => {
           const saved = stored[section.key];
+          if (section.sharedWith) {
+            const target = `/admin/pages/${section.sharedWith.page}#section-${section.sharedWith.section}`;
+            return (
+              <section key={section.key} id={`section-${section.key}`} className="scroll-mt-6 rounded-card border border-line bg-white p-5">
+                <h2 className="text-h3">
+                  {index + 1}. {section.title}
+                </h2>
+                <p className="mt-2 text-muted">
+                  Cette section est partagée avec une autre page.{" "}
+                  <Link href={target} className="font-semibold text-link underline underline-offset-4">
+                    La modifier ici
+                  </Link>
+                </p>
+              </section>
+            );
+          }
           return (
             <PageSectionEditor
               key={section.key}

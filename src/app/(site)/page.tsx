@@ -14,6 +14,8 @@ import { HomeTeam } from "@/components/home/HomeTeam";
 import { HomeVision } from "@/components/home/HomeVision";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ABOUT_PAGE } from "@/content/page-sections/a-propos";
+import { HOME_PAGE } from "@/content/page-sections/accueil";
+import { AREAS_PAGE } from "@/content/page-sections/domaines";
 import { ORG, T } from "@/content/fr/site";
 import { homeJsonLd } from "@/lib/seo/structured-data";
 import { listLatestArticles } from "@/server/data/articles";
@@ -46,9 +48,11 @@ export function generateMetadata(): Metadata {
  * actualités et partenaires n'apparaissent que s'ils sont publiés.
  */
 export default async function HomePage() {
-  const [settings, about, areas, projects, articles, partners, team] = await Promise.all([
+  const [settings, home, about, domains, areas, projects, articles, partners, team] = await Promise.all([
     getSiteSettings(),
+    getPageContent(HOME_PAGE),
     getPageContent(ABOUT_PAGE),
+    getPageContent(AREAS_PAGE),
     listActionAreas(),
     listHomeProjects(3),
     listLatestArticles(3),
@@ -59,18 +63,18 @@ export default async function HomePage() {
   return (
     <>
       <JsonLd data={homeJsonLd(settings)} />
-      <HomeHero settings={settings} />
-      <HomeAbout />
-      <HomeVision missions={about.section("missions").list("items")} />
-      <HomeAreas areas={areas} />
-      <HomeObjectives />
-      <HomeAchievements settings={settings} limit={6} />
-      {projects.length > 0 && <HomeProjects projects={projects} />}
-      <HomeTeam members={team} />
+      <HomeHero top={home.section("haut")} slideshow={home.section("diaporama")} />
+      <HomeAbout s={home.section("presentation")} />
+      <HomeVision s={home.section("vision")} missions={about.section("missions").list("items")} />
+      <HomeAreas s={home.section("piliers")} interventions={domains.section("interventions")} areas={areas} />
+      <HomeObjectives s={home.section("objectifs")} />
+      <HomeAchievements s={home.section("actions")} limit={6} />
+      {projects.length > 0 && <HomeProjects s={home.section("projets")} projects={projects} />}
+      <HomeTeam s={home.section("equipe")} members={team} />
       <HomeJoin s={about.section("rejoindre")} />
-      <HomeNews articles={articles} />
-      <HomePartners partners={partners} />
-      <HomeCallToAction />
+      <HomeNews s={home.section("actualites")} articles={articles} />
+      <HomePartners s={home.section("partenaires")} partners={partners} />
+      <HomeCallToAction s={home.section("agir")} />
     </>
   );
 }
