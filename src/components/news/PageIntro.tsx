@@ -32,18 +32,24 @@ type PageIntroProps = {
  * de l'accueil (décoratif).
  */
 export function PageIntro({ breadcrumbs, label, title, intro, aside, children, titleId, size = "site", backdrop, className }: PageIntroProps) {
-  const hasAside = Boolean(aside);
+  // Avec une photo de fond, la recherche passe sous le texte : la photo reste entièrement visible.
+  const hasAside = Boolean(aside) && !backdrop;
   return (
     <header className={cn("relative isolate overflow-hidden border-b border-line bg-ivory", className)}>
-      {backdrop && <HeaderBackdrop image={backdrop} />}
-      <span
-        aria-hidden="true"
-        className="absolute -top-40 -right-40 -z-10 hidden size-[30rem] rounded-full border-[3px] border-brand-2/25 md:block"
-      />
-      <span
-        aria-hidden="true"
-        className="absolute -top-24 -right-24 -z-10 hidden size-[30rem] rounded-full bg-brand-50/70 md:block"
-      />
+      {backdrop ? (
+        <HeaderBackdrop image={backdrop} />
+      ) : (
+        <>
+          <span
+            aria-hidden="true"
+            className="absolute -top-40 -right-40 -z-10 hidden size-[30rem] rounded-full border-[3px] border-brand-2/25 md:block"
+          />
+          <span
+            aria-hidden="true"
+            className="absolute -top-24 -right-24 -z-10 hidden size-[30rem] rounded-full bg-brand-50/70 md:block"
+          />
+        </>
+      )}
       <Container size={size} className="py-section-sm">
         {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} className="mb-8 sm:mb-10" />}
         <div className={cn(hasAside && "grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-12")}>
@@ -57,6 +63,7 @@ export function PageIntro({ breadcrumbs, label, title, intro, aside, children, t
           </div>
           {hasAside && <div className="lg:col-span-5">{aside}</div>}
         </div>
+        {aside && !hasAside && <div className="mt-8 max-w-md">{aside}</div>}
         {children && <div className="mt-10 empty:hidden">{children}</div>}
       </Container>
     </header>

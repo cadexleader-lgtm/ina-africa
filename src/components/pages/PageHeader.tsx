@@ -32,16 +32,21 @@ type PageHeaderProps = {
 export function PageHeader({ id, breadcrumbs, label, title, intro, meta, aside, backdrop, className }: PageHeaderProps) {
   return (
     <section aria-labelledby={id} className={cn("relative isolate overflow-hidden bg-ivory", className)}>
-      {backdrop && <HeaderBackdrop image={backdrop} />}
-      {/* Arcs décoratifs (aucun sens) : masqués sur téléphone. */}
-      <span
-        aria-hidden="true"
-        className="absolute -top-40 -right-40 -z-10 hidden size-[34rem] rounded-full border-[3px] border-brand-2/20 md:block"
-      />
-      <span
-        aria-hidden="true"
-        className="absolute -top-16 -right-16 -z-10 hidden size-[18rem] rounded-full border-2 border-gold/40 md:block"
-      />
+      {backdrop ? (
+        <HeaderBackdrop image={backdrop} />
+      ) : (
+        <>
+          {/* Arcs décoratifs (aucun sens), seulement sans photo : masqués sur téléphone. */}
+          <span
+            aria-hidden="true"
+            className="absolute -top-40 -right-40 -z-10 hidden size-[34rem] rounded-full border-[3px] border-brand-2/20 md:block"
+          />
+          <span
+            aria-hidden="true"
+            className="absolute -top-16 -right-16 -z-10 hidden size-[18rem] rounded-full border-2 border-gold/40 md:block"
+          />
+        </>
+      )}
       <Container className="pt-8 pb-12 sm:pt-10 sm:pb-16 lg:pb-20">
         <Breadcrumbs items={breadcrumbs} />
         <div className={cn("mt-10 sm:mt-14", Boolean(aside) && "grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-16")}>
