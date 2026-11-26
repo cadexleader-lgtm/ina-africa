@@ -1,10 +1,9 @@
-import { INTERVENTION_DOMAINS } from "@/content/fr/ina-africa";
 import { PAGES } from "@/content/fr/pages";
 import { T as SITE } from "@/content/fr/site";
 import { PAGE_BACKDROPS } from "@/content/provisional-images";
 import type { PageDef } from "@/lib/page-content/types";
 
-import { headerSection, line, list, text, title } from "./fields";
+import { headerSection, line } from "./fields";
 
 /** Page « Nos domaines d'action » (/domaines). Ne jamais renommer une clé. */
 
@@ -14,7 +13,7 @@ export const AREAS_PAGE: PageDef = {
   key: "domaines",
   label: "Domaines d'action",
   path: "/domaines",
-  description: "Liste des huit piliers et des domaines d'intervention.",
+  description: "Les domaines d'intervention de INA-AFRICA.",
   sections: [
     headerSection({
       label: T.label,
@@ -29,17 +28,6 @@ export const AREAS_PAGE: PageDef = {
       anchor: null,
       fields: [line("button", "Texte du bouton de chaque carte", SITE.actions.discoverArea, 60)],
       records: "areas",
-    },
-    {
-      key: "interventions",
-      title: "Nos domaines d'intervention",
-      anchor: "domaines-interventions",
-      alsoOn: ["Accueil"],
-      fields: [
-        title("Nos domaines d'intervention"),
-        text("intro", "Introduction", "Les champs d'action concrets de INA-AFRICA sur le terrain.", 600, 2),
-        list("items", "Domaines d'intervention", "Domaine", INTERVENTION_DOMAINS, 200, 16),
-      ],
     },
     {
       key: "soutenir",

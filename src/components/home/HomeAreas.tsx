@@ -10,7 +10,6 @@ import { PROVISIONAL_AREA_IMAGES } from "@/content/provisional-images";
 import { cn } from "@/lib/cn";
 import type { ResolvedSection } from "@/lib/page-content/resolve";
 import type { ActionArea } from "@/lib/types/content";
-import { InterventionDomains } from "@/components/site/InterventionDomains";
 import { MediaTile } from "@/components/site/MediaTile";
 import { areaIcon } from "@/components/site/domain-icons";
 
@@ -20,7 +19,7 @@ import { areaIcon } from "@/components/site/domain-icons";
  * premier domaine occupe deux colonnes seulement si la grille reste complète
  * (7 domaines : oui ; 8 piliers : non). Dessous, les domaines d'intervention.
  */
-export function HomeAreas({ s, interventions, areas }: { s: ResolvedSection; interventions: ResolvedSection; areas: ActionArea[] }) {
+export function HomeAreas({ s, areas }: { s: ResolvedSection; areas: ActionArea[] }) {
   if (areas.length === 0) return null;
 
   return (
@@ -107,9 +106,6 @@ export function HomeAreas({ s, interventions, areas }: { s: ResolvedSection; int
             </Reveal>
           </li>
         </ul>
-        <Reveal className="mt-10">
-          <InterventionDomains s={interventions} id="accueil-interventions" />
-        </Reveal>
       </Container>
     </Section>
   );

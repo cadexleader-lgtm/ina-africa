@@ -25,7 +25,7 @@ export const HOME_PAGE: PageDef = {
   key: "accueil",
   label: "Accueil",
   path: "/",
-  description: "Page d'accueil : diaporama du haut, présentation, vision, piliers, objectifs, actions, projets, équipe, actualités, appel à agir.",
+  description: "Page d'accueil : diaporama du haut, présentation, vision, domaines, objectifs, actions, projets, équipe, actualités, appel à agir.",
   sections: [
     {
       key: "haut",
@@ -96,7 +96,7 @@ export const HOME_PAGE: PageDef = {
     },
     {
       key: "piliers",
-      title: "Nos huit piliers d'action",
+      title: "Nos domaines d'intervention",
       anchor: "accueil-domaines",
       fields: [
         label(T.home.areas.label),
@@ -105,20 +105,13 @@ export const HOME_PAGE: PageDef = {
         text(
           "text",
           "Texte",
-          "Chaque projet mené sur le terrain par INA-AFRICA s'articule autour de huit piliers stratégiques. Cette approche intégrée nous permet d'apporter des réponses concrètes, inclusives et pérennes aux besoins des communautés les plus vulnérables.",
+          "Chaque projet mené sur le terrain par INA-AFRICA s'inscrit dans l'un de ses sept domaines d'intervention. Cette approche intégrée nous permet d'apporter des réponses concrètes, inclusives et pérennes aux besoins des communautés les plus vulnérables.",
         ),
         line("all", "Texte de la carte « tous les domaines »", T.home.areas.all, 80),
         line("allIntro", "Carte « tous les domaines » : phrase", "Pour chaque domaine, découvrez :", 120),
         list("allItems", "Carte « tous les domaines » : points", "Point", ["La problématique", "Notre engagement", "Nos interventions", "Les publics concernés"], 80, 6),
       ],
       records: "areas",
-    },
-    {
-      key: "interventions",
-      title: "Nos domaines d'intervention",
-      anchor: "accueil-interventions",
-      fields: [],
-      sharedWith: { page: "domaines", section: "interventions" },
     },
     {
       key: "objectifs",

@@ -4,8 +4,8 @@ begin;
 
 -- Visiteur
 set local role anon;
-select tests.ok((select count(*) from public.action_areas) = 0,
-  'Les domaines initiaux sont en brouillon : invisibles des visiteurs');
+select tests.ok((select count(*) from public.action_areas) = 7,
+  'Les visiteurs voient les 7 domaines d''intervention (anciens piliers masqués)');
 select tests.ok((select count(*) from public.site_settings) = 1, 'Les visiteurs lisent les paramètres du site');
 select tests.fails($$insert into public.articles (title, slug) values ('Test', 'test')$$,
   'Un visiteur ne peut pas écrire d''article', '42501');
@@ -17,7 +17,7 @@ set local role authenticated;
 
 -- Éditeur
 select tests.login_as('00000000-0000-0000-0000-00000000000c', 'aal1');
-select tests.ok((select count(*) from public.action_areas) = 8, 'L''équipe voit les 8 piliers confirmés, en brouillon');
+select tests.ok((select count(*) from public.action_areas) = 15, 'L''équipe voit les 7 domaines et les 8 anciens piliers masqués');
 
 insert into public.articles (title, slug, content, author_id) values (
   'Premier article', 'premier-article',

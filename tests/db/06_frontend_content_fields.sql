@@ -2,7 +2,7 @@
 begin;
 
 select tests.ok(
-  (select array_agg(slug order by display_order) from public.action_areas) = array[
+  (select array_agg(slug order by display_order) from public.action_areas where not is_active) = array[
     'education', 'sante-sexuelle-et-reproductive', 'autonomisation-des-femmes',
     'jeunesse-et-adolescents', 'inclusion-et-egalite-de-genre',
     'environnement-et-resilience-climatique', 'developpement-local-durable', 'innovation-sociale'],
@@ -11,7 +11,7 @@ select tests.ok(
   (select title from public.action_areas where slug = 'education') = 'Éducation et soutien scolaire',
   'Nouvel intitulé du pilier éducation');
 select tests.ok(
-  (select bool_and(not is_active and description is null and summary is null) from public.action_areas),
+  (select bool_and(not is_active and description is null and summary is null) from public.action_areas where not is_active),
   'Les domaines sont en brouillon et sans texte inventé');
 
 -- Textes officiels de départ (statuts, articles 8 à 11)

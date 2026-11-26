@@ -20,7 +20,6 @@ import { PAGES } from "@/content/fr/pages";
 import { cn } from "@/lib/cn";
 import { ORG } from "@/content/fr/site";
 import { listActionAreas } from "@/server/data/site";
-import { InterventionDomains } from "@/components/site/InterventionDomains";
 
 const T = PAGES.areas;
 
@@ -116,9 +115,6 @@ export default async function AreasPage() {
               })}
             </ol>
           )}
-          <Reveal className="mt-10 lg:mt-12">
-            <InterventionDomains s={content.section("interventions")} id="domaines-interventions" headingLevel="h2" />
-          </Reveal>
         </Container>
       </Section>
 

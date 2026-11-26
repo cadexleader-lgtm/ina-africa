@@ -13,7 +13,7 @@ import { listAdminActionAreas, listAdminPartners, listAdminTeamMembers } from "@
 
 type RecordLink = { id: string; label: string; detail: string | null; hidden: boolean };
 const RECORDS = {
-  areas: { title: "Les piliers affichés ici", base: "/admin/domaines", add: "Ajouter un pilier" },
+  areas: { title: "Les domaines affichés ici", base: "/admin/domaines", add: "Ajouter un domaine" },
   team: { title: "Les membres affichés ici", base: "/admin/equipe", add: "Ajouter un membre" },
   partners: { title: "Les partenaires affichés ici", base: "/admin/partenaires", add: "Ajouter un partenaire" },
 } as const;

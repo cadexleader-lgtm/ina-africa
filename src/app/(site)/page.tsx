@@ -15,7 +15,6 @@ import { HomeVision } from "@/components/home/HomeVision";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ABOUT_PAGE } from "@/content/page-sections/a-propos";
 import { HOME_PAGE } from "@/content/page-sections/accueil";
-import { AREAS_PAGE } from "@/content/page-sections/domaines";
 import { ORG, T } from "@/content/fr/site";
 import { homeJsonLd } from "@/lib/seo/structured-data";
 import { listLatestArticles } from "@/server/data/articles";
@@ -48,11 +47,10 @@ export function generateMetadata(): Metadata {
  * actualités et partenaires n'apparaissent que s'ils sont publiés.
  */
 export default async function HomePage() {
-  const [settings, home, about, domains, areas, projects, articles, partners, team] = await Promise.all([
+  const [settings, home, about, areas, projects, articles, partners, team] = await Promise.all([
     getSiteSettings(),
     getPageContent(HOME_PAGE),
     getPageContent(ABOUT_PAGE),
-    getPageContent(AREAS_PAGE),
     listActionAreas(),
     listHomeProjects(3),
     listLatestArticles(3),
@@ -66,7 +64,7 @@ export default async function HomePage() {
       <HomeHero top={home.section("haut")} slideshow={home.section("diaporama")} />
       <HomeAbout s={home.section("presentation")} />
       <HomeVision s={home.section("vision")} missions={about.section("missions").list("items")} />
-      <HomeAreas s={home.section("piliers")} interventions={domains.section("interventions")} areas={areas} />
+      <HomeAreas s={home.section("piliers")} areas={areas} />
       <HomeObjectives s={home.section("objectifs")} />
       <HomeAchievements s={home.section("actions")} limit={6} />
       {projects.length > 0 && <HomeProjects s={home.section("projets")} projects={projects} />}
