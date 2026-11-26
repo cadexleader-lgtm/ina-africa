@@ -309,3 +309,28 @@ dialog[open]::backdrop {
     translate: none !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Traduction automatique Google (bouton FR / EN, src/lib/translate.ts) :
+ * la barre et les info-bulles de Google sont masquées (notre bouton et notre
+ * bandeau suffisent), et la page n'est pas décalée vers le bas.
+ * ------------------------------------------------------------------------- */
+.skiptranslate > iframe,
+iframe.skiptranslate,
+.goog-te-banner-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+.VIpgJd-ZVi9od-aZ2wEe-OiiCO,
+.VIpgJd-yAWNEb-L7lbkb {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+}
+.goog-text-highlight,
+.VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q {
+  background: none !important;
+  box-shadow: none !important;
+}

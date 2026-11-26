@@ -1,6 +1,7 @@
 import { NewsletterFooterBlock } from "@/components/forms/NewsletterServer";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
+import { TranslationNotice } from "@/components/site/LanguageSwitch";
 import { TopBar } from "@/components/site/TopBar";
 import { T } from "@/content/fr/site";
 import { isNewsletterAvailable } from "@/server/email";
@@ -22,6 +23,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       </a>
       <TopBar />
       <Header />
+      <TranslationNotice />
       <main id="contenu" tabIndex={-1} className="focus:outline-none">
         {children}
       </main>

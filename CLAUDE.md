@@ -35,6 +35,7 @@ fonctionnalité hors périmètre sans accord.
 | Variables d'environnement | `.env.example`, `src/lib/public-env.ts`, `src/server/env.ts` |
 | Clients Supabase | `src/server/supabase/server.ts` (session, RLS), `public.ts` (visiteur), `admin.ts` (clé secrète, usage restreint) |
 | Erreurs | `src/server/errors.ts` (`ActionResult`, messages FR, indice `ina-africa`) |
+| Traduction FR / EN | Google Traduction automatique (choix de l'ONG) : `src/lib/translate.ts`, bouton et bandeau `src/components/site/LanguageSwitch.tsx`, adresses Google dans la CSP (`next.config.ts`). Script Google chargé seulement au clic sur « EN » (cookie `googtrans`) ; tout ce qui ne doit pas être traduit porte `translate="no"` |
 | Paiement KKiaPay | `src/server/payments/kkiapay.ts` (modes test/réel), `reconcile.ts`, `src/components/donate/KkiapayCheckout.tsx`, webhook `src/app/api/paiements/notification/route.ts` — mode test : rien n'est enregistré (voir `docs/architecture.md`) |
 
 ## Conventions

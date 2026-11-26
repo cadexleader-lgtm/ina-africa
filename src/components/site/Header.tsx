@@ -3,6 +3,7 @@ import { Heart } from "lucide-react";
 
 import { LinkButton } from "@/components/ui/Button";
 import { DesktopNav } from "@/components/site/DesktopNav";
+import { LanguageSwitch } from "@/components/site/LanguageSwitch";
 import { Logo } from "@/components/site/Logo";
 import { MobileMenu, MobileMenuWithPath } from "@/components/site/MobileMenu";
 import { EngageMenu } from "@/components/site/EngageMenu";
@@ -30,7 +31,8 @@ export function Header() {
           <EngageMenu />
         </nav>
 
-        <div className="flex items-center gap-2 whitespace-nowrap">
+        <div className="flex items-center gap-1.5 whitespace-nowrap sm:gap-2">
+          <LanguageSwitch />
           {/* Les classes d'affichage sont sur des enveloppes : jamais en conflit avec celles du bouton. */}
           <div className="hidden lg:block">
             <LinkButton href={DONATE_LINK.href} variant="donate" iconLeft={<Heart aria-hidden="true" />}>

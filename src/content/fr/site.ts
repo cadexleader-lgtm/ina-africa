@@ -83,6 +83,13 @@ export const SOCIAL_LABELS: Record<string, string> = {
 };
 
 export const T = {
+  /** Bouton de langue (traduction automatique par Google). */
+  language: {
+    label: "Langue du site / Site language",
+    names: { fr: "Français", en: "English" },
+    notice: "This page was translated automatically by Google. The original text is in French.",
+    backToFrench: "Revenir au français",
+  },
   a11y: {
     skipToContent: "Aller au contenu",
     mainNav: "Navigation principale",

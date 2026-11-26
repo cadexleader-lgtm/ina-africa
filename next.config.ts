@@ -55,25 +55,47 @@ const indexable = isSiteIndexable() && (!process.env.VERCEL_ENV || process.env.V
 //    La vérification des paiements se fait côté serveur (aucun connect-src).
 //    Si CinetPay est ajouté un jour : script-src https://cdn.cinetpay.com ;
 //    frame-src https://checkout.cinetpay.com ; form-action https://checkout.cinetpay.com.
+//
+//  - traduction automatique Google (bouton FR / EN de l'en-tête), chargée
+//    SEULEMENT quand le visiteur choisit l'anglais (src/lib/translate.ts) :
+//    script translate.google.com + translate.googleapis.com, styles et icônes
+//    www.gstatic.com / fonts.gstatic.com, appels translate(-pa).googleapis.com
+//    (dont un script JSONP sur translate-pa).
 // ---------------------------------------------------------------------------
 
 const TURNSTILE = "https://challenges.cloudflare.com";
 const VIDEO_FRAMES = ["https://www.youtube-nocookie.com", "https://www.facebook.com"];
 const KKIAPAY_SCRIPT = "https://cdn.kkiapay.me";
 const KKIAPAY_FRAME = "https://widget-v3.kkiapay.me";
+// Traduction automatique (bouton FR / EN), chargée seulement au clic sur « EN ».
+const GOOGLE_TRANSLATE_SCRIPTS = [
+  "https://translate.google.com",
+  "https://translate.googleapis.com",
+  "https://translate-pa.googleapis.com",
+];
+const GOOGLE_TRANSLATE_STYLES = ["https://www.gstatic.com"];
+const GOOGLE_TRANSLATE_IMAGES = [
+  "https://www.gstatic.com",
+  "https://fonts.gstatic.com",
+  "https://www.google.com",
+  "https://translate.google.com",
+  "https://translate.googleapis.com",
+];
+const GOOGLE_TRANSLATE_API = ["https://translate.googleapis.com", "https://translate-pa.googleapis.com"];
 
 const supabaseHttp = supabase ? [supabase] : [];
 const supabaseWs = supabase ? [supabase.replace(/^http/, "ws")] : [];
 
 const csp: Record<string, string[]> = {
   "default-src": ["'self'"],
-  "script-src": ["'self'", "'unsafe-inline'", ...(isDev ? ["'unsafe-eval'"] : []), TURNSTILE, KKIAPAY_SCRIPT],
-  "style-src": ["'self'", "'unsafe-inline'"],
-  "img-src": ["'self'", "data:", "blob:", ...supabaseHttp],
+  "script-src": ["'self'", "'unsafe-inline'", ...(isDev ? ["'unsafe-eval'"] : []), TURNSTILE, KKIAPAY_SCRIPT, ...GOOGLE_TRANSLATE_SCRIPTS],
+  "style-src": ["'self'", "'unsafe-inline'", ...GOOGLE_TRANSLATE_STYLES],
+  "img-src": ["'self'", "data:", "blob:", ...supabaseHttp, ...GOOGLE_TRANSLATE_IMAGES],
   "font-src": ["'self'"],
-  "connect-src": ["'self'", ...supabaseHttp, ...supabaseWs],
+  "connect-src": ["'self'", ...supabaseHttp, ...supabaseWs, ...GOOGLE_TRANSLATE_API],
   "media-src": ["'self'", ...supabaseHttp],
-  "frame-src": [...VIDEO_FRAMES, TURNSTILE, KKIAPAY_FRAME],
+  // 'self' : barre de Google Traduction (iframe vide de la page, masquée par le CSS).
+  "frame-src": ["'self'", ...VIDEO_FRAMES, TURNSTILE, KKIAPAY_FRAME],
   "worker-src": ["'self'", "blob:"],
   "manifest-src": ["'self'"],
   "object-src": ["'none'"],

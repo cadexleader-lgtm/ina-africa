@@ -138,6 +138,28 @@ droit d'écriture sur ces tables.
 - Frais KKiaPay : par défaut payés par le donateur (s'ajoutent au montant affiché
   par KKiaPay) ; l'API renvoie le montant du don hors frais.
 
+## Traduction (français / anglais)
+
+Choix de l'ONG (26/11/2026) : traduction **automatique par Google**, pas de
+version anglaise rédigée. Bouton FR / EN dans l'en-tête
+(`src/components/site/LanguageSwitch.tsx`) :
+
+- « EN » pose le cookie `googtrans=/fr/en` puis charge le script de Google
+  (`translate.google.com/translate_a/element.js`). Rien n'est chargé chez
+  Google tant que le visiteur reste en français.
+- Le cookie fait reprendre la traduction à chaque page ; la navigation interne
+  (sans rechargement) est aussi traduite.
+- « FR » (ou « Revenir au français » dans le bandeau) efface le cookie sur
+  tous ses domaines et recharge la page.
+- Google remplace des morceaux de texte par ses balises : un correctif
+  (`removeChild` / `insertBefore` tolérants, appliqué seulement en anglais)
+  évite que React plante.
+- La barre de Google est masquée (`globals.css`) ; un bandeau du site signale
+  que la traduction est automatique.
+- Ce qui ne doit pas être traduit porte `translate="no"` (classe `notranslate`).
+- Limites : traduction approximative, non indexée par Google en anglais ; les
+  adresses Google sont autorisées dans la CSP (`next.config.ts`).
+
 ## Clés et secrets
 
 Modèle dans `.env.example`. Les variables `NEXT_PUBLIC_*` sont envoyées au
