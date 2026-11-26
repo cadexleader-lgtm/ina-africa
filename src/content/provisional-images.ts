@@ -131,6 +131,8 @@ export const HOME_PHOTOS: {
   heroSlides: Record<"femmes" | "jeunes" | "sante" | "inclusion", SiteImage>;
   presentation: SiteImage;
   callToAction: SiteImage;
+  /** Grand fond du haut de l'accueil : photos d'illustration HD qui défilent (8). */
+  heroGallery: SiteImage[];
 } = {
   // Haut de l'accueil : photos verticales ou de grande taille (le cadre est presque vertical sur ordinateur).
   hero: REAL_PHOTOS.womenDayGroup,
@@ -143,6 +145,16 @@ export const HOME_PHOTOS: {
   },
   presentation: PROVISIONAL_IMAGES.enfantsFauteuil,
   callToAction: REAL_PHOTOS.kitsHandOver,
+  heroGallery: [
+    "ecolieres-jeux",
+    "femmes-cuisine",
+    "apprenti-technicien",
+    "couturiere-benin",
+    "sport-handicap",
+    "fille-velo",
+    "femmes-gastronomie",
+    "reboisement-natitingou",
+  ].map((name) => illustrationAsProvisional(`/images/illustrations/${name}.webp`)),
 };
 
 /**

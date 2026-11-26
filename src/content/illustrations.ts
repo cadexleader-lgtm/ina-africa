@@ -103,8 +103,8 @@ export const ILLUSTRATIONS: Illustration[] = [
   {
     path: "/images/illustrations/reboisement-natitingou.webp",
     alt: "Un périmètre de reboisement à Natitingou, au Bénin.",
-    width: 960,
-    height: 640,
+    width: 1920,
+    height: 1280,
     credit: {
       author: "Vitoyaovimariusmavy",
       ...CC_BY_SA_4,
@@ -127,8 +127,8 @@ export const ILLUSTRATIONS: Illustration[] = [
   {
     path: "/images/illustrations/couturiere-benin.webp",
     alt: "Une couturière béninoise à sa machine, dans son atelier.",
-    width: 1600,
-    height: 1067,
+    width: 1920,
+    height: 1280,
     credit: {
       author: "Megnon",
       ...CC_BY_SA_4,
@@ -139,8 +139,8 @@ export const ILLUSTRATIONS: Illustration[] = [
   {
     path: "/images/illustrations/apprenti-technicien.webp",
     alt: "Un jeune apprenti répare un téléphone dans un atelier à Cotonou.",
-    width: 1600,
-    height: 1067,
+    width: 1920,
+    height: 1280,
     credit: {
       author: "Adoscam",
       ...CC_BY_SA_4,
@@ -151,8 +151,8 @@ export const ILLUSTRATIONS: Illustration[] = [
   {
     path: "/images/illustrations/femmes-gastronomie.webp",
     alt: "Des femmes commerçantes servent leurs clients sur un marché au Bénin.",
-    width: 1600,
-    height: 1067,
+    width: 1920,
+    height: 1280,
     credit: {
       author: "FiossifrejusduBénin",
       ...CC_BY_SA_4,
@@ -163,8 +163,8 @@ export const ILLUSTRATIONS: Illustration[] = [
   {
     path: "/images/illustrations/ecolieres-jeux.webp",
     alt: "Des écolières béninoises jouent à un jeu traditionnel dans la cour de l'école.",
-    width: 1600,
-    height: 1067,
+    width: 1920,
+    height: 1280,
     credit: {
       author: "Domingo Daniella Rhode",
       ...CC_BY_SA_4,
@@ -175,8 +175,8 @@ export const ILLUSTRATIONS: Illustration[] = [
   {
     path: "/images/illustrations/fille-velo.webp",
     alt: "Une jeune fille à vélo dans une rue de Bohicon.",
-    width: 1600,
-    height: 1067,
+    width: 1920,
+    height: 1280,
     credit: {
       author: "GBETONGNINOUGBO Joseph Hervé Ahissou",
       ...CC_BY_SA_4,
@@ -187,13 +187,25 @@ export const ILLUSTRATIONS: Illustration[] = [
   {
     path: "/images/illustrations/sport-handicap.webp",
     alt: "Des joueuses de basket en fauteuil roulant pendant un match au Bénin.",
-    width: 1600,
-    height: 1146,
+    width: 1920,
+    height: 1375,
     credit: {
       author: "DEGAN Gabin",
       ...CC_BY_SA_4,
       title: "DEGAN Gabin ( disabled sports)",
       sourceUrl: "https://commons.wikimedia.org/wiki/File:DEGAN_Gabin_%28_disabled_sports%29.jpg",
+    },
+  },
+  {
+    path: "/images/illustrations/femmes-cuisine.webp",
+    alt: "Une commerçante souriante à son étal, sur un marché du Bénin.",
+    width: 1600,
+    height: 1750,
+    credit: {
+      author: "FiossifrejusduBénin",
+      ...CC_BY_SA_4,
+      title: "Les femmes et le bien être de la gastronomie. 05",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Les_femmes_et_le_bien_%C3%AAtre_de_la_gastronomie._05.jpg",
     },
   },
 ];

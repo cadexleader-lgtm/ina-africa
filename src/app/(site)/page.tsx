@@ -61,7 +61,7 @@ export default async function HomePage() {
   return (
     <>
       <JsonLd data={homeJsonLd(settings)} />
-      <HomeHero top={home.section("haut")} slideshow={home.section("diaporama")} />
+      <HomeHero top={home.section("haut")} slideshow={home.section("diaporama")} photos={home.section("photos")} />
       <HomeAbout s={home.section("presentation")} />
       <HomeVision s={home.section("vision")} missions={about.section("missions").list("items")} />
       <HomeAreas s={home.section("piliers")} areas={areas} />

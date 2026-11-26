@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
-import { Pause, Play } from "lucide-react";
+import { Heart, Pause, Play } from "lucide-react";
 
 import { ResponsiveImage, type ImageSource } from "@/components/ui/ResponsiveImage";
 import { Eyebrow } from "@/components/ui/SectionHeading";
@@ -41,8 +41,22 @@ export function HeroSlideshow({
   identity,
   actions,
   interval = 5000,
+  gallery,
+  galleryCaptions = [],
+  galleryAction,
+  galleryInterval = 6000,
 }: {
   slides: HeroSlide[];
+  /**
+   * Photos du grand fond, qui défilent à leur propre rythme (fondu enchaîné
+   * et zoom lent). Sans cette liste : la photo de chaque diapositive.
+   */
+  gallery?: ImageSource[];
+  /** Phrase affichée sur chaque photo du fond (même ordre). */
+  galleryCaptions?: string[];
+  /** Appel au don posé sur les photos. */
+  galleryAction?: { label: string; note: string; href: string };
+  galleryInterval?: number;
   /** Nom de l'ONG (h1), fixe. */
   identity: string;
   actions: ReactNode;
@@ -62,6 +76,17 @@ export function HeroSlideshow({
   }, []);
 
   const running = !paused && !hovered && !reduced && slides.length > 1;
+  const photos = gallery && gallery.length > 0 ? gallery : slides.map((slide) => slide.image);
+  const ownPhotos = Boolean(gallery && gallery.length > 0);
+  const [photoIndex, setPhotoIndex] = useState(0);
+  const shownPhoto = ownPhotos ? photoIndex : index;
+  const photosRunning = ownPhotos && !paused && !reduced && photos.length > 1;
+
+  useEffect(() => {
+    if (!photosRunning) return;
+    const timer = window.setTimeout(() => setPhotoIndex((i) => (i + 1) % photos.length), galleryInterval);
+    return () => window.clearTimeout(timer);
+  }, [photosRunning, photoIndex, photos.length, galleryInterval]);
 
   useEffect(() => {
     if (!running) return;
@@ -155,26 +180,96 @@ export function HeroSlideshow({
           )}
         </div>
 
-        <div className="relative aspect-[4/3] sm:aspect-[16/9] lg:aspect-auto">
-          {slides.map((slide, i) => (
+        <div className="relative aspect-[4/3] overflow-hidden bg-brand sm:aspect-[16/9] lg:aspect-auto">
+          {photos.map((photo, i) => (
             <div
-              key={slide.key}
-              aria-hidden={i !== index}
+              key={`${photo.path}-${i}`}
+              aria-hidden={i !== shownPhoto}
               className={cn(
-                "absolute inset-0 transition-opacity duration-1000 ease-out motion-reduce:transition-none",
-                i === index ? "opacity-100" : "opacity-0",
+                "absolute inset-0 transition-[opacity,filter] duration-[1600ms] ease-out motion-reduce:transition-none",
+                i === shownPhoto ? "opacity-100 blur-0" : "opacity-0 blur-[2px]",
               )}
             >
-              <ResponsiveImage
-                image={slide.image}
-                fill
-                priority={i === 0}
-                focus="50% 40%"
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                labelPosition="bottom-right"
-              />
+              {/* Zoom et déplacement lents, en sens alternés d'une photo à l'autre. */}
+              <div
+                className={cn(
+                  "absolute inset-0 motion-safe:animate-[kenburns-a_14s_ease-in-out_infinite_alternate]",
+                  i % 2 === 1 && "motion-safe:animate-[kenburns-b_14s_ease-in-out_infinite_alternate]",
+                )}
+              >
+                <ResponsiveImage
+                  image={photo}
+                  fill
+                  priority={i === 0}
+                  focus="50% 40%"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  labelPosition="bottom-right"
+                />
+              </div>
             </div>
           ))}
+          {/* Voile sombre en bas, façon cinéma : la phrase et le bouton restent lisibles. */}
+          <span
+            aria-hidden="true"
+            className={cn(
+              "absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t to-transparent",
+              ownPhotos ? "h-3/4 from-black/80 via-black/35 lg:h-full lg:via-black/30" : "h-28 from-black/45",
+            )}
+          />
+          {ownPhotos && (
+            <span aria-hidden="true" className="absolute inset-0 z-10 hidden bg-gradient-to-r from-black/55 via-black/20 to-transparent lg:block" />
+          )}
+          {ownPhotos && (
+            <div className="absolute inset-x-0 bottom-14 z-20 px-6 sm:bottom-16 lg:top-[max(2rem,calc(100svh-27rem))] lg:bottom-auto lg:px-10">
+              {/* Ordinateur : placé dans la partie visible dès l'arrivée (le bandeau est plus haut que l'écran). */}
+              <div className="grid">
+                {photos.map((photo, i) =>
+                  galleryCaptions[i] ? (
+                    <p
+                      key={`legende-${photo.path}-${i}`}
+                      aria-hidden={i !== shownPhoto}
+                      className={cn(
+                        "[grid-area:1/1] max-w-[30rem] font-heading text-h3 leading-tight font-semibold text-white [text-shadow:0_2px_18px_rgb(0_0_0/0.65)] sm:text-h2",
+                        "transition-[opacity,translate] duration-1000 ease-out motion-reduce:transition-none",
+                        i === shownPhoto ? "translate-y-0 opacity-100 delay-500" : "translate-y-4 opacity-0",
+                      )}
+                    >
+                      {galleryCaptions[i]}
+                    </p>
+                  ) : null,
+                )}
+              </div>
+              {galleryAction && (
+                <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <a
+                    href={galleryAction.href}
+                    className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-semibold text-brand shadow-overlay transition-transform duration-(--duration-fast) hover:scale-[1.03] motion-safe:animate-[pulse-soft_2.8s_ease-in-out_infinite]"
+                  >
+                    <Heart aria-hidden="true" className="size-5 fill-brand" />
+                    {galleryAction.label}
+                  </a>
+                  <span className="text-small font-medium text-white/90">{galleryAction.note}</span>
+                </div>
+              )}
+            </div>
+          )}
+          {ownPhotos && photos.length > 1 && (
+            <div aria-hidden="true" className="absolute bottom-4 left-6 z-20 flex items-center gap-3 font-heading text-small font-semibold text-white lg:left-10">
+              <span className="tabular-nums">
+                {String(shownPhoto + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}
+              </span>
+              <span className="relative h-1 w-24 overflow-hidden rounded-full bg-white/30">
+                <span
+                  key={`${shownPhoto}-${photosRunning}`}
+                  className={cn(
+                    "absolute inset-y-0 left-0 rounded-full bg-gold",
+                    photosRunning ? "animate-[hero-progress_linear_forwards]" : "w-full",
+                  )}
+                  style={photosRunning ? { animationDuration: `${galleryInterval}ms` } : undefined}
+                />
+              </span>
+            </div>
+          )}
           <span aria-hidden="true" className="absolute inset-y-0 left-0 z-10 hidden w-2 bg-gold lg:block" />
         </div>
       </div>

@@ -249,6 +249,46 @@
   }
 }
 
+/* Grand fond de l'accueil : zoom et déplacement lents (deux sens). */
+@keyframes kenburns-a {
+  from {
+    scale: 1.04;
+    translate: 0 0;
+  }
+  to {
+    scale: 1.16;
+    translate: -2.5% -1.5%;
+  }
+}
+@keyframes kenburns-b {
+  from {
+    scale: 1.16;
+    translate: 2.5% 1%;
+  }
+  to {
+    scale: 1.04;
+    translate: 0 0;
+  }
+}
+/* Bouton de don du grand fond : légère pulsation, pour attirer l'œil. */
+@keyframes pulse-soft {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(217 165 0 / 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgb(217 165 0 / 0);
+  }
+}
+@keyframes hero-progress {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 /* Fond des en-têtes de page : zoom lent à l'arrivée. */
 @keyframes backdrop-zoom {
   from {

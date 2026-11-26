@@ -4,13 +4,17 @@ import { HeroSlideshow, type HeroSlide } from "@/components/home/HeroSlideshow";
 import { LinkButton } from "@/components/ui/Button";
 import { HERO_SLIDES } from "@/content/fr/ina-africa";
 import { ORG } from "@/content/fr/site";
+import { HOME_PHOTOS } from "@/content/provisional-images";
 import type { ResolvedSection } from "@/lib/page-content/resolve";
 
 /**
  * Hero de l'accueil : première image puis diaporama des grands axes d'action.
  * Textes et photos : Pages du site → Accueil (sections « Haut de la page » et « Diaporama »).
  */
-export function HomeHero({ top, slideshow }: { top: ResolvedSection; slideshow: ResolvedSection }) {
+export function HomeHero({ top, slideshow, photos }: { top: ResolvedSection; slideshow: ResolvedSection; photos: ResolvedSection }) {
+  const gallery = HOME_PHOTOS.heroGallery.map((_, index) => photos.image(`photo-${index + 1}`)).filter((photo) => photo !== null);
+  const fallback = gallery[0]!;
+  const captions = HOME_PHOTOS.heroGallery.map((_, index) => photos.line(`caption-${index + 1}`)).filter((_, index) => photos.image(`photo-${index + 1}`) !== null);
   const texts = slideshow.items("slides");
   const slides: HeroSlide[] = [
     {
@@ -18,7 +22,7 @@ export function HomeHero({ top, slideshow }: { top: ResolvedSection; slideshow: 
       kicker: top.line("kicker") || null,
       title: top.line("title") || ORG.name,
       text: top.text("text") || null,
-      image: top.image("image")!,
+      image: fallback,
     },
     ...HERO_SLIDES.map((slide, index) => ({
       key: slide.key,
@@ -26,13 +30,16 @@ export function HomeHero({ top, slideshow }: { top: ResolvedSection; slideshow: 
       title: texts[index]?.title ?? slide.title,
       lead: texts[index]?.lead || null,
       text: texts[index]?.text || null,
-      image: slideshow.image(`image-${slide.key}`)!,
+      image: fallback,
     })),
   ];
 
   return (
     <HeroSlideshow
       slides={slides}
+      gallery={gallery}
+      galleryCaptions={captions}
+      galleryAction={{ label: photos.line("action"), note: photos.line("actionNote"), href: "/faire-un-don" }}
       identity={`${ORG.name} : ${ORG.fullName}`}
       actions={
         <>

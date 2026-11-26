@@ -14,12 +14,18 @@ import { cards, image, label, lead, line, list, text, title } from "./fields";
 /** Identifiant stable d'une action documentée (rattache ses textes modifiés). */
 export const achievementKey = (achievementTitle: string) => slugify(achievementTitle).slice(0, 80);
 
-const SLIDE_LABELS: Record<(typeof HERO_SLIDES)[number]["key"], string> = {
-  femmes: "Femmes",
-  jeunes: "Jeunes",
-  sante: "Santé",
-  inclusion: "Inclusion",
-};
+
+/** Phrases affichées sur les grandes photos du haut (une par photo, même ordre). */
+const HERO_CAPTIONS = [
+  "Chaque enfant mérite de grandir, d'apprendre et de rêver.",
+  "Une femme qui gagne sa vie fait vivre toute une famille.",
+  "Un métier entre les mains, c'est un avenir qui s'ouvre.",
+  "Derrière chaque savoir-faire, une indépendance à conquérir.",
+  "Le handicap n'efface ni les talents ni les rêves.",
+  "Garder les filles à l'école, c'est changer une génération.",
+  "Soutenir les femmes, c'est faire avancer toute une communauté.",
+  "Protéger la terre, c'est protéger ceux qui en vivent."
+];
 
 export const HOME_PAGE: PageDef = {
   key: "accueil",
@@ -36,9 +42,22 @@ export const HOME_PAGE: PageDef = {
         line("kicker", "Petit titre au-dessus", HERO.kicker, 80),
         title(HERO.title, "Grand titre"),
         text("text", "Texte", HERO.text, 400, 3),
-        image("image", "Photo", HOME_PHOTOS.hero, "Une vraie photo de l'ONG, au format paysage."),
         line("primary", "Bouton 1 (vers À propos)", T.home.hero.primary, 40),
         line("secondary", "Bouton 2 (vers Nous rejoindre)", T.home.hero.secondary, 40),
+      ],
+    },
+    {
+      key: "photos",
+      title: "Grandes photos du haut (défilement)",
+      description: "Les photos qui défilent en grand à droite du texte, dans l'ordre. Photos en haute définition, au format paysage.",
+      anchor: null,
+      fields: [
+        ...HOME_PHOTOS.heroGallery.flatMap((photo, index) => [
+          image(`photo-${index + 1}`, `Photo ${index + 1}`, photo),
+          line(`caption-${index + 1}`, `Phrase sur la photo ${index + 1}`, HERO_CAPTIONS[index] ?? "", 120),
+        ]),
+        line("action", "Bouton sur les photos (vers Faire un don)", "Je soutiens cette cause", 40),
+        line("actionNote", "Petite phrase au-dessus du bouton", "Votre don peut tout changer.", 80),
       ],
     },
     {
@@ -63,7 +82,6 @@ export const HOME_PAGE: PageDef = {
           ],
           default: HERO_SLIDES.map((slide) => ({ kicker: slide.kicker, title: slide.title, lead: "lead" in slide ? slide.lead : "", text: slide.text })),
         },
-        ...HERO_SLIDES.map((slide, index) => image(`image-${slide.key}`, `Photo de l'image ${index + 2} (${SLIDE_LABELS[slide.key]})`, HOME_PHOTOS.heroSlides[slide.key])),
       ],
     },
     {
