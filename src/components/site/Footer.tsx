@@ -4,7 +4,7 @@ import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 
 import { CopyrightYear } from "@/components/site/CopyrightYear";
 import { Logo } from "@/components/site/Logo";
-import { socialLinks, telHref, whatsappHref } from "@/components/site/social";
+import { googleMapsHref, socialLinks, telHref, whatsappHref } from "@/components/site/social";
 import { FOOTER_NAV, JOIN_NAV, LEGAL_NAV, ORG, T } from "@/content/fr/site";
 import { COMMON_PAGE } from "@/content/page-sections/commun";
 import { getPageContent } from "@/server/data/page-sections";
@@ -67,7 +67,13 @@ export function FooterContacts({
             {address && (
               <li className="flex gap-3 text-white/90">
                 <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-2-light" />
-                <span className="whitespace-pre-line">{address}</span>
+                <span className="flex flex-col gap-1">
+                  <span className="whitespace-pre-line">{address}</span>
+                  <a href={googleMapsHref(address)} target="_blank" rel="noopener noreferrer" className={LINK}>
+                    Voir sur Google Maps
+                    <span className="sr-only"> {T.a11y.newTab}</span>
+                  </a>
+                </span>
               </li>
             )}
             {email && (

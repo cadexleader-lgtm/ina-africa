@@ -2,7 +2,7 @@ import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 
 import { LinkButton } from "@/components/ui/Button";
 import { AsideCard } from "@/components/forms/PageParts";
-import { socialLinks, telHref, whatsappHref } from "@/components/site/social";
+import { googleMapsHref, socialLinks, telHref, whatsappHref } from "@/components/site/social";
 import { FORM_TEXT } from "@/content/fr/forms";
 import { T } from "@/content/fr/site";
 import type { SiteSettings } from "@/lib/types/content";
@@ -29,7 +29,13 @@ export function OrgContactCard({ settings }: { settings: SiteSettings }) {
             {settings.address && (
               <li className="flex gap-3">
                 <MapPin aria-hidden="true" className="mt-1 size-5 shrink-0 text-brand-2" />
-                <span className="whitespace-pre-line text-ink">{settings.address}</span>
+                <span className="flex flex-col gap-1">
+                  <span className="whitespace-pre-line text-ink">{settings.address}</span>
+                  <a href={googleMapsHref(settings.address)} target="_blank" rel="noopener noreferrer" className={`${LINK} text-small`}>
+                    Voir sur Google Maps
+                    <span className="sr-only"> {T.a11y.newTab}</span>
+                  </a>
+                </span>
               </li>
             )}
             {settings.contactEmail && (

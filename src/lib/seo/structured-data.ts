@@ -70,6 +70,8 @@ export function organizationJsonLd(
     description: ORG_FACTS.description,
     foundingDate: ORG_FACTS.foundingDate,
     address: compact({ "@type": "PostalAddress", streetAddress: address, addressCountry: ORG_FACTS.country }),
+    // Lien vers l'adresse sur Google Maps (aide Google à relier le site à la fiche Maps de l'ONG).
+    hasMap: address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}` : undefined,
     areaServed: { "@type": "Country", name: ORG_FACTS.areaServed },
     knowsAbout: AREAS.map((area) => area.title),
     email: settings.contactEmail,

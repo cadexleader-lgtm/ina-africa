@@ -29,3 +29,9 @@ export function whatsappHref(phone: string): string | null {
   const digits = phone.replace(/\D/g, "");
   return digits.length >= 8 ? `https://wa.me/${digits}` : null;
 }
+
+/** Lien Google Maps vers une adresse (recherche publique, sans clé ni script). */
+export function googleMapsHref(address: string): string {
+  const oneLine = address.replace(/\s*\n+\s*/g, ", ").replace(/\s+/g, " ").trim();
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(oneLine)}`;
+}
