@@ -137,7 +137,7 @@ export const T = {
     status: {
       planned: "À venir",
       ongoing: "En cours",
-      completed: "Terminé",
+      completed: "Achevé",
       archived: "Archivé",
     },
   },

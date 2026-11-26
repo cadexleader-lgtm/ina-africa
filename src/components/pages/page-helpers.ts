@@ -151,7 +151,7 @@ export function alternateTones(
 // Projets
 // ---------------------------------------------------------------------------
 
-/** Libellé de l'état d'un projet public (« À venir », « En cours », « Terminé »). */
+/** Libellé de l'état d'un projet public (« À venir », « En cours », « Achevé »). */
 export function projectStatusLabel(status: ProjectStatus): string | null {
   return isPublicProjectStatus(status) ? PAGES.project.status[status] : null;
 }

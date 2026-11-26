@@ -90,10 +90,10 @@ describe("liens de la liste des projets", () => {
 });
 
 describe("libellés et période des projets", () => {
-  it("états : À venir, En cours, Terminé ; archivé → aucun libellé", () => {
+  it("états : À venir, En cours, Achevé ; archivé → aucun libellé", () => {
     expect(projectStatusLabel("planned")).toBe("À venir");
     expect(projectStatusLabel("ongoing")).toBe("En cours");
-    expect(projectStatusLabel("completed")).toBe("Terminé");
+    expect(projectStatusLabel("completed")).toBe("Achevé");
     expect(projectStatusLabel("archived")).toBeNull();
   });
   it("période en toutes lettres", () => {

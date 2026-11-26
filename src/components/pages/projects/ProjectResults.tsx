@@ -1,4 +1,7 @@
+import Link from "next/link";
 import { FolderOpen, SearchX } from "lucide-react";
+
+import { cn } from "@/lib/cn";
 
 import { LinkButton } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -10,6 +13,14 @@ import { PAGES } from "@/content/fr/pages";
 import type { SearchParamsRecord } from "@/lib/pagination";
 import { listProjects } from "@/server/data/projects";
 import { listActionAreas } from "@/server/data/site";
+
+/** Onglets d'état, toujours visibles en haut de la liste (téléphone compris). */
+const STATUS_TABS = [
+  { status: undefined, label: "Tous les projets" },
+  { status: "ongoing", label: "En cours" },
+  { status: "completed", label: "Achevés" },
+  { status: "planned", label: "À venir" },
+] as const;
 
 const T = PAGES.projects;
 
@@ -41,6 +52,24 @@ export async function ProjectResults({ searchParams }: { searchParams: SearchPar
 
   return (
     <div className="flex flex-col gap-8">
+      <nav aria-label="État des projets" className="flex flex-wrap gap-2">
+        {STATUS_TABS.map((tab) => {
+          const active = filters.status === tab.status;
+          return (
+            <Link
+              key={tab.label}
+              href={projectsHref({ area: filters.area, status: tab.status })}
+              aria-current={active ? "page" : undefined}
+              className={cn(
+                "rounded-full border px-5 py-2.5 font-semibold transition-colors",
+                active ? "border-brand bg-brand text-white" : "border-line-strong bg-white text-brand hover:border-brand hover:bg-brand-50",
+              )}
+            >
+              {tab.label}
+            </Link>
+          );
+        })}
+      </nav>
       <ProjectFilters areas={areas} filters={filters} />
 
       <section aria-labelledby="projets-resultats" className="flex flex-col gap-6">

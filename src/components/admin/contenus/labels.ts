@@ -10,7 +10,7 @@ export const ARTICLE_STATUS_LABELS = {
 export const PROJECT_STATUS_LABELS = {
   planned: "Prévu",
   ongoing: "En cours",
-  completed: "Terminé",
+  completed: "Achevé",
   archived: "Archivé",
 } as const;
 
