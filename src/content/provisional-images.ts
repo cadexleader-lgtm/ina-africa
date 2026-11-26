@@ -132,14 +132,14 @@ export const HOME_PHOTOS: {
   presentation: SiteImage;
   callToAction: SiteImage;
 } = {
-  // Vraies photos de l'ONG (action-photos.ts) dès qu'il y en a une qui correspond.
-  hero: REAL_PHOTOS.kitsGroup,
+  // Haut de l'accueil : photos verticales ou de grande taille (le cadre est presque vertical sur ordinateur).
+  hero: REAL_PHOTOS.womenDayGroup,
   /** Photos des diapositives suivantes du hero (clés de HERO_SLIDES). */
   heroSlides: {
-    femmes: REAL_PHOTOS.launchWomen,
-    jeunes: PROVISIONAL_IMAGES.formationTechnique,
-    sante: illustrationAsProvisional("/images/illustrations/femmes-cotonou.webp"),
-    inclusion: PROVISIONAL_IMAGES.enfantsFauteuil,
+    femmes: REAL_PHOTOS.womenDayPortrait,
+    jeunes: illustrationAsProvisional("/images/illustrations/apprenti-technicien.webp"),
+    sante: REAL_PHOTOS.womenDaySpeaker,
+    inclusion: illustrationAsProvisional("/images/illustrations/sport-handicap.webp"),
   },
   presentation: PROVISIONAL_IMAGES.enfantsFauteuil,
   callToAction: REAL_PHOTOS.kitsHandOver,

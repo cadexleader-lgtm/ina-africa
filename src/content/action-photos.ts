@@ -102,4 +102,7 @@ export const REAL_PHOTOS = {
   launchTeam: pick(LAUNCH_2023_PHOTOS, "photo-02"),
   launchThumbsUp: pick(LAUNCH_2023_PHOTOS, "photo-11"),
   launchSpeech: pick(LAUNCH_2023_PHOTOS, "photo-10"),
+  womenDayGroup: pick(WOMEN_DAY_2026_PHOTOS, "photo-01"),
+  womenDaySpeaker: pick(WOMEN_DAY_2026_PHOTOS, "photo-02"),
+  womenDayPortrait: pick(WOMEN_DAY_2026_PHOTOS, "photo-03"),
 } as const;
