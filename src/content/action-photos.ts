@@ -63,7 +63,7 @@ export const CLOTHING_KITS_2026_PHOTOS = photos("2026-03-21-kits-vestimentaires"
   ["photo-02", "Les femmes repartent avec leur kit après la distribution"],
   ["photo-09", "Les bénéficiaires, leur kit à la main, avec l'équipe de INA-AFRICA"],
   ["photo-11", "Photo de groupe des bénéficiaires et de l'équipe de INA-AFRICA"],
-  ["photo-03", "L'équipe de INA-AFRICA avec des personnalités locales"],
+  ["photo-03", "Des bénévoles de INA-AFRICA avec des personnalités locales de Tanmey"],
   ["photo-08", "L'équipe de INA-AFRICA et des personnalités locales, sourire aux lèvres"],
   ["photo-04", "L'équipe de INA-AFRICA avec des personnalités locales du village"],
 ]);

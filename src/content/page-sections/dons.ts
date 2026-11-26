@@ -114,7 +114,7 @@ export const CONTACT_PAGE: PageDef = {
         line("joinTitle", "Encadré « s'engager » : titre", C.joinTitle, 120),
         text("joinText", "Encadré « s'engager » : texte", C.joinText, 400, 2),
         line("joinAction", "Encadré « s'engager » : lien", C.joinAction, 60),
-        image("image", "Photo de fond", PAGE_BACKDROPS.contact),
+        image("image", "Photo de fond (facultative : sans photo, le logo de INA-AFRICA s'affiche)", null),
       ],
       elsewhere: [{ label: "Adresse, email, téléphone, WhatsApp : Paramètres → Coordonnées et réseaux", href: "/admin/parametres#coordonnees" }],
     },

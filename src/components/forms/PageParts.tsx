@@ -24,14 +24,30 @@ type PageIntroProps = {
   id?: string;
   /** Photo d'illustration en fond (à droite, fondue dans l'ivoire). */
   backdrop?: ImageSource;
+  /** Sans photo : grand logo officiel à droite (page Contact). */
+  logoBackdrop?: boolean;
   children?: ReactNode;
 };
 
 /** En-tête des pages formulaires et dons : fil d'Ariane, libellé, titre, introduction. */
-export function PageIntro({ title, eyebrow, intro, breadcrumbs, id = "page-titre", backdrop, children }: PageIntroProps) {
+export function PageIntro({ title, eyebrow, intro, breadcrumbs, id = "page-titre", backdrop, logoBackdrop = false, children }: PageIntroProps) {
   return (
     <section aria-labelledby={id} className="relative isolate overflow-hidden border-b border-line bg-ivory">
-      {backdrop && <HeaderBackdrop image={backdrop} />}
+      {backdrop ? (
+        <HeaderBackdrop image={backdrop} />
+      ) : logoBackdrop ? (
+        <div aria-hidden="true" className="absolute inset-y-0 right-0 -z-10 hidden w-[42%] items-center justify-center md:flex">
+          {/* Logo officiel, jamais recoloré. */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- image locale, taille fixe */}
+          <img
+            src="/brand/ina-africa-logo.webp"
+            alt=""
+            width={800}
+            height={594}
+            className="h-auto w-[min(22rem,80%)] drop-shadow-xl motion-safe:animate-[backdrop-zoom_1.2s_ease-out_both]"
+          />
+        </div>
+      ) : null}
       <Container className="py-section-sm">
         <Breadcrumbs items={[{ label: "Accueil", href: "/" }, ...breadcrumbs]} className="mb-8 md:mb-10" />
         <div className="max-w-reading">

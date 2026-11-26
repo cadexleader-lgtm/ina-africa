@@ -1,12 +1,25 @@
 import "server-only";
+import { REAL_PHOTOS } from "@/content/action-photos";
 
 import { cacheLife, cacheTag } from "next/cache";
 
-import type { Article, ArticleCategory, ArticleSummary, Paginated } from "@/lib/types/content";
+import type { Article, ArticleCategory, ArticleSummary, ImageRef, Paginated } from "@/lib/types/content";
 import { EMPTY_DOC, richTextDocSchema, type RichTextDoc } from "@/lib/validation/rich-text";
 import { emptyPage, getReader, logReadError, pageRange, paginated, toImage } from "@/server/data/reader";
 import { TAGS } from "@/server/data/tags";
 
+
+/**
+ * Couverture d'une actualité sans photo choisie dans l'administration : la
+ * vraie photo de l'action racontée (photos de l'ONG dans le dépôt). Une photo
+ * choisie dans l'administration passe toujours avant.
+ */
+const ARTICLE_COVERS: Record<string, ImageRef> = {
+  "tanmey-kits-vestimentaires-femmes-vulnerables": REAL_PHOTOS.clothingGroup,
+  "kits-scolaires-trois-ecoles": REAL_PHOTOS.kitsGroup,
+  "lancement-officiel-activites-ina-africa": REAL_PHOTOS.launchGroup,
+  "sept-domaines-intervention-ina-africa": REAL_PHOTOS.launchTeam,
+};
 const SUMMARY_COLUMNS =
   "id, slug, title, excerpt, published_at, cover_image_path, cover_image_alt, category:article_categories(slug, name)";
 
@@ -28,7 +41,7 @@ function toSummary(row: ArticleRow): ArticleSummary {
     title: row.title,
     excerpt: row.excerpt,
     publishedAt: row.published_at,
-    cover: toImage(row.cover_image_path, row.cover_image_alt, row.title),
+    cover: toImage(row.cover_image_path, row.cover_image_alt, row.title) ?? ARTICLE_COVERS[row.slug] ?? null,
     category: Array.isArray(row.category) ? (row.category[0] ?? null) : row.category,
   };
 }

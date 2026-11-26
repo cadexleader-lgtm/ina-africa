@@ -35,7 +35,8 @@ export default async function ContactPage() {
   return (
     <>
       <PageIntro
-        backdrop={backdrop} eyebrow={C.eyebrow} title={C.title} intro={C.intro} breadcrumbs={[{ label: C.eyebrow }]} />
+        backdrop={backdrop}
+        logoBackdrop eyebrow={C.eyebrow} title={C.title} intro={C.intro} breadcrumbs={[{ label: C.eyebrow }]} />
       <Section labelledBy="contact-formulaire">
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
