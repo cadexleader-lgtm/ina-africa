@@ -150,9 +150,15 @@ export const actionAreaInputSchema = z
     description: optionalText(5000),
     imagePath: optionalStoragePath,
     imageAlt: optionalAlt,
+    image2Path: optionalStoragePath,
+    image2Alt: optionalAlt,
+    image3Path: optionalStoragePath,
+    image3Alt: optionalAlt,
     displayOrder: displayOrderField,
   })
-  .superRefine(requireAltFor("imagePath", "imageAlt"));
+  .superRefine(requireAltFor("imagePath", "imageAlt"))
+  .superRefine(requireAltFor("image2Path", "image2Alt"))
+  .superRefine(requireAltFor("image3Path", "image3Alt"));
 
 export const actionAreaUpdateSchema = z.object({ id: idField }).and(actionAreaInputSchema);
 

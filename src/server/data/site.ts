@@ -4,6 +4,7 @@ import { cacheLife, cacheTag } from "next/cache";
 
 import type {
   ActionArea,
+  ImageRef,
   GalleryItem,
   OfflineDonationInstruction,
   Paginated,
@@ -188,7 +189,22 @@ type AreaRow = {
   image_path: string | null;
   image_alt: string | null;
   display_order: number;
+  extra_images?: unknown;
 };
+
+function galleryOf(value: unknown): ImageRef[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((item): item is { path: string; alt: string } => !!item && typeof item.path === "string" && typeof item.alt === "string")
+    .slice(0, 2)
+    .map((item) => ({ path: item.path, alt: item.alt }));
+}
+
+/** Lecture des domaines avec leurs images en plus ; sans la colonne (migration pas encore collée), sans elles. */
+async function selectAreaRows<T>(build: (columns: string) => PromiseLike<{ data: T | null; error: { code?: string; message?: string } | null }>) {
+  const first = await build(`${AREA_COLUMNS}, extra_images`);
+  return first.error ? build(AREA_COLUMNS) : first;
+}
 
 function toArea(row: AreaRow): ActionArea {
   const official = AREAS.find((area) => area.slug === row.slug);
@@ -200,6 +216,7 @@ function toArea(row: AreaRow): ActionArea {
     description: orOfficial(row.description, official?.description ?? null),
     actions: official?.actions ?? [],
     image: toImage(row.image_path, row.image_alt, row.title),
+    gallery: galleryOf(row.extra_images),
     displayOrder: row.display_order,
   };
 }
@@ -213,6 +230,7 @@ const OFFICIAL_AREAS: ActionArea[] = AREAS.map((area, index) => ({
   description: area.description,
   actions: area.actions,
   image: null,
+  gallery: [],
   displayOrder: index + 1,
 }));
 
@@ -224,12 +242,12 @@ export async function listActionAreas(): Promise<ActionArea[]> {
 
   const db = getReader();
   if (!db) return OFFICIAL_AREAS;
-  const { data, error } = await db.from("action_areas").select(AREA_COLUMNS).order("display_order");
+  const { data, error } = await selectAreaRows<AreaRow[]>((columns) => db.from("action_areas").select(columns).order("display_order") as unknown as PromiseLike<{ data: AreaRow[] | null; error: { code?: string; message?: string } | null }>);
   if (error) {
     logReadError("action_areas", error);
     return OFFICIAL_AREAS;
   }
-  const areas = (data as AreaRow[]).map(toArea);
+  const areas = (data ?? []).map(toArea);
   return areas.length > 0 ? areas : OFFICIAL_AREAS;
 }
 

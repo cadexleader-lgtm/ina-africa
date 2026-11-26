@@ -121,9 +121,26 @@ type AreaRow = {
   image_alt: string | null;
   display_order: number;
   is_active: boolean;
+  extra_images?: unknown;
 };
 
 const AREA_COLUMNS = "id, title, slug, summary, description, image_path, image_alt, display_order, is_active";
+const AREA_COLUMNS_WITH_GALLERY = `${AREA_COLUMNS}, extra_images`;
+
+/** Images en plus d'un domaine (liste { path, alt } bien formée). */
+export function extraImagesOf(value: unknown): { path: string; alt: string }[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((item): item is { path: string; alt: string } => !!item && typeof item.path === "string" && typeof item.alt === "string")
+    .slice(0, 2);
+}
+
+/** Lecture avec les images en plus ; sans la colonne (migration pas encore collée), sans elles. */
+async function selectAreas(db: Awaited<ReturnType<typeof adminReader>>["db"], build: (columns: string) => PromiseLike<{ data: unknown; error: unknown }>) {
+  void db;
+  const first = await build(AREA_COLUMNS_WITH_GALLERY);
+  return first.error ? build(AREA_COLUMNS) : first;
+}
 
 function toArea(row: AreaRow): AdminActionArea {
   return {
@@ -134,6 +151,7 @@ function toArea(row: AreaRow): AdminActionArea {
     description: row.description,
     imagePath: row.image_path,
     imageAlt: row.image_alt,
+    extraImages: extraImagesOf(row.extra_images),
     displayOrder: row.display_order,
     isActive: row.is_active,
   };
@@ -142,14 +160,21 @@ function toArea(row: AreaRow): AdminActionArea {
 /** Tous les domaines (actifs ou non), dans l'ordre d'affichage. */
 export async function listAdminActionAreas(): Promise<AdminActionArea[]> {
   const { db } = await adminReader("editor");
-  const rows = check(await db.from("action_areas").select(AREA_COLUMNS).order("display_order").order("title"));
+  const rows = check(
+    (await selectAreas(db, (columns) => db.from("action_areas").select(columns).order("display_order").order("title"))) as {
+      data: unknown;
+      error: null;
+    },
+  );
   return ((rows ?? []) as unknown as AreaRow[]).map(toArea);
 }
 
 export async function getAdminActionArea(id: string): Promise<AdminActionArea | null> {
   const { db } = await adminReader("editor");
   if (!isUuid(id)) return null;
-  const row = check(await db.from("action_areas").select(AREA_COLUMNS).eq("id", id).maybeSingle());
+  const row = check(
+    (await selectAreas(db, (columns) => db.from("action_areas").select(columns).eq("id", id).maybeSingle())) as { data: unknown; error: null },
+  );
   return row ? toArea(row as unknown as AreaRow) : null;
 }
 

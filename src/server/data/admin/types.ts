@@ -94,6 +94,8 @@ export type AdminActionArea = {
   description: string | null;
   imagePath: string | null;
   imageAlt: string | null;
+  /** Deux images en plus (3 au total). */
+  extraImages: { path: string; alt: string }[];
   displayOrder: number;
   isActive: boolean;
 };

@@ -77,6 +77,7 @@ const areaWithPhoto: ActionArea = {
   description: null,
   image: null,
   actions: [],
+  gallery: [],
   displayOrder: 1,
 };
 

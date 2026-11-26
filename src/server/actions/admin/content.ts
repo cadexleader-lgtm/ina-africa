@@ -130,6 +130,10 @@ function toAreaRow(data: {
   description: string | null;
   imagePath: string | null;
   imageAlt: string | null;
+  image2Path: string | null;
+  image2Alt: string | null;
+  image3Path: string | null;
+  image3Alt: string | null;
   displayOrder: number;
 }) {
   return {
@@ -140,6 +144,12 @@ function toAreaRow(data: {
     image_path: data.imagePath,
     image_alt: data.imageAlt,
     display_order: data.displayOrder,
+    extra_images: [
+      [data.image2Path, data.image2Alt],
+      [data.image3Path, data.image3Alt],
+    ]
+      .filter((pair): pair is [string, string] => Boolean(pair[0] && pair[1]))
+      .map(([path, alt]) => ({ path, alt })),
   };
 }
 

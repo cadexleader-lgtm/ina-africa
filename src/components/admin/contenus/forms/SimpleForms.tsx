@@ -58,6 +58,10 @@ export function AreaForm({ area, nextOrder }: { area: AdminActionArea | null; ne
     description: area?.description ?? "",
     imagePath: area?.imagePath ?? "",
     imageAlt: area?.imageAlt ?? "",
+    image2Path: area?.extraImages[0]?.path ?? "",
+    image2Alt: area?.extraImages[0]?.alt ?? "",
+    image3Path: area?.extraImages[1]?.path ?? "",
+    image3Alt: area?.extraImages[1]?.alt ?? "",
     displayOrder: area?.displayOrder ?? nextOrder,
   });
   const e = (key: string) => fieldError(f.errors, key);
@@ -67,7 +71,7 @@ export function AreaForm({ area, nextOrder }: { area: AdminActionArea | null; ne
       onSubmit={() => f.save((values) => (area ? updateActionArea({ id: area.id, ...values }) : createActionArea(values)), "Domaine enregistré.")}
       feedback={f.feedback}
       feedbackRef={f.feedbackRef}
-      extraErrors={unmatchedErrors(f.errors, ["id", "title", "slug", "summary", "description", "imagePath", "imageAlt", "displayOrder"])}
+      extraErrors={unmatchedErrors(f.errors, ["id", "title", "slug", "summary", "description", "imagePath", "imageAlt", "image2Path", "image2Alt", "image3Path", "image3Alt", "displayOrder"])}
       pending={f.pending}
       dirty={f.dirty}
       submitLabel={area ? "Enregistrer" : "Créer le domaine"}
@@ -106,9 +110,9 @@ export function AreaForm({ area, nextOrder }: { area: AdminActionArea | null; ne
           onChange={(value) => f.set("description", value)}
         />
       </FieldGroup>
-      <FieldGroup legend="Image">
+      <FieldGroup legend="Images (jusqu'à 3)" description="La 1re image est la principale ; les 2 autres s'affichent à côté sur la carte du domaine.">
         <ImageField
-          label="Image du domaine"
+          label="Image principale du domaine"
           hint="Une vraie photo d'une action de l'ONG dans ce domaine."
           folder="domaines"
           path={f.values.imagePath}
@@ -116,6 +120,24 @@ export function AreaForm({ area, nextOrder }: { area: AdminActionArea | null; ne
           pathError={e("imagePath")}
           altError={e("imageAlt")}
           onChange={(value) => f.patch({ imagePath: value.path, imageAlt: value.alt })}
+        />
+        <ImageField
+          label="Image 2 (facultative)"
+          folder="domaines"
+          path={f.values.image2Path}
+          alt={f.values.image2Alt}
+          pathError={e("image2Path")}
+          altError={e("image2Alt")}
+          onChange={(value) => f.patch({ image2Path: value.path, image2Alt: value.alt })}
+        />
+        <ImageField
+          label="Image 3 (facultative)"
+          folder="domaines"
+          path={f.values.image3Path}
+          alt={f.values.image3Alt}
+          pathError={e("image3Path")}
+          altError={e("image3Alt")}
+          onChange={(value) => f.patch({ image3Path: value.path, image3Alt: value.alt })}
         />
       </FieldGroup>
     </ContentForm>

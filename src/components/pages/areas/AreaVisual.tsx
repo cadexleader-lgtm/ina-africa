@@ -39,6 +39,23 @@ export function AreaVisual({ area, priority = false }: { area: ActionArea; prior
 /** Visuel d'un domaine qui remplit son parent (positionné et dimensionné). */
 export function AreaVisualFill({ area }: { area: ActionArea }) {
   const image = area.image ?? PROVISIONAL_AREA_IMAGES[area.slug] ?? null;
+  if (image && area.gallery.length > 0) {
+    // Image principale en grand, les 1 ou 2 autres en dessous.
+    return (
+      <div className="absolute inset-0 flex flex-col gap-1 bg-white">
+        <div className="relative min-h-0 flex-[2]">
+          <ResponsiveImage image={image} fill focus="50% 40%" sizes="(min-width: 768px) 480px, 100vw" labelPosition="top-left" />
+        </div>
+        <div className="flex min-h-0 flex-1 gap-1">
+          {area.gallery.map((extra) => (
+            <div key={extra.path} className="relative flex-1">
+              <ResponsiveImage image={extra} fill sizes="(min-width: 768px) 240px, 50vw" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
   return image ? (
     <ResponsiveImage image={image} fill focus="50% 40%" sizes="(min-width: 768px) 480px, 100vw" labelPosition="top-left" />
   ) : (
