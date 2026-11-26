@@ -7,7 +7,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { Pagination } from "@/components/ui/Pagination";
 import { Section } from "@/components/ui/Section";
 import { MediaGallery } from "@/components/pages/gallery/MediaGallery";
-import { CLOTHING_KITS_2026_PHOTOS, LAUNCH_2023_PHOTOS, SCHOOL_KITS_2025_PHOTOS } from "@/content/action-photos";
+import { CLOTHING_KITS_2026_PHOTOS, LAUNCH_2023_PHOTOS, SCHOOL_KITS_2025_PHOTOS, WOMEN_DAY_2026_PHOTOS } from "@/content/action-photos";
 import type { ImageRef } from "@/lib/types/content";
 import { PageCallToAction } from "@/components/pages/PageCallToAction";
 import { Paragraphs } from "@/components/pages/Paragraphs";
@@ -102,6 +102,7 @@ async function GalleryResults({ page }: { page: number }) {
 /** Albums des vraies photos de l'ONG (src/content/action-photos.ts), toujours affichés. */
 const ALBUMS: { id: string; title: string; photos: ImageRef[] }[] = [
   { id: "kits-vestimentaires-2026", title: "Distribution de kits vestimentaires à Tanmey (21 mars 2026)", photos: CLOTHING_KITS_2026_PHOTOS },
+  { id: "journee-femme-2026", title: "Journée internationale de la femme (8 mars 2026)", photos: WOMEN_DAY_2026_PHOTOS },
   { id: "kits-scolaires-2025", title: "Distribution de kits scolaires dans trois écoles (26 septembre 2025)", photos: SCHOOL_KITS_2025_PHOTOS },
   { id: "lancement-2023", title: "Lancement officiel des activités de l'ONG (26 août 2023)", photos: LAUNCH_2023_PHOTOS },
 ];

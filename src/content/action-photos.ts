@@ -74,6 +74,14 @@ function pick(list: ImageRef[], file: string): ImageRef {
   return found;
 }
 
+/** Journée internationale de la femme, 8 mars 2026 (photos transmises par l'ONG le 28/11/2026). */
+export const WOMEN_DAY_2026_PHOTOS = photos("2026-03-08-journee-femme", [
+  ["photo-01", "Trois membres de INA-AFRICA, en tee-shirt de l'ONG, devant la banderole de INA-AFRICA lors de la Journée internationale de la femme"],
+  ["photo-02", "Une intervenante de INA-AFRICA prend la parole devant la banderole de l'ONG, le 8 mars 2026"],
+  ["photo-03", "Une membre de INA-AFRICA, en tee-shirt de l'ONG, devant la banderole lors de la Journée internationale de la femme"],
+  ["photo-04", "Une membre de INA-AFRICA devant la banderole de l'ONG, le 8 mars 2026"],
+]);
+
 /** Photos choisies pour illustrer le site (une par emplacement). */
 export const REAL_PHOTOS = {
   kitsGroup: pick(SCHOOL_KITS_2025_PHOTOS, "photo-03"),

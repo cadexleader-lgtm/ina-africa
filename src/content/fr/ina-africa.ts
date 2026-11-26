@@ -17,7 +17,7 @@
  * rien n'est publié, ou si la base ne répond pas, ce contenu s'affiche.
  */
 
-import { CLOTHING_KITS_2026_PHOTOS, LAUNCH_2023_PHOTOS, SCHOOL_KITS_2025_PHOTOS } from "@/content/action-photos";
+import { CLOTHING_KITS_2026_PHOTOS, LAUNCH_2023_PHOTOS, SCHOOL_KITS_2025_PHOTOS, WOMEN_DAY_2026_PHOTOS } from "@/content/action-photos";
 
 import type { TeamGroup } from "@/lib/team";
 
@@ -128,6 +128,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     text: "INA-AFRICA a marqué la Journée internationale de la femme, le 8 mars 2026.",
     audience: "Les femmes",
     areaSlug: "autonomisation-economique-des-femmes",
+    photos: WOMEN_DAY_2026_PHOTOS,
   },
   {
     date: "2025-09-26",
@@ -252,10 +253,20 @@ export const AREAS: OfficialArea[] = [
       "Des formations pratiques pour les femmes, les jeunes et les personnes en situation de handicap : métiers, entrepreneuriat, gestion et savoir-faire utiles au quotidien.",
     problem:
       "Beaucoup de femmes, de jeunes et de personnes en situation de handicap n'ont pas accès à une formation adaptée à leur réalité. Sans savoir-faire reconnu, il est difficile de trouver un travail décent ou de créer sa propre activité.",
-    audiences: ["Les femmes rurales, les veuves et les filles-mères", "Les jeunes et les adolescents", "Les personnes en situation de handicap"],
+    audiences: [
+      "Les femmes rurales, les veuves et les filles-mères",
+      "Les jeunes et les adolescents",
+      "Les personnes en situation de handicap",
+    ],
     description:
       "La formation est au cœur de l'action de INA-AFRICA. L'ONG organise des sessions de formation et de sensibilisation adaptées aux besoins des communautés : économie solidaire, hygiène corporelle, transformation de produits locaux, entrepreneuriat social et agro-alimentaire.\n\nCes sessions donnent aux participants des compétences concrètes, utiles tout de suite dans leur vie quotidienne et dans leurs activités, pour avancer vers l'autonomie.",
-    actions: ["Sessions de formation et de sensibilisation", "Économie solidaire", "Transformation de produits locaux", "Entrepreneuriat social", "Agro-alimentaire"],
+    actions: [
+      "Sessions de formation et de sensibilisation",
+      "Économie solidaire",
+      "Transformation de produits locaux",
+      "Entrepreneuriat social",
+      "Agro-alimentaire",
+    ],
   },
   {
     slug: "intermediation",
@@ -267,7 +278,11 @@ export const AREAS: OfficialArea[] = [
     audiences: ["Les communautés locales", "Les femmes et les jeunes", "Les partenaires et les institutions"],
     description:
       "INA-AFRICA joue un rôle de pont entre les communautés qu'elle accompagne, les autorités locales, les écoles, les institutions et les partenaires. L'ONG relaie les besoins du terrain, oriente les bénéficiaires vers les bons interlocuteurs et rapproche les acteurs autour de projets communs.\n\nCette intermédiation permet de mobiliser les ressources là où elles sont le plus utiles et de construire des partenariats durables au service des plus vulnérables.",
-    actions: ["Mise en relation avec les institutions et les partenaires", "Orientation des bénéficiaires", "Développement de partenariats"],
+    actions: [
+      "Mise en relation avec les institutions et les partenaires",
+      "Orientation des bénéficiaires",
+      "Développement de partenariats",
+    ],
   },
   {
     slug: "autonomisation-economique-des-femmes",
@@ -279,7 +294,13 @@ export const AREAS: OfficialArea[] = [
     audiences: ["Les femmes rurales", "Les veuves", "Les filles-mères"],
     description:
       "INA-AFRICA s'engage pour l'autonomisation durable des femmes, des veuves et des filles-mères, en priorité celles issues des milieux ruraux et marginalisés. L'ONG les forme et les accompagne pour transformer les savoir-faire locaux en activités génératrices de revenus.\n\nEn renforçant leur indépendance financière, INA-AFRICA renforce aussi leur place dans les prises de décision, au sein de leur famille et de leur communauté.",
-    actions: ["Activités génératrices de revenus", "Transformation de produits locaux", "Entrepreneuriat social", "Économie solidaire", "Gestion financière"],
+    actions: [
+      "Activités génératrices de revenus",
+      "Transformation de produits locaux",
+      "Entrepreneuriat social",
+      "Économie solidaire",
+      "Gestion financière",
+    ],
   },
   {
     slug: "insertion-socio-professionnelle",
@@ -314,7 +335,11 @@ export const AREAS: OfficialArea[] = [
     audiences: ["Les communautés locales", "Les jeunes", "Les femmes rurales"],
     description:
       "La protection de l'environnement fait partie des engagements de INA-AFRICA. L'ONG sensibilise les communautés à la préservation de leur cadre de vie et des ressources naturelles, et encourage des pratiques plus respectueuses de l'environnement au quotidien.\n\nProtéger l'environnement, c'est protéger la santé, les revenus et l'avenir des communautés.",
-    actions: ["Sensibilisation à la protection de l'environnement", "Préservation des ressources naturelles", "Pratiques respectueuses de l'environnement"],
+    actions: [
+      "Sensibilisation à la protection de l'environnement",
+      "Préservation des ressources naturelles",
+      "Pratiques respectueuses de l'environnement",
+    ],
   },
   {
     slug: "lutte-contre-le-rechauffement-climatique",
@@ -502,11 +527,7 @@ export const VISION_EXPLAINED =
   "INA-AFRICA œuvre pour l'inclusion et la participation active des femmes (notamment les femmes rurales, les veuves et les filles-mères), des jeunes et des personnes en situation de handicap au cœur des initiatives de développement durable. Convaincus qu'ils ne doivent plus rester en marge du progrès, nous agissons pour en faire de véritables acteurs du changement. En améliorant leurs conditions de vie, en renforçant la voix des femmes dans les prises de décision et en levant les barrières sociales, nous bâtissons avec et pour les populations vulnérables un avenir plus juste, digne et durable.";
 
 /** Titres courts des trois missions (statuts, art. 9), dans l'ordre de MISSIONS. */
-export const MISSION_TITLES = [
-  "Améliorer les conditions de vie",
-  "Faire progresser l'égalité",
-  "Bâtir un avenir durable",
-];
+export const MISSION_TITLES = ["Améliorer les conditions de vie", "Faire progresser l'égalité", "Bâtir un avenir durable"];
 
 /**
  * Les cinq objectifs des statuts (art. 10), dans les termes transmis par
