@@ -132,7 +132,7 @@ export function NewsListView({ state }: { state: NewsListState }) {
             <div>
               <h2 className="text-h4">Les premières actualités arrivent bientôt</h2>
               <p className="mt-1 max-w-measure text-small text-muted">
-                Inscrivez-vous à la lettre d&apos;information pour recevoir les nouvelles d&apos;INA-AFRICA dès leur
+                Inscrivez-vous à la lettre d&apos;information pour recevoir les nouvelles de INA-AFRICA dès leur
                 publication. En attendant, découvrez ci-dessous les actions déjà menées.
               </p>
             </div>

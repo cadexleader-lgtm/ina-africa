@@ -43,7 +43,7 @@ export async function ProjectResults({ searchParams }: { searchParams: SearchPar
           <FolderOpen className="size-5" strokeWidth={1.75} />
         </span>
         <p className="text-body text-ink">
-          Les projets d&apos;INA-AFRICA seront présentés ici dès leur publication par l&apos;équipe. En attendant,
+          Les projets de INA-AFRICA seront présentés ici dès leur publication par l&apos;équipe. En attendant,
           découvrez ci-dessous les actions déjà documentées et les domaines d&apos;intervention de l&apos;ONG.
         </p>
       </div>

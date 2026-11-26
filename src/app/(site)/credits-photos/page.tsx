@@ -64,7 +64,7 @@ export default function PhotoCreditsPage() {
           </ul>
           <p className="mt-8 text-small text-muted">
             Contour de la carte de l&apos;Afrique : données Natural Earth (domaine public). Logo : propriété
-            d&apos;INA-AFRICA.
+            de INA-AFRICA.
           </p>
         </Container>
       </Section>

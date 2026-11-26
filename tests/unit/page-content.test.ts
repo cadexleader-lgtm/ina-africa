@@ -145,3 +145,11 @@ describe("formulaire de l'administration", () => {
     });
   });
 });
+
+describe("jamais d'élision devant INA-AFRICA (demande de l'ONG)", () => {
+  it("aucun « d'INA » ni « qu'INA » dans le code du site", async () => {
+    const { execSync } = await import("node:child_process");
+    const found = execSync("grep -rlE \"(d|qu)(&apos;|'|’)INA\" src || true", { encoding: "utf8" }).trim();
+    expect(found).toBe("");
+  });
+});

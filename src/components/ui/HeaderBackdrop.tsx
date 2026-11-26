@@ -3,25 +3,38 @@ import { ResponsiveImage, type ImageSource } from "@/components/ui/ResponsiveIma
 /**
  * Photo d'illustration en fond d'un en-tête de page : nette à droite, qui se
  * fond dans l'ivoire vers le texte (le texte reste sur un fond uni, contraste
- * inchangé). Sur téléphone : très légère, derrière tout l'en-tête.
+ * inchangé). Sur téléphone : en bandeau net au-dessus du titre.
  * Décorative : le contenu de la page ne dépend pas de l'image.
  */
 export function HeaderBackdrop({ image }: { image: ImageSource }) {
+  const provisional = "provisional" in image && image.provisional;
   return (
-    <div className="absolute inset-0 -z-10">
-      <div className="absolute inset-0 overflow-hidden opacity-25 md:inset-y-0 md:right-0 md:left-auto md:w-[58%] md:opacity-100">
-        {/* Léger zoom lent (désactivé si l'utilisateur réduit les animations). */}
+    <>
+      {/* Téléphone : la photo, nette, en bandeau au-dessus du titre (jamais pâlie derrière le texte). */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden md:hidden">
         <div className="absolute inset-0 motion-safe:animate-[backdrop-zoom_18s_ease-out_both]">
-          <ResponsiveImage image={image} fill focus="50% 35%" sizes="(min-width: 768px) 60vw, 100vw" provisionalLabel="none" />
+          <ResponsiveImage image={image} fill focus="50% 40%" sizes="100vw" provisionalLabel="none" />
         </div>
-        {/* Fondu court seulement sur le bord gauche, pour raccorder au texte : la photo reste nette. */}
-        <div aria-hidden="true" className="absolute inset-y-0 left-0 hidden w-2/5 bg-gradient-to-r from-ivory via-ivory/70 to-ivory/0 md:block" />
+        {provisional && (
+          <span className="absolute right-3 bottom-3 inline-flex rounded-full bg-white/90 px-3 py-1 text-small font-medium text-muted shadow-card">
+            Photo d&apos;illustration
+          </span>
+        )}
       </div>
-      {"provisional" in image && image.provisional && (
-        <span className="absolute right-3 bottom-3 hidden rounded-full bg-white/90 px-3 py-1 text-small font-medium text-muted shadow-card md:inline-flex">
-          Photo d&apos;illustration
-        </span>
-      )}
-    </div>
+      {/* Ordinateur : la photo à droite, en fond, nette (léger fondu sur le bord gauche seulement). */}
+      <div className="absolute inset-0 -z-10 hidden md:block">
+        <div className="absolute inset-y-0 right-0 w-[58%] overflow-hidden">
+          <div className="absolute inset-0 motion-safe:animate-[backdrop-zoom_18s_ease-out_both]">
+            <ResponsiveImage image={image} fill focus="50% 35%" sizes="60vw" provisionalLabel="none" />
+          </div>
+          <div aria-hidden="true" className="absolute inset-y-0 left-0 w-2/5 bg-gradient-to-r from-ivory via-ivory/70 to-ivory/0" />
+        </div>
+        {provisional && (
+          <span className="absolute right-3 bottom-3 inline-flex rounded-full bg-white/90 px-3 py-1 text-small font-medium text-muted shadow-card">
+            Photo d&apos;illustration
+          </span>
+        )}
+      </div>
+    </>
   );
 }
