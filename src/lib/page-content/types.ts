@@ -80,6 +80,8 @@ export type SectionDef = {
    * (l'administration affiche un lien, `fields` est vide).
    */
   sharedWith?: { page: string; section: string };
+  /** Éléments affichés par la section et gérés dans leur propre fiche (listés avec un bouton « Modifier »). */
+  records?: "areas" | "team" | "partners";
 };
 
 export type PageDef = {

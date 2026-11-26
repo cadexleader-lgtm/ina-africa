@@ -28,7 +28,7 @@ export const AREAS_PAGE: PageDef = {
       description: "Textes communs aux cartes des domaines.",
       anchor: null,
       fields: [line("button", "Texte du bouton de chaque carte", SITE.actions.discoverArea, 60)],
-      elsewhere: [{ label: "Chaque domaine (titre, résumé, photo, page détaillée) : Domaines", href: "/admin/domaines" }],
+      records: "areas",
     },
     {
       key: "interventions",

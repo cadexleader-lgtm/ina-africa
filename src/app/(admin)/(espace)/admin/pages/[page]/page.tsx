@@ -9,6 +9,14 @@ import { findPage } from "@/content/page-sections";
 import { formatDate } from "@/lib/format";
 import { requireAdminPage } from "@/server/auth/guard";
 import { getAdminPageSections, type AdminStoredSection } from "@/server/data/admin/page-sections";
+import { listAdminActionAreas, listAdminPartners, listAdminTeamMembers } from "@/server/data/admin/content";
+
+type RecordLink = { id: string; label: string; detail: string | null; hidden: boolean };
+const RECORDS = {
+  areas: { title: "Les piliers affichés ici", base: "/admin/domaines", add: "Ajouter un pilier" },
+  team: { title: "Les membres affichés ici", base: "/admin/equipe", add: "Ajouter un membre" },
+  partners: { title: "Les partenaires affichés ici", base: "/admin/partenaires", add: "Ajouter un partenaire" },
+} as const;
 
 export const instant = false;
 
@@ -21,6 +29,18 @@ export default async function EditSitePage({ params }: PageProps<"/admin/pages/[
   await requireAdminPage("admin");
   const page = findPage((await params).page);
   if (!page) notFound();
+
+  const kinds = new Set(page.sections.map((section) => section.records).filter(Boolean));
+  const [areas, team, partners] = await Promise.all([
+    kinds.has("areas") ? listAdminActionAreas().catch(() => []) : [],
+    kinds.has("team") ? listAdminTeamMembers().catch(() => []) : [],
+    kinds.has("partners") ? listAdminPartners().catch(() => []) : [],
+  ]);
+  const records: Record<keyof typeof RECORDS, RecordLink[]> = {
+    areas: areas.map((item) => ({ id: item.id, label: item.title, detail: item.summary, hidden: !item.isActive })),
+    team: team.map((item) => ({ id: item.id, label: item.fullName, detail: item.position, hidden: !item.isActive })),
+    partners: partners.map((item) => ({ id: item.id, label: item.name, detail: null, hidden: !item.isActive })),
+  };
 
   let stored: Record<string, AdminStoredSection> | null = null;
   try {
@@ -87,16 +107,48 @@ export default async function EditSitePage({ params }: PageProps<"/admin/pages/[
               </section>
             );
           }
+          const kind = section.records;
+          const list = kind ? (
+            <div className="rounded-card border border-line bg-white p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h3 className="text-h4">{RECORDS[kind].title}</h3>
+                <Link href={`${RECORDS[kind].base}/nouveau`} className="text-small font-semibold text-link underline underline-offset-4">
+                  + {RECORDS[kind].add}
+                </Link>
+              </div>
+              <ul className="mt-3 divide-y divide-line">
+                {records[kind].map((item) => (
+                  <li key={item.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
+                    <span className="min-w-0">
+                      <span className="block font-semibold text-ink">
+                        {item.label}
+                        {item.hidden && <span className="ml-2 text-small font-normal text-muted">(masqué sur le site)</span>}
+                      </span>
+                      {item.detail && <span className="line-clamp-1 text-small text-muted">{item.detail}</span>}
+                    </span>
+                    <Link
+                      href={`${RECORDS[kind].base}/${item.id}`}
+                      className="shrink-0 rounded-full border border-brand px-4 py-1.5 text-small font-semibold text-brand hover:bg-brand-50"
+                    >
+                      Modifier
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null;
           return (
-            <PageSectionEditor
-              key={section.key}
-              pageKey={page.key}
-              pagePath={page.path}
-              number={index + 1}
-              section={section}
-              stored={saved?.content ?? null}
-              updated={saved ? `${formatDate(saved.updatedAt)}${saved.updatedByName ? ` par ${saved.updatedByName}` : ""}` : null}
-            />
+            <div key={section.key} className="flex flex-col gap-4">
+              <PageSectionEditor
+                pageKey={page.key}
+                pagePath={page.path}
+                number={index + 1}
+                section={section}
+                stored={saved?.content ?? null}
+                updated={saved ? `${formatDate(saved.updatedAt)}${saved.updatedByName ? ` par ${saved.updatedByName}` : ""}` : null}
+              />
+              {list}
+            </div>
           );
         })}
     </div>

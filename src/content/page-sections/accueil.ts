@@ -111,7 +111,7 @@ export const HOME_PAGE: PageDef = {
         line("allIntro", "Carte « tous les domaines » : phrase", "Pour chaque domaine, découvrez :", 120),
         list("allItems", "Carte « tous les domaines » : points", "Point", ["La problématique", "Notre engagement", "Nos interventions", "Les publics concernés"], 80, 6),
       ],
-      elsewhere: [{ label: "Les piliers eux-mêmes (titre, résumé, photo) : Domaines", href: "/admin/domaines" }],
+      records: "areas",
     },
     {
       key: "interventions",
@@ -200,7 +200,7 @@ export const HOME_PAGE: PageDef = {
         ),
         line("all", "Texte du lien vers toute l'équipe", "Découvrir toute l'équipe", 80),
       ],
-      elsewhere: [{ label: "Les membres : Équipe", href: "/admin/equipe" }],
+      records: "team",
     },
     {
       key: "rejoindre",
@@ -233,7 +233,7 @@ export const HOME_PAGE: PageDef = {
       title: "Partenaires et sponsors",
       anchor: "accueil-partenaires",
       fields: [label(T.home.partners.label), title(T.home.partners.title)],
-      elsewhere: [{ label: "Les partenaires (nom, logo) : Partenaires", href: "/admin/partenaires" }],
+      records: "partners",
     },
     {
       key: "agir",

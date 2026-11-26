@@ -246,7 +246,7 @@ export const ABOUT_PAGE: PageDef = {
         { ...TITLE, default: T.team.title },
         { key: "intro", label: "Introduction", kind: "text", max: 600, rows: 3, default: T.team.intro },
       ],
-      elsewhere: [{ label: "Membres de l'équipe : Équipe", href: "/admin/equipe" }],
+      records: "team",
     },
     {
       key: "rejoindre",

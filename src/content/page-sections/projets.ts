@@ -43,7 +43,7 @@ export const PROJECTS_PAGE: PageDef = {
           "Chaque projet mené sur le terrain par INA-AFRICA s'articule autour de huit piliers stratégiques. Cette approche intégrée nous permet d'apporter des réponses concrètes, inclusives et pérennes aux besoins des communautés les plus vulnérables.",
         ),
       ],
-      elsewhere: [{ label: "Les piliers (titre, résumé, photo) : Domaines", href: "/admin/domaines" }],
+      records: "areas",
     },
     { key: "soutenir", title: "Bloc « Soutenir INA-AFRICA » (bas de page)", anchor: "projets-soutenir", fields: [], sharedWith: { page: "commun", section: "soutenir" } },
   ],
