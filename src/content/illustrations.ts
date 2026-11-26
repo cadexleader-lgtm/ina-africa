@@ -124,6 +124,78 @@ export const ILLUSTRATIONS: Illustration[] = [
       sourceUrl: "https://commons.wikimedia.org/wiki/File:Inondation_%C3%A0_Cotonou.jpg",
     },
   },
+  {
+    path: "/images/illustrations/couturiere-benin.webp",
+    alt: "Une couturière béninoise à sa machine, dans son atelier.",
+    width: 1600,
+    height: 1067,
+    credit: {
+      author: "Megnon",
+      ...CC_BY_SA_4,
+      title: "Une couturière Béninoise",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Une_couturi%C3%A8re_B%C3%A9ninoise.jpg",
+    },
+  },
+  {
+    path: "/images/illustrations/apprenti-technicien.webp",
+    alt: "Un jeune apprenti répare un téléphone dans un atelier à Cotonou.",
+    width: 1600,
+    height: 1067,
+    credit: {
+      author: "Adoscam",
+      ...CC_BY_SA_4,
+      title: "Un apprenti technicien en train de réparer un téléphone dans un centre à Cotonou",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Un_apprenti_technicien_en_train_de_r%C3%A9parer_un_t%C3%A9l%C3%A9phone_dans_un_centre_%C3%A0_Cotonou.jpg",
+    },
+  },
+  {
+    path: "/images/illustrations/femmes-gastronomie.webp",
+    alt: "Des femmes commerçantes servent leurs clients sur un marché au Bénin.",
+    width: 1600,
+    height: 1067,
+    credit: {
+      author: "FiossifrejusduBénin",
+      ...CC_BY_SA_4,
+      title: "Les femmes et le bien être de la gastronomie. 04",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Les_femmes_et_le_bien_%C3%AAtre_de_la_gastronomie._04.jpg",
+    },
+  },
+  {
+    path: "/images/illustrations/ecolieres-jeux.webp",
+    alt: "Des écolières béninoises jouent à un jeu traditionnel dans la cour de l'école.",
+    width: 1600,
+    height: 1067,
+    credit: {
+      author: "Domingo Daniella Rhode",
+      ...CC_BY_SA_4,
+      title: "Jeux de claquette par les écolières au BENIN",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Jeux_de_claquette_par_les_%C3%A9coli%C3%A8res_au_BENIN.jpg",
+    },
+  },
+  {
+    path: "/images/illustrations/fille-velo.webp",
+    alt: "Une jeune fille à vélo dans une rue de Bohicon.",
+    width: 1600,
+    height: 1067,
+    credit: {
+      author: "GBETONGNINOUGBO Joseph Hervé Ahissou",
+      ...CC_BY_SA_4,
+      title: "Fille vélo Bohicon",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Fille_v%C3%A9lo_Bohicon.jpg",
+    },
+  },
+  {
+    path: "/images/illustrations/sport-handicap.webp",
+    alt: "Des joueuses de basket en fauteuil roulant pendant un match au Bénin.",
+    width: 1600,
+    height: 1146,
+    credit: {
+      author: "DEGAN Gabin",
+      ...CC_BY_SA_4,
+      title: "DEGAN Gabin ( disabled sports)",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:DEGAN_Gabin_%28_disabled_sports%29.jpg",
+    },
+  },
 ];
 
 /** « Auteur, licence » pour une légende courte. */

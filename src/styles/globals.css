@@ -134,8 +134,8 @@
 :root {
   --duration-fast: 150ms; /* survol */
   --duration-base: 250ms; /* transitions (menus, dialogues) */
-  --duration-reveal: 500ms; /* apparition des sections */
-  --reveal-distance: 12px;
+  --duration-reveal: 800ms; /* apparition des sections */
+  --reveal-distance: 36px;
   --focus-ring-color: var(--color-link);
 }
 
@@ -228,6 +228,37 @@
   transition-delay: var(--reveal-delay, 0ms);
 }
 
+/* Les photos d'une section qui apparaît se « posent » : léger zoom arrière. */
+/* (Chaque image est dans un cadre .overflow-hidden : le zoom ne déborde jamais.) */
+[data-reveal="hidden"] .overflow-hidden > img {
+  scale: 1.08;
+}
+[data-reveal="shown"] .overflow-hidden > img {
+  scale: 1;
+  transition: scale 1.4s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Photos des cartes : zoom doux au survol. */
+@media (hover: hover) {
+  .group .overflow-hidden > img {
+    transition: scale 700ms var(--ease-out);
+  }
+  .group:hover .overflow-hidden > img {
+    scale: 1.05;
+  }
+}
+
+/* Fond des en-têtes de page : zoom lent à l'arrivée. */
+@keyframes backdrop-zoom {
+  from {
+    scale: 1.12;
+  }
+  to {
+    scale: 1;
+  }
+}
+
 /* Ouverture des dialogues et du menu mobile (250 ms). */
 @keyframes modal-in {
   from {
@@ -300,6 +331,11 @@ dialog[open]::backdrop {
   [data-reveal] {
     opacity: 1 !important;
     translate: none !important;
+  }
+
+  [data-reveal] .overflow-hidden > img,
+  .group:hover .overflow-hidden > img {
+    scale: none !important;
   }
 }
 

@@ -2,7 +2,7 @@ import type { LucideIcon } from "lucide-react";
 
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { areaIcon } from "@/components/site/domain-icons";
-import { PROVISIONAL_AREA_IMAGES } from "@/content/provisional-images";
+import { PROVISIONAL_AREA_GALLERY, PROVISIONAL_AREA_IMAGES } from "@/content/provisional-images";
 import type { ActionArea } from "@/lib/types/content";
 
 /** Grande tuile sans photo : fond teinté, arcs et UNE icône (décorative). */
@@ -39,7 +39,8 @@ export function AreaVisual({ area, priority = false }: { area: ActionArea; prior
 /** Visuel d'un domaine qui remplit son parent (positionné et dimensionné). */
 export function AreaVisualFill({ area }: { area: ActionArea }) {
   const image = area.image ?? PROVISIONAL_AREA_IMAGES[area.slug] ?? null;
-  if (image && area.gallery.length > 0) {
+  const gallery = area.gallery.length > 0 ? area.gallery : (PROVISIONAL_AREA_GALLERY[area.slug] ?? []);
+  if (image && gallery.length > 0) {
     // Image principale en grand, les 1 ou 2 autres en dessous.
     return (
       <div className="absolute inset-0 flex flex-col gap-1 bg-white">
@@ -47,7 +48,7 @@ export function AreaVisualFill({ area }: { area: ActionArea }) {
           <ResponsiveImage image={image} fill focus="50% 40%" sizes="(min-width: 768px) 480px, 100vw" labelPosition="top-left" />
         </div>
         <div className="flex min-h-0 flex-1 gap-1">
-          {area.gallery.map((extra) => (
+          {gallery.map((extra) => (
             <div key={extra.path} className="relative flex-1">
               <ResponsiveImage image={extra} fill sizes="(min-width: 768px) 240px, 50vw" />
             </div>

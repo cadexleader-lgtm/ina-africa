@@ -112,6 +112,16 @@ export const PROVISIONAL_AREA_IMAGES: Partial<Record<string, SiteImage>> = {
   "lutte-contre-le-rechauffement-climatique": illustrationAsProvisional("/images/illustrations/inondation-cotonou.webp"),
 }
 
+/** Deux photos libres en plus par domaine (cartes de la page Domaines), tant que l'admin n'en a pas choisi. */
+const ill = (name: string) => illustrationAsProvisional(`/images/illustrations/${name}.webp`);
+export const PROVISIONAL_AREA_GALLERY: Partial<Record<string, SiteImage[]>> = {
+  formation: [ill("apprenti-technicien"), ill("couturiere-benin")],
+  intermediation: [ill("femmes-gastronomie"), ill("ecolieres-jeux")],
+  "autonomisation-economique-des-femmes": [ill("femmes-gastronomie"), ill("couturiere-benin")],
+  "insertion-socio-professionnelle": [ill("sport-handicap"), ill("apprenti-technicien")],
+  "lutte-contre-le-travail-des-enfants": [ill("ecolieres-jeux"), ill("fille-velo")],
+};
+
 /**
  * Photos des sections de l'accueil (une photo n'apparaît qu'une fois sur la
  * page). Remplacées par les vraies photos de l'ONG dès qu'elles arrivent.
