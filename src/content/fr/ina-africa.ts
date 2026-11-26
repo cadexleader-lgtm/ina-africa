@@ -119,7 +119,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     text: "Distribution de kits vestimentaires (sous-vêtements) aux femmes vulnérables à Tanmey, dans l'arrondissement de Zinvié.",
     audience: "Femmes vulnérables",
     place: "Tanmey (arrondissement de Zinvié)",
-    areaSlug: "autonomisation-des-femmes",
+    areaSlug: "autonomisation-economique-des-femmes",
     photos: CLOTHING_KITS_2026_PHOTOS,
   },
   {
@@ -127,7 +127,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     title: "Journée internationale de la femme",
     text: "INA-AFRICA a marqué la Journée internationale de la femme, le 8 mars 2026.",
     audience: "Les femmes",
-    areaSlug: "autonomisation-des-femmes",
+    areaSlug: "autonomisation-economique-des-femmes",
   },
   {
     date: "2025-09-26",
@@ -135,7 +135,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     text: "Distribution de kits scolaires au complexe scolaire Amour de Dieu à Abomey-Calavi, à l'EPP Tori Gare (quartier Sèmè-Aïfa) et à l'EPP de Zinvié.",
     audience: "Élèves de trois écoles",
     place: "Abomey-Calavi, Sèmè-Aïfa et Zinvié",
-    areaSlug: "education",
+    areaSlug: "lutte-contre-le-travail-des-enfants",
     photos: SCHOOL_KITS_2025_PHOTOS,
   },
   {
@@ -144,7 +144,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     text: "Lancement officiel des activités de INA-AFRICA, suivi d'une distribution de vivres et d'enveloppes aux femmes vulnérables.",
     audience: "Femmes vulnérables",
     place: "Zinvié et Djidjè (Cotonou)",
-    areaSlug: "autonomisation-des-femmes",
+    areaSlug: "autonomisation-economique-des-femmes",
     photos: LAUNCH_2023_PHOTOS,
   },
   // Réalisations du document de présentation (non datées).
@@ -153,21 +153,21 @@ export const ACHIEVEMENTS: Achievement[] = [
     text: "Des activités de sensibilisation sur les droits et la santé sexuels et reproductifs, organisées à l'endroit des artisans.",
     audience: "Artisans",
     place: "Commune d'Abomey-Calavi",
-    areaSlug: "sante-sexuelle-et-reproductive",
+    areaSlug: "formation",
   },
   {
     title: "Causerie sur les infections sexuellement transmissibles au CEG Godomey",
     text: "À l'occasion de la Saint-Valentin, une causerie sur les maladies sexuellement transmissibles avec les élèves du collège.",
     audience: "Élèves du CEG Godomey",
     place: "Godomey",
-    areaSlug: "jeunesse-et-adolescents",
+    areaSlug: "formation",
   },
   {
     title: "Expliquer la loi 2021-12 sur la santé sexuelle et reproductive",
     text: "Une séance d'échanges avec les chefs de quartier, les leaders d'opinion et les leaders religieux pour expliquer la loi 2021-12 sur la santé sexuelle et reproductive.",
     audience: "Chefs de quartier, leaders d'opinion et religieux",
     place: "Godomey",
-    areaSlug: "sante-sexuelle-et-reproductive",
+    areaSlug: "formation",
   },
 ];
 
@@ -243,120 +243,89 @@ export type OfficialArea = {
 };
 
 export const AREAS: OfficialArea[] = [
+  // Les 7 domaines d'intervention transmis par l'ONG (27/11/2026).
+  // Textes rédigés à partir des documents de l'ONG : À FAIRE VALIDER par l'ONG.
   {
-    slug: "education",
-    title: "Éducation et soutien scolaire",
-    summary: "Garantir l'accès à une éducation de qualité pour tous les enfants, en particulier les orphelins et les plus démunis, à travers la distribution de kits scolaires et l'accompagnement éducatif.",
-    problem:
-      "L'éducation fait partie des défis socio-économiques persistants qui ont conduit à la création de INA-AFRICA. Former les jeunes et soutenir les enfants vulnérables, c'est préparer la relève de demain.",
-    audiences: ["Les jeunes et les adolescents", "Les enfants vulnérables"],
-    description:
-      "L'éducation est l'un des défis qui ont conduit à la création de INA-AFRICA. L'ONG s'engage pour la formation des jeunes et le soutien aux enfants vulnérables, avec une approche participative et centrée sur l'impact à long terme.",
-    actions: ["Formation des jeunes", "Soutien aux enfants vulnérables", "Sessions de formation et de sensibilisation"],
-  },
-  {
-    slug: "sante-sexuelle-et-reproductive",
-    title: "Santé et droits sexuels et reproductifs (DSSR)",
-    summary: "Informer, sensibiliser et faciliter l'accès aux soins pour permettre aux jeunes, aux filles-mères et aux femmes de faire des choix éclairés et libres pour leur santé.",
-    problem:
-      "La santé fait partie des défis persistants identifiés par l'ONG. Une information fiable sur les droits et la santé sexuels et reproductifs, sur les infections sexuellement transmissibles et sur la loi 2021-12, est essentielle pour que chacun puisse protéger sa santé.",
-    audiences: ["Les artisans", "Les élèves et les jeunes", "Les chefs de quartier, leaders d'opinion et religieux"],
-    description:
-      "INA-AFRICA contribue à une bonne santé des populations en leur fournissant les informations essentielles pour leur bien. L'ONG mène des actions de sensibilisation sur les droits et la santé sexuels et reproductifs auprès d'artisans, d'élèves et de leaders communautaires.",
-    actions: [
-      "Sensibilisation des artisans de la commune d'Abomey-Calavi",
-      "Causerie sur les maladies sexuellement transmissibles avec les élèves du CEG Godomey",
-      "Explication de la loi 2021-12 sur la santé sexuelle et reproductive aux chefs de quartier, leaders d'opinion et religieux de Godomey",
-    ],
-  },
-  {
-    slug: "autonomisation-des-femmes",
-    title: "Autonomisation des femmes",
-    summary: "Renforcer les compétences, l'estime de soi et l'indépendance économique des femmes rurales, des veuves et des filles-mères par la formation professionnelle et l'entrepreneuriat.",
-    problem:
-      "Les femmes et les filles mères, en particulier celles issues de milieux ruraux et marginalisés, ont besoin de compétences et de ressources pour gagner en indépendance économique et en estime de soi.",
-    audiences: ["Les femmes rurales", "Les filles mères", "Les femmes issues de milieux marginalisés"],
-    description:
-      "INA-AFRICA œuvre activement pour l'autonomisation des femmes et des filles mères, en particulier celles issues de milieux ruraux et marginalisés. Ses programmes visent à relever leur niveau de vie et à renforcer leurs compétences, leur estime de soi et leur indépendance économique.",
-    actions: [
-      "Formations en économie solidaire",
-      "Formations en hygiène corporelle",
-      "Transformation de produits locaux",
-      "Entrepreneuriat social et agro-alimentaire",
-    ],
-  },
-  {
-    slug: "jeunesse-et-adolescents",
-    title: "Jeunesse et adolescents",
-    summary: "Accompagner les jeunes vers l'âge adulte grâce à l'orientation, la formation aux métiers d'avenir, le leadership et l'insertion socio-professionnelle.",
-    problem:
-      "Les jeunes et les adolescents constituent la relève de demain. Leur formation, leur santé et leur accès à un travail décent conditionnent l'avenir des communautés.",
-    audiences: ["Les jeunes en recherche d'insertion professionnelle", "Les adolescents et les élèves"],
-    description:
-      "Les jeunes et les adolescents constituent la relève de demain. INA-AFRICA veille à leur bien-être et favorise leur insertion socio-professionnelle et leur accès au travail décent, notamment à travers son « Programme Jeune Professionnel » (PJP).",
-    actions: [
-      "Formation des jeunes",
-      "Programme Jeune Professionnel (PJP) pour l'insertion socio-professionnelle",
-      "Sensibilisation des élèves à la santé sexuelle et reproductive",
-    ],
-  },
-  {
-    slug: "inclusion-et-egalite-de-genre",
-    title: "Inclusion et égalité de genre",
-    summary: "Lutter contre toutes les formes de discrimination et garantir la pleine participation sociale et économique des femmes, des personnes en situation de handicap et des groupes marginalisés.",
-    problem:
-      "Les inégalités entre les sexes et la mise à l'écart des personnes vulnérables freinent le développement durable. L'ODD 5 fixe l'objectif de parvenir à l'égalité des sexes et d'autonomiser toutes les femmes et les filles.",
-    audiences: ["Les femmes et les filles", "Les personnes en situation de handicap", "Les personnes vulnérables"],
-    description:
-      "INA-AFRICA œuvre à l'inclusion et à la participation active des femmes, des jeunes et des personnes en situation de handicap. Elle promeut la représentativité des femmes dans toutes les sphères de décision et l'atteinte de l'ODD 5 : « Parvenir à l'égalité des sexes et autonomiser toutes les femmes et les filles ».",
-    actions: [
-      "Réduction des inégalités entre les sexes et promotion de l'approche genre",
-      "Représentativité des femmes dans les sphères de décision",
-      "Aide aux personnes en situation de handicap",
-    ],
-  },
-  {
-    // 8e pilier, transmis par l'ONG le 20/11/2026 (statuts, art. 10 : lutte contre le réchauffement climatique).
-    slug: "environnement-et-resilience-climatique",
-    title: "Environnement et résilience climatique",
+    slug: "formation",
+    title: "Formation",
     summary:
-      "Protéger les écosystèmes locaux, sensibiliser aux enjeux écologiques et promouvoir des pratiques durables pour préserver l'avenir des générations futures.",
-    audiences: [],
+      "Des formations pratiques pour les femmes, les jeunes et les personnes en situation de handicap : métiers, entrepreneuriat, gestion et savoir-faire utiles au quotidien.",
+    problem:
+      "Beaucoup de femmes, de jeunes et de personnes en situation de handicap n'ont pas accès à une formation adaptée à leur réalité. Sans savoir-faire reconnu, il est difficile de trouver un travail décent ou de créer sa propre activité.",
+    audiences: ["Les femmes rurales, les veuves et les filles-mères", "Les jeunes et les adolescents", "Les personnes en situation de handicap"],
     description:
-      "INA-AFRICA participe à l'effort national de lutte contre le réchauffement climatique et à une gestion participative et durable des écosystèmes. L'ONG protège les écosystèmes locaux, sensibilise aux enjeux écologiques et promeut des pratiques durables pour préserver l'avenir des générations futures.",
-    actions: ["Sauvegarde de l'environnement", "Lutte contre le réchauffement climatique"],
+      "La formation est au cœur de l'action de INA-AFRICA. L'ONG organise des sessions de formation et de sensibilisation adaptées aux besoins des communautés : économie solidaire, hygiène corporelle, transformation de produits locaux, entrepreneuriat social et agro-alimentaire.\n\nCes sessions donnent aux participants des compétences concrètes, utiles tout de suite dans leur vie quotidienne et dans leurs activités, pour avancer vers l'autonomie.",
+    actions: ["Sessions de formation et de sensibilisation", "Économie solidaire", "Transformation de produits locaux", "Entrepreneuriat social", "Agro-alimentaire"],
   },
   {
-    slug: "developpement-local-durable",
-    title: "Développement local durable et inclusif",
-    summary: "Co-construire avec les communautés rurales des infrastructures et des initiatives économiques qui améliorent durablement leurs conditions de vie.",
+    slug: "intermediation",
+    title: "Action d'intermédiation",
+    summary:
+      "INA-AFRICA fait le lien entre les communautés, les institutions et les partenaires pour faciliter l'accès aux services, aux opportunités et aux ressources.",
     problem:
-      "Les couches défavorisées ont besoin de meilleures conditions de vie, à la fois socio-économiques et environnementales. Le réchauffement climatique et la gestion des écosystèmes sont aussi des enjeux pour les communautés.",
-    audiences: ["Les communautés rurales", "Les populations défavorisées"],
+      "Les personnes vulnérables connaissent souvent mal les services, les aides et les opportunités qui existent, ou ne savent pas comment y accéder.",
+    audiences: ["Les communautés locales", "Les femmes et les jeunes", "Les partenaires et les institutions"],
     description:
-      "INA-AFRICA promeut des initiatives locales, durables et inclusives pour offrir aux couches défavorisées de meilleures conditions de vie socio-économiques et environnementales. L'ONG agit pour le développement rural, la lutte contre le réchauffement climatique et la valorisation du patrimoine culturel béninois et africain.",
-    actions: [
-      "Développement rural",
-      "Gestion participative et durable des écosystèmes",
-      "Lutte contre le réchauffement climatique",
-      "Valorisation du patrimoine culturel béninois et africain",
-    ],
+      "INA-AFRICA joue un rôle de pont entre les communautés qu'elle accompagne, les autorités locales, les écoles, les institutions et les partenaires. L'ONG relaie les besoins du terrain, oriente les bénéficiaires vers les bons interlocuteurs et rapproche les acteurs autour de projets communs.\n\nCette intermédiation permet de mobiliser les ressources là où elles sont le plus utiles et de construire des partenariats durables au service des plus vulnérables.",
+    actions: ["Mise en relation avec les institutions et les partenaires", "Orientation des bénéficiaires", "Développement de partenariats"],
   },
   {
-    slug: "innovation-sociale",
-    title: "Innovation sociale",
-    summary: "Concevoir et déployer des solutions créatives, participatives et adaptées aux réalités locales pour relever efficacement les défis sociaux et communautaires.",
+    slug: "autonomisation-economique-des-femmes",
+    title: "Appui à l'autonomisation économique des femmes",
+    summary:
+      "Accompagner les femmes, les veuves et les filles-mères vers l'indépendance financière : activités génératrices de revenus, transformation de produits locaux, entrepreneuriat social.",
     problem:
-      "Les défis des communautés appellent des réponses adaptées à chaque territoire. INA-AFRICA a été créée pour promouvoir des initiatives locales, durables et inclusives, construites avec les personnes concernées.",
-    audiences: ["Les communautés locales", "Les bénévoles et partenaires engagés à leurs côtés"],
+      "Les femmes rurales, les veuves et les filles-mères restent trop souvent en marge du progrès économique, sans revenus stables ni accès aux moyens de développer une activité.",
+    audiences: ["Les femmes rurales", "Les veuves", "Les filles-mères"],
     description:
-      "L'innovation sociale est au cœur du projet de INA-AFRICA depuis sa création. L'ONG s'appuie sur une approche participative, le développement de partenariats et la mobilisation du bénévolat pour construire, avec les communautés, des réponses durables à leurs besoins.",
-    actions: [
-      "Approche participative centrée sur l'impact à long terme",
-      "Développement de partenariats",
-      "Mobilisation du bénévolat",
-      "Campagnes de collecte de fonds",
-    ],
+      "INA-AFRICA s'engage pour l'autonomisation durable des femmes, des veuves et des filles-mères, en priorité celles issues des milieux ruraux et marginalisés. L'ONG les forme et les accompagne pour transformer les savoir-faire locaux en activités génératrices de revenus.\n\nEn renforçant leur indépendance financière, INA-AFRICA renforce aussi leur place dans les prises de décision, au sein de leur famille et de leur communauté.",
+    actions: ["Activités génératrices de revenus", "Transformation de produits locaux", "Entrepreneuriat social", "Économie solidaire", "Gestion financière"],
+  },
+  {
+    slug: "insertion-socio-professionnelle",
+    title: "Apprentissage et insertion socio-professionnelle des femmes, des jeunes et des personnes en situation de handicap",
+    summary:
+      "Accompagner les femmes, les jeunes et les personnes en situation de handicap vers un métier, un emploi décent ou la création de leur propre activité.",
+    problem:
+      "Le manque de qualification et d'accompagnement éloigne de nombreux jeunes, femmes et personnes en situation de handicap de l'emploi et de l'entrepreneuriat.",
+    audiences: ["Les jeunes et les adolescents", "Les femmes et les filles-mères", "Les personnes en situation de handicap"],
+    description:
+      "INA-AFRICA fait de l'avenir des jeunes une priorité. À travers son « Programme Jeune Professionnel » (PJP), l'ONG accompagne les jeunes, y compris les plus vulnérables, les filles-mères et les jeunes en situation de handicap, dans l'acquisition de compétences recherchées, le mentorat et l'accès à des opportunités concrètes d'emploi ou de création d'entreprise.\n\nL'objectif : que chacun puisse apprendre un métier, s'insérer dans la vie active et devenir acteur du développement de sa communauté.",
+    actions: ["Programme Jeune Professionnel (PJP)", "Apprentissage d'un métier", "Mentorat", "Accès à l'emploi et à l'entrepreneuriat"],
+  },
+  {
+    slug: "lutte-contre-le-travail-des-enfants",
+    title: "Lutte contre le travail des enfants dans les mines et carrières, les BTP et les activités marchandes",
+    summary:
+      "Protéger les enfants contre le travail dans les mines et carrières, les BTP et les activités marchandes, et les accompagner vers l'école.",
+    problem:
+      "Trop d'enfants travaillent dans les mines et carrières, sur les chantiers ou dans les activités marchandes, au lieu d'aller à l'école. Ce travail met en danger leur santé et leur avenir.",
+    audiences: ["Les enfants vulnérables", "Les orphelins", "Les familles en difficulté"],
+    description:
+      "INA-AFRICA agit pour que chaque enfant puisse grandir, apprendre et aller à l'école. L'ONG sensibilise les familles et les communautés aux dangers du travail des enfants et soutient la scolarisation des enfants vulnérables et des orphelins, par exemple avec la distribution de kits scolaires.\n\nGarder les enfants à l'école, c'est les protéger aujourd'hui et leur ouvrir un avenir meilleur demain.",
+    actions: ["Sensibilisation des familles et des communautés", "Soutien à la scolarisation", "Distribution de kits scolaires"],
+  },
+  {
+    slug: "sauvegarde-de-l-environnement",
+    title: "Sauvegarde de l'environnement",
+    summary: "Sensibiliser et agir avec les communautés pour protéger l'environnement et préserver les ressources naturelles.",
+    problem:
+      "La dégradation de l'environnement touche d'abord les communautés les plus vulnérables, qui dépendent directement des ressources naturelles pour vivre.",
+    audiences: ["Les communautés locales", "Les jeunes", "Les femmes rurales"],
+    description:
+      "La protection de l'environnement fait partie des engagements de INA-AFRICA. L'ONG sensibilise les communautés à la préservation de leur cadre de vie et des ressources naturelles, et encourage des pratiques plus respectueuses de l'environnement au quotidien.\n\nProtéger l'environnement, c'est protéger la santé, les revenus et l'avenir des communautés.",
+    actions: ["Sensibilisation à la protection de l'environnement", "Préservation des ressources naturelles", "Pratiques respectueuses de l'environnement"],
+  },
+  {
+    slug: "lutte-contre-le-rechauffement-climatique",
+    title: "Lutte contre le réchauffement climatique",
+    summary: "Mobiliser les communautés face au réchauffement climatique par la sensibilisation et des pratiques plus durables.",
+    problem:
+      "Les effets du réchauffement climatique (sécheresses, inondations, baisse des récoltes) fragilisent les communautés rurales et les familles les plus pauvres.",
+    audiences: ["Les communautés rurales", "Les jeunes", "Les femmes"],
+    description:
+      "INA-AFRICA contribue à la lutte contre le réchauffement climatique en sensibilisant les communautés à ses causes et à ses effets, et en encourageant des pratiques plus durables.\n\nL'ONG veut aider les communautés à mieux résister aux changements du climat et à devenir actrices de solutions pour leur avenir.",
+    actions: ["Sensibilisation au changement climatique", "Pratiques durables", "Résilience des communautés"],
   },
 ];
 

@@ -26,7 +26,7 @@ describe("organizationJsonLd", () => {
       foundingDate: "2017",
       address: { "@type": "PostalAddress", addressCountry: "BJ" },
       areaServed: { "@type": "Country", name: "Bénin" },
-      knowsAbout: expect.arrayContaining(["Éducation et soutien scolaire", "Autonomisation des femmes", "Environnement et résilience climatique"]),
+      knowsAbout: expect.arrayContaining(["Formation", "Appui à l'autonomisation économique des femmes", "Sauvegarde de l'environnement"]),
       potentialAction: { "@type": "DonateAction", name: "Faire un don", target: "https://ina-africa.example/faire-un-don" },
     });
   });

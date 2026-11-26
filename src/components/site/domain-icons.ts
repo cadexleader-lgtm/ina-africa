@@ -24,6 +24,14 @@ const AREA_ICONS: Record<string, LucideIcon> = {
   "environnement-et-resilience-climatique": Leaf,
   "developpement-local-durable": Sprout,
   "innovation-sociale": Lightbulb,
+  // Les 7 domaines d'intervention (27/11/2026).
+  formation: GraduationCap,
+  intermediation: Scale,
+  "autonomisation-economique-des-femmes": HandCoins,
+  "insertion-socio-professionnelle": UsersRound,
+  "lutte-contre-le-travail-des-enfants": HeartPulse,
+  "sauvegarde-de-l-environnement": Leaf,
+  "lutte-contre-le-rechauffement-climatique": Sprout,
 };
 
 export function areaIcon(slug: string | null | undefined): LucideIcon {

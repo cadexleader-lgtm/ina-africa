@@ -101,14 +101,13 @@ export const PROVISIONAL_IMAGES = {
  * illustration provisoire (mention « Photo d'illustration »).
  */
 export const PROVISIONAL_AREA_IMAGES: Partial<Record<string, SiteImage>> = {
-  education: REAL_PHOTOS.kitsClassroom,
-  "sante-sexuelle-et-reproductive": illustrationAsProvisional("/images/illustrations/femmes-cotonou.webp"),
-  "autonomisation-des-femmes": REAL_PHOTOS.clothingWomen,
-  "jeunesse-et-adolescents": PROVISIONAL_IMAGES.salleDeClasse,
-  "inclusion-et-egalite-de-genre": illustrationAsProvisional("/images/illustrations/egalite-femme-moto.webp"),
-  "developpement-local-durable": illustrationAsProvisional("/images/illustrations/alphabetisation.webp"),
-  "innovation-sociale": PROVISIONAL_IMAGES.formationTechnique,
-};
+  // Vraies photos de l'ONG (actions réelles) ; pas de photo pour l'environnement et le climat.
+  formation: REAL_PHOTOS.launchSpeech,
+  intermediation: REAL_PHOTOS.kitsExchange,
+  "autonomisation-economique-des-femmes": REAL_PHOTOS.launchWomen,
+  "insertion-socio-professionnelle": REAL_PHOTOS.launchThumbsUp,
+  "lutte-contre-le-travail-des-enfants": REAL_PHOTOS.kitsGroup,
+}
 
 /**
  * Photos des sections de l'accueil (une photo n'apparaît qu'une fois sur la
