@@ -10,28 +10,32 @@ import { OrgContactCard } from "@/components/forms/OrgContactCard";
 import { AsideCard, contactsFrom, FormCard, PageIntro } from "@/components/forms/PageParts";
 import { ContactForm } from "@/components/forms/RequestForms";
 import { FORM_TEXT } from "@/content/fr/forms";
+import { getPageContent } from "@/server/data/page-sections";
+import { CONTACT_PAGE } from "@/content/page-sections/dons";
+
 import { submitContact } from "@/server/actions/requests";
 import { getSiteSettings } from "@/server/data/site";
-import { PAGE_BACKDROPS } from "@/content/provisional-images";
 
-const C = FORM_TEXT.contact;
+const CT = FORM_TEXT.contact;
 
 export const metadata: Metadata = {
-  title: C.metaTitle,
-  description: C.metaDescription,
+  title: CT.metaTitle,
+  description: CT.metaDescription,
   alternates: { canonical: "/contact" },
-  openGraph: { title: C.metaTitle, description: C.metaDescription, url: "/contact" },
+  openGraph: { title: CT.metaTitle, description: CT.metaDescription, url: "/contact" },
 };
 
 /** Contact : formulaire (enregistré dans contact_requests) et coordonnées renseignées. */
 export default async function ContactPage() {
-  const settings = await getSiteSettings();
+  const [settings, content] = await Promise.all([getSiteSettings(), getPageContent(CONTACT_PAGE)]);
   const contacts = contactsFrom(settings);
+  const C = { ...CT, ...content.section("en-tete").strings() };
+  const backdrop = content.section("en-tete").image("image") ?? undefined;
 
   return (
     <>
       <PageIntro
-        backdrop={PAGE_BACKDROPS.contact} eyebrow={C.eyebrow} title={C.title} intro={C.intro} breadcrumbs={[{ label: C.eyebrow }]} />
+        backdrop={backdrop} eyebrow={C.eyebrow} title={C.title} intro={C.intro} breadcrumbs={[{ label: C.eyebrow }]} />
       <Section labelledBy="contact-formulaire">
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">

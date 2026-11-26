@@ -7,16 +7,18 @@ import { Section } from "@/components/ui/Section";
 import { NeedCard } from "@/components/donate/NeedCard";
 import { PageIntro } from "@/components/forms/PageParts";
 import { DONATE_TEXT } from "@/content/fr/forms";
-import { PAGE_BACKDROPS } from "@/content/provisional-images";
+import { getPageContent } from "@/server/data/page-sections";
+import { NEEDS_PAGE } from "@/content/page-sections/dons";
+
 import { getCampaignProgress, listActiveCampaigns } from "@/server/data/campaigns";
 
-const N = DONATE_TEXT.needs;
+const NT = DONATE_TEXT.needs;
 
 export const metadata: Metadata = {
-  title: N.metaTitle,
-  description: N.metaDescription,
+  title: NT.metaTitle,
+  description: NT.metaDescription,
   alternates: { canonical: "/nos-besoins" },
-  openGraph: { title: N.metaTitle, description: N.metaDescription, url: "/nos-besoins" },
+  openGraph: { title: NT.metaTitle, description: NT.metaDescription, url: "/nos-besoins" },
 };
 
 /**
@@ -25,7 +27,9 @@ export const metadata: Metadata = {
  * n'est inventé : sans appel actif, un message honnête et le don général.
  */
 export default async function NeedsPage() {
-  const campaigns = await listActiveCampaigns();
+  const [campaigns, content] = await Promise.all([listActiveCampaigns(), getPageContent(NEEDS_PAGE)]);
+  const N = { ...NT, ...content.section("en-tete").strings(), ...content.section("don-general").strings() };
+  const backdrop = content.section("en-tete").image("image") ?? undefined;
   const progress = await Promise.all(
     campaigns.map((campaign) => (campaign.showProgress ? getCampaignProgress(campaign.id) : Promise.resolve(null))),
   );
@@ -33,7 +37,7 @@ export default async function NeedsPage() {
   return (
     <>
       <PageIntro
-        backdrop={PAGE_BACKDROPS.needs}
+        backdrop={backdrop}
         eyebrow={N.eyebrow}
         title={N.title}
         intro={

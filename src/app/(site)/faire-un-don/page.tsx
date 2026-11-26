@@ -12,19 +12,21 @@ import { OnlineDonation } from "@/components/donate/OnlineDonation";
 import { formatAchievementDate } from "@/components/site/AchievementCard";
 import { AsideCard, contactsFrom, PageIntro } from "@/components/forms/PageParts";
 import { DONATE_TEXT } from "@/content/fr/forms";
+import { getPageContent } from "@/server/data/page-sections";
+import { DONATE_PAGE } from "@/content/page-sections/dons";
+
 import { ACHIEVEMENTS } from "@/content/fr/ina-africa";
-import { PAGE_BACKDROPS } from "@/content/provisional-images";
 import { getCampaignProgress, listActiveCampaigns } from "@/server/data/campaigns";
 import { getSiteSettings } from "@/server/data/site";
 import { getActiveProvider } from "@/server/payments/provider";
 
-const D = DONATE_TEXT;
+const DT = DONATE_TEXT;
 
 export const metadata: Metadata = {
-  title: D.metaTitle,
-  description: D.metaDescription,
+  title: DT.metaTitle,
+  description: DT.metaDescription,
   alternates: { canonical: "/faire-un-don" },
-  openGraph: { title: D.metaTitle, description: D.metaDescription, url: "/faire-un-don" },
+  openGraph: { title: DT.metaTitle, description: DT.metaDescription, url: "/faire-un-don" },
 };
 
 const LINK = "inline-flex items-center gap-2 font-semibold text-link underline-offset-4 hover:text-link-strong hover:underline";
@@ -38,7 +40,19 @@ const PROOF = ACHIEVEMENTS.filter((achievement) => achievement.date).slice(0, 3)
  * réelles de l'ONG, besoins du moment (appels aux dons actifs).
  */
 export default async function DonatePage() {
-  const [settings, campaigns] = await Promise.all([getSiteSettings(), listActiveCampaigns()]);
+  const [settings, campaigns, content] = await Promise.all([getSiteSettings(), listActiveCampaigns(), getPageContent(DONATE_PAGE)]);
+  const top = content.section("en-tete").strings();
+  const form = content.section("formulaire").strings();
+  const needs = content.section("besoins").strings();
+  const D = {
+    ...DT,
+    ...top,
+    ...form,
+    campaigns: { ...DT.campaigns, all: top.allNeeds!, title: needs.title!, intro: needs.intro! },
+    needs: { ...DT.needs, eyebrow: needs.label! },
+    otherWays: { title: form.otherTitle!, volunteer: form.otherVolunteer!, member: form.otherMember!, partner: form.otherPartner! },
+  };
+  const backdrop = content.section("en-tete").image("image") ?? undefined;
   const contacts = contactsFrom(settings);
   const online = getActiveProvider() !== null;
   const featured = campaigns.slice(0, 3);
@@ -49,7 +63,7 @@ export default async function DonatePage() {
   return (
     <>
       <PageIntro
-        backdrop={PAGE_BACKDROPS.donate}
+        backdrop={backdrop}
         eyebrow={D.eyebrow}
         title={D.title}
         intro={

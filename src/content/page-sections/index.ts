@@ -6,6 +6,7 @@ import { NEWS_PAGE } from "./actualites";
 import { COMMON_PAGE } from "./commun";
 import { AREAS_PAGE } from "./domaines";
 import { GALLERY_PAGE } from "./galerie";
+import { CONTACT_PAGE, DONATE_PAGE, NEEDS_PAGE } from "./dons";
 import { JOIN_PAGE } from "./nous-rejoindre";
 import { PROJECTS_PAGE } from "./projets";
 
@@ -15,7 +16,7 @@ import { PROJECTS_PAGE } from "./projets";
  * sections dans un fichier de ce dossier, l'ajouter ici, puis lire ses
  * valeurs avec getPageContent() dans la page du site.
  */
-export const EDITABLE_PAGES: PageDef[] = [HOME_PAGE, ABOUT_PAGE, AREAS_PAGE, PROJECTS_PAGE, NEWS_PAGE, GALLERY_PAGE, JOIN_PAGE, COMMON_PAGE];
+export const EDITABLE_PAGES: PageDef[] = [HOME_PAGE, ABOUT_PAGE, AREAS_PAGE, PROJECTS_PAGE, NEWS_PAGE, GALLERY_PAGE, DONATE_PAGE, NEEDS_PAGE, JOIN_PAGE, CONTACT_PAGE, COMMON_PAGE];
 
 export function findPage(key: string): PageDef | null {
   return EDITABLE_PAGES.find((page) => page.key === key) ?? null;

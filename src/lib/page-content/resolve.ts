@@ -91,6 +91,8 @@ export type ResolvedSection = {
   list(key: string): string[];
   items(key: string): Record<string, string>[];
   image(key: string): SiteImage | null;
+  /** Tous les champs texte (ligne ou paragraphes), clé → valeur affichée. */
+  strings(): Record<string, string>;
 };
 
 export function splitParagraphs(text: string): string[] {
@@ -113,5 +115,9 @@ export function resolveSection(section: SectionDef, stored: StoredContent = {}):
     list: (key) => get(key, "list") as string[],
     items: (key) => get(key, "items") as Record<string, string>[],
     image: (key) => get(key, "image") as SiteImage | null,
+    strings: () =>
+      Object.fromEntries(
+        section.fields.filter((field) => field.kind === "line" || field.kind === "text").map((field) => [field.key, fieldValue(field, stored) as string]),
+      ),
   };
 }
