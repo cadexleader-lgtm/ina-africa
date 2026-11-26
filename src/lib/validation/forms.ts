@@ -239,7 +239,7 @@ export const volunteerSchema = z.object({
   fullName,
   email: emailField,
   phone: phoneField,
-  profession: optionalLine(LIMITS.profession),
+  profession: requiredLine("Indiquez votre profession ou vos études.", LIMITS.profession),
   skills: requiredText("Indiquez vos compétences ou ce que vous aimeriez apporter.", LIMITS.skills),
   motivation: requiredText("Dites-nous en quelques mots pourquoi vous souhaitez vous engager.", LIMITS.motivation),
   consent: consentField,
@@ -250,7 +250,7 @@ export const membershipSchema = z.object({
   email: emailField,
   phone: phoneField,
   city: requiredLine("Indiquez votre ville.", LIMITS.city),
-  profession: optionalLine(LIMITS.profession),
+  profession: requiredLine("Indiquez votre profession ou vos études.", LIMITS.profession),
   motivation: optionalText(LIMITS.motivation),
   consent: consentField,
 });

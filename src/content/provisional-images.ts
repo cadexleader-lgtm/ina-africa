@@ -107,6 +107,9 @@ export const PROVISIONAL_AREA_IMAGES: Partial<Record<string, SiteImage>> = {
   "autonomisation-economique-des-femmes": REAL_PHOTOS.launchWomen,
   "insertion-socio-professionnelle": REAL_PHOTOS.launchThumbsUp,
   "lutte-contre-le-travail-des-enfants": REAL_PHOTOS.kitsGroup,
+  // Photos libres (Wikimedia Commons), mention « Photo d'illustration » automatique.
+  "sauvegarde-de-l-environnement": illustrationAsProvisional("/images/illustrations/reboisement-natitingou.webp"),
+  "lutte-contre-le-rechauffement-climatique": illustrationAsProvisional("/images/illustrations/inondation-cotonou.webp"),
 }
 
 /**

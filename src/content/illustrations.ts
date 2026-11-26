@@ -100,6 +100,30 @@ export const ILLUSTRATIONS: Illustration[] = [
       sourceUrl: "https://commons.wikimedia.org/wiki/File:Children_in_Wanrarou,_Benin_2009-06-17.JPG",
     },
   },
+  {
+    path: "/images/illustrations/reboisement-natitingou.webp",
+    alt: "Un périmètre de reboisement à Natitingou, au Bénin.",
+    width: 960,
+    height: 640,
+    credit: {
+      author: "Vitoyaovimariusmavy",
+      ...CC_BY_SA_4,
+      title: "Traversée de périmètre de reboisement de Natitingou 16",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Travers%C3%A9e_de_p%C3%A9rim%C3%A8tre_de_reboisement_de_Natitingou_16.jpg",
+    },
+  },
+  {
+    path: "/images/illustrations/inondation-cotonou.webp",
+    alt: "Une rue inondée à Cotonou, au Bénin.",
+    width: 960,
+    height: 640,
+    credit: {
+      author: "Ganiath BELLO",
+      ...CC_BY_SA_4,
+      title: "Inondation à Cotonou",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Inondation_%C3%A0_Cotonou.jpg",
+    },
+  },
 ];
 
 /** « Auteur, licence » pour une légende courte. */

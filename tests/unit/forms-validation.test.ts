@@ -75,15 +75,15 @@ describe("formulaire de contact", () => {
 describe("formulaires Nous rejoindre", () => {
   const base = { fullName: "Koffi Agbo", email: "KOFFI@exemple.bj", phone: "+229 97 00 00 00", consent: "on" };
 
-  it("bénévole : compétences et motivation obligatoires, profession facultative", () => {
-    expect(validate(volunteerSchema, { ...base, skills: "Animation", motivation: "Aider" }).ok).toBe(true);
+  it("bénévole : compétences et motivation obligatoires, profession obligatoire", () => {
+    expect(validate(volunteerSchema, { ...base, profession: "Étudiante", skills: "Animation", motivation: "Aider" }).ok).toBe(true);
     const missing = validate(volunteerSchema, { ...base });
     expect(missing.ok).toBe(false);
-    if (!missing.ok) expect(Object.keys(missing.fieldErrors).sort()).toEqual(["motivation", "skills"]);
+    if (!missing.ok) expect(Object.keys(missing.fieldErrors).sort()).toEqual(["motivation", "profession", "skills"]);
   });
 
   it("membre : ville obligatoire, motivation facultative, email en minuscules", () => {
-    const result = validate(membershipSchema, { ...base, city: "Cotonou" });
+    const result = validate(membershipSchema, { ...base, city: "Cotonou", profession: "Commerçante" });
     expect(result.ok).toBe(true);
     if (result.ok) {
       expect(result.data.email).toBe("koffi@exemple.bj");

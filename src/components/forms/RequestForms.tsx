@@ -74,7 +74,7 @@ export function VolunteerForm({ action, security, contacts }: RequestFormProps) 
             <EmailField field={field} />
           </div>
           <PhoneField field={field} required label={V.phoneLabel} />
-          <LineField field={field} name="profession" label={F.profession} maxLength={LIMITS.profession} autoComplete="organization-title" />
+          <LineField field={field} name="profession" label={F.profession} required maxLength={LIMITS.profession} autoComplete="organization-title" />
           <TextAreaField field={field} name="skills" label={V.skills} hint={V.skillsHint} required maxLength={LIMITS.skills} rows={4} />
           <TextAreaField
             field={field}
@@ -113,7 +113,7 @@ export function MembershipForm({ action, security, contacts }: RequestFormProps)
           <PhoneField field={field} required />
           <div className={ROW}>
             <LineField field={field} name="city" label={F.city} required maxLength={LIMITS.city} autoComplete="address-level2" />
-            <LineField field={field} name="profession" label={F.profession} maxLength={LIMITS.profession} autoComplete="organization-title" />
+            <LineField field={field} name="profession" label={F.profession} required maxLength={LIMITS.profession} autoComplete="organization-title" />
           </div>
           <TextAreaField field={field} name="motivation" label={M.motivation} maxLength={LIMITS.motivation} rows={4} />
           <ConsentField field={field} />
