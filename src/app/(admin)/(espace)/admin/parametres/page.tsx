@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
-import {
-  ContactSettings,
-  DonationSettings,
-  HomeSettings,
-  LegalSettings,
-  PresentationSettings,
-} from "@/components/admin/contenus/forms/SettingsForms";
+import { ContactSettings, DonationSettings, HomeSettings, LegalSettings } from "@/components/admin/contenus/forms/SettingsForms";
 import { AdminPageHeader } from "@/components/admin/contenus/ui";
+import { Alert } from "@/components/ui/Alert";
 import { formatDate } from "@/lib/format";
 import { requireAdminPage } from "@/server/auth/guard";
 import { getAdminSiteSettings } from "@/server/data/admin/settings";
@@ -17,7 +13,6 @@ export const instant = false;
 export const metadata: Metadata = { title: "Paramètres du site" };
 
 const SECTIONS = [
-  { id: "presentation", label: "Présentation" },
   { id: "accueil", label: "Page d'accueil" },
   { id: "coordonnees", label: "Coordonnées et réseaux" },
   { id: "dons", label: "Dons" },
@@ -50,7 +45,15 @@ export default async function SettingsPage() {
           ))}
         </ul>
       </nav>
-      <PresentationSettings settings={settings} />
+      <Alert tone="info" role="none">
+        <p>
+          Les textes de présentation (histoire, vision, missions, objectifs, valeurs, approche…) se modifient maintenant dans{" "}
+          <Link href="/admin/pages/a-propos" className="font-semibold text-link underline underline-offset-4">
+            Pages du site → À propos
+          </Link>
+          , section par section.
+        </p>
+      </Alert>
       <HomeSettings settings={settings} />
       <ContactSettings settings={settings} />
       <DonationSettings settings={settings} />

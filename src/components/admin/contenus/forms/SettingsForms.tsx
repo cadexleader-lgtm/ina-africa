@@ -15,7 +15,7 @@ import { richTextProblems } from "../../editor/rich-text-filter";
 import { ImageField } from "../../media/ImageField";
 import { ContentForm } from "../ContentForm";
 import { FieldGroup, SelectField, TextAreaField, TextField } from "../fields";
-import { amountsToText, fieldError, linesToPoints, unmatchedErrors } from "../form-utils";
+import { amountsToText, fieldError, unmatchedErrors } from "../form-utils";
 import { useActionForm, useFormValues } from "../useActionForm";
 
 /*
@@ -53,112 +53,6 @@ function Section({ id, title, description, children }: { id: string; title: stri
       </div>
       {children}
     </section>
-  );
-}
-
-/** Aide d'un champ « une ligne = un point » : rappelle la règle et compte les points. */
-function pointsHint(value: string, example: string) {
-  const count = linesToPoints(value).length;
-  return (
-    <>
-      Une ligne = un point (ex. « {example} »). {count > 0 ? `${count} point${count > 1 ? "s" : ""} actuellement.` : "Aucun point pour l'instant."}
-    </>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Présentation (page À propos)
-// ---------------------------------------------------------------------------
-
-export function PresentationSettings({ settings }: { settings: AdminSiteSettings }) {
-  const s = useSettingsSection({
-    aboutHistory: settings.aboutHistory ?? "",
-    vision: settings.vision ?? "",
-    mission: settings.mission ?? "",
-    objectives: settings.objectives ?? "",
-    valuesText: settings.valuesText ?? "",
-    approach: settings.approach ?? "",
-  });
-  const keys = Object.keys(s.values);
-  return (
-    <Section
-      id="presentation"
-      title="Présentation de l'ONG"
-      description="Textes de la page « À propos », tels que validés par l'ONG (ne rien inventer)."
-    >
-      <ContentForm
-        formRef={s.formRef}
-        onSubmit={() => s.save(s.values, "Textes de présentation enregistrés.")}
-        feedback={s.feedback}
-        feedbackRef={s.feedbackRef}
-        extraErrors={unmatchedErrors(s.errors, keys)}
-        pending={s.pending}
-        dirty={s.dirty}
-        submitLabel="Enregistrer la présentation"
-      >
-        <FieldGroup legend="Textes">
-          <TextAreaField
-            id="reglages-history"
-            label="Historique"
-            hint="Laissez une ligne vide entre deux paragraphes."
-            max={10000}
-            rows={8}
-            value={s.values.aboutHistory}
-            error={s.e("aboutHistory")}
-            onChange={(value) => s.set("aboutHistory", value)}
-          />
-          <TextAreaField
-            id="reglages-vision"
-            label="Vision"
-            max={5000}
-            rows={4}
-            value={s.values.vision}
-            error={s.e("vision")}
-            onChange={(value) => s.set("vision", value)}
-          />
-          <TextAreaField
-            id="reglages-mission"
-            label="Missions"
-            hint={pointsHint(s.values.mission, "Promouvoir l'éducation des filles")}
-            max={5000}
-            rows={6}
-            value={s.values.mission}
-            error={s.e("mission")}
-            onChange={(value) => s.set("mission", value)}
-          />
-          <TextAreaField
-            id="reglages-objectives"
-            label="Objectifs"
-            hint={pointsHint(s.values.objectives, "Former 100 femmes à un métier")}
-            max={5000}
-            rows={6}
-            value={s.values.objectives}
-            error={s.e("objectives")}
-            onChange={(value) => s.set("objectives", value)}
-          />
-          <TextAreaField
-            id="reglages-values"
-            label="Valeurs"
-            hint={pointsHint(s.values.valuesText, "Solidarité")}
-            max={5000}
-            rows={4}
-            value={s.values.valuesText}
-            error={s.e("valuesText")}
-            onChange={(value) => s.set("valuesText", value)}
-          />
-          <TextAreaField
-            id="reglages-approach"
-            label="Approche"
-            hint={pointsHint(s.values.approach, "Travailler avec les communautés locales")}
-            max={5000}
-            rows={6}
-            value={s.values.approach}
-            error={s.e("approach")}
-            onChange={(value) => s.set("approach", value)}
-          />
-        </FieldGroup>
-      </ContentForm>
-    </Section>
   );
 }
 

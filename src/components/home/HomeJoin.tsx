@@ -5,7 +5,8 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section, type SectionTone } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ENGAGEMENT_OPTIONS, JOIN_REASONS } from "@/content/fr/ina-africa";
+import { ENGAGEMENT_OPTIONS } from "@/content/fr/ina-africa";
+import type { ResolvedSection } from "@/lib/page-content/resolve";
 
 const ICONS: Record<(typeof ENGAGEMENT_OPTIONS)[number]["key"], LucideIcon> = {
   membre: UserPlus,
@@ -13,25 +14,29 @@ const ICONS: Record<(typeof ENGAGEMENT_OPTIONS)[number]["key"], LucideIcon> = {
   partenaire: Handshake,
 };
 
-/** Pourquoi rejoindre INA-AFRICA, et les trois façons de s'engager (accueil, À propos). */
-export function HomeJoin({ tone = "ivory", id = "rejoindre" }: { tone?: SectionTone; id?: string } = {}) {
+/**
+ * Pourquoi rejoindre INA-AFRICA, et les trois façons de s'engager (accueil, À propos).
+ * Textes : Pages du site → À propos → « Pourquoi rejoindre INA-AFRICA ? ».
+ */
+export function HomeJoin({ s, tone = "ivory", id = "rejoindre" }: { s: ResolvedSection; tone?: SectionTone; id?: string }) {
+  const texts = s.items("options");
+  const reasons = s.items("reasons");
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
       <Container>
         <Reveal>
           <SectionHeading
             id={`${id}-titre`}
-            label="Nous rejoindre"
-            title="Pourquoi rejoindre INA-AFRICA ?"
+            label={s.line("label")}
+            title={s.line("title")}
             intro={
-              // Texte transmis par l'ONG le 19/11/2026.
               <>
-                <p className="font-semibold text-brand">Votre engagement, leur nouvel avenir.</p>
-                <p className="mt-3 text-body">
-                  Chacun a le pouvoir d&apos;agir à sa mesure pour transformer durablement la vie des communautés. Que ce soit par
-                  un don, du bénévolat ou un partenariat, choisissez la forme d&apos;engagement qui vous ressemble pour soutenir les
-                  enfants, les orphelins, les jeunes, les personnes en situation de handicap et les femmes vulnérables sur le terrain.
-                </p>
+                <p className="font-semibold text-brand">{s.line("lead")}</p>
+                {s.paragraphs("text").map((paragraph, index) => (
+                  <p key={index} className="mt-3 text-body">
+                    {paragraph}
+                  </p>
+                ))}
               </>
             }
           />
@@ -40,6 +45,7 @@ export function HomeJoin({ tone = "ivory", id = "rejoindre" }: { tone?: SectionT
         <ul className="grid gap-5 md:grid-cols-3">
           {ENGAGEMENT_OPTIONS.map((option, index) => {
             const Icon = ICONS[option.key];
+            const text = texts[index] ?? option;
             return (
               <li key={option.key} className="flex">
                 <Reveal delay={index * 80} className="flex w-full">
@@ -50,11 +56,14 @@ export function HomeJoin({ tone = "ivory", id = "rejoindre" }: { tone?: SectionT
                     <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-brand text-white">
                       <Icon className="size-6" strokeWidth={1.75} />
                     </span>
-                    <h3 className="mt-5 text-h3">{option.title}</h3>
-                    <p className="mt-2 text-body text-muted">{option.text}</p>
+                    <h3 className="mt-5 text-h3">{text.title}</h3>
+                    <p className="mt-2 text-body text-muted">{text.text}</p>
                     <span className="mt-auto inline-flex items-center gap-1.5 pt-6 font-semibold text-link group-hover:text-link-strong">
-                      {option.action}
-                      <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-(--duration-fast) motion-safe:group-hover:translate-x-1" />
+                      {text.action}
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="size-4 transition-transform duration-(--duration-fast) motion-safe:group-hover:translate-x-1"
+                      />
                     </span>
                   </Link>
                 </Reveal>
@@ -63,19 +72,21 @@ export function HomeJoin({ tone = "ivory", id = "rejoindre" }: { tone?: SectionT
           })}
         </ul>
 
-        <Reveal className="mt-8">
-          <ul className="grid gap-4 rounded-card bg-brand-50 p-5 sm:p-6 md:grid-cols-3">
-            {JOIN_REASONS.map((reason) => (
-              <li key={reason.title} className="flex gap-3">
-                <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-2" />
-                <span>
-                  <span className="block font-semibold text-brand">{reason.title}</span>
-                  <span className="text-small text-ink">{reason.text}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+        {reasons.length > 0 && (
+          <Reveal className="mt-8">
+            <ul className="grid gap-4 rounded-card bg-brand-50 p-5 sm:p-6 md:grid-cols-3">
+              {reasons.map((reason, index) => (
+                <li key={index} className="flex gap-3">
+                  <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-2" />
+                  <span>
+                    <span className="block font-semibold text-brand">{reason.title}</span>
+                    <span className="text-small text-ink">{reason.text}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        )}
       </Container>
     </Section>
   );

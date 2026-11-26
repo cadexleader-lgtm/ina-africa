@@ -13,9 +13,11 @@ import { HomeProjects } from "@/components/home/HomeProjects";
 import { HomeTeam } from "@/components/home/HomeTeam";
 import { HomeVision } from "@/components/home/HomeVision";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { ABOUT_PAGE } from "@/content/page-sections/a-propos";
 import { ORG, T } from "@/content/fr/site";
 import { homeJsonLd } from "@/lib/seo/structured-data";
 import { listLatestArticles } from "@/server/data/articles";
+import { getPageContent } from "@/server/data/page-sections";
 import { listHomeProjects } from "@/server/data/projects";
 import { getSiteSettings, listActionAreas, listPartners, listTeamMembers } from "@/server/data/site";
 
@@ -44,8 +46,9 @@ export function generateMetadata(): Metadata {
  * actualités et partenaires n'apparaissent que s'ils sont publiés.
  */
 export default async function HomePage() {
-  const [settings, areas, projects, articles, partners, team] = await Promise.all([
+  const [settings, about, areas, projects, articles, partners, team] = await Promise.all([
     getSiteSettings(),
+    getPageContent(ABOUT_PAGE),
     listActionAreas(),
     listHomeProjects(3),
     listLatestArticles(3),
@@ -58,13 +61,13 @@ export default async function HomePage() {
       <JsonLd data={homeJsonLd(settings)} />
       <HomeHero settings={settings} />
       <HomeAbout />
-      <HomeVision settings={settings} />
+      <HomeVision missions={about.section("missions").list("items")} />
       <HomeAreas areas={areas} />
       <HomeObjectives />
       <HomeAchievements settings={settings} limit={6} />
       {projects.length > 0 && <HomeProjects projects={projects} />}
       <HomeTeam members={team} />
-      <HomeJoin />
+      <HomeJoin s={about.section("rejoindre")} />
       <HomeNews articles={articles} />
       <HomePartners partners={partners} />
       <HomeCallToAction />

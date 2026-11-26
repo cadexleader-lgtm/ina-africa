@@ -5,6 +5,8 @@
  */
 export const TAGS = {
   settings: "site-settings",
+  /** Textes et photos des pages modifiables (menu « Pages du site »). */
+  pageSections: "page-sections",
   areas: "action-areas",
   projects: "projects",
   project: (slug: string) => `project:${slug}`,

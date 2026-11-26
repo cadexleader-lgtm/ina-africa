@@ -16,7 +16,7 @@ fonctionnalité hors périmètre sans accord.
 - **Photos provisoires** (`public/images/provisoires/`, `src/content/provisional-images.ts`) : origine inconnue, fournies par l'utilisateur pour le développement. Illustration seulement, toujours avec « Photo d'illustration », jamais dans un projet, un article ou la galerie, **à remplacer avant la mise en ligne**. Les photos de la maquette (générées par IA) ne sont jamais utilisées.
 - **Aucun faux contenu** : pas de faux partenaires, chiffres, témoignages, réalisations. Les textes viennent de l'ONG.
 - **Aucune clé inventée**, aucun paiement simulé présenté comme réel. Paiements réels seulement après validation du compte marchand (le mode test KKiaPay, annoncé comme tel et sans écriture en base, est autorisé).
-- **Pas de migration appliquée sur Supabase sans accord explicite** de l'utilisateur. Projet Supabase : `vzmkyegczqlzjtuntmvz` (ina-africa) ; les 21 migrations actuelles y sont appliquées (voir `docs/database.md` §5).
+- **Pas de migration appliquée sur Supabase sans accord explicite** de l'utilisateur. Projet Supabase : `vzmkyegczqlzjtuntmvz` (ina-africa) ; les 21 premières migrations y sont appliquées ; la 22e (`20261126100000_page_sections`) est à coller par l'utilisateur dans le SQL Editor (voir `docs/database.md` §5).
 - Avancer **par étapes**, présenter le résultat avant de passer à la suivante. Phase 1 (base) faite ; frontend en cours selon `docs/frontend-plan.md` (validé) ; Phase 2 (connexion admin) avant le dashboard.
 - La maquette sert de référence de **mise en page** uniquement : ses logos de partenaires, chiffres, valeurs et articles ne sont pas des contenus réels.
 
@@ -35,6 +35,7 @@ fonctionnalité hors périmètre sans accord.
 | Variables d'environnement | `.env.example`, `src/lib/public-env.ts`, `src/server/env.ts` |
 | Clients Supabase | `src/server/supabase/server.ts` (session, RLS), `public.ts` (visiteur), `admin.ts` (clé secrète, usage restreint) |
 | Erreurs | `src/server/errors.ts` (`ActionResult`, messages FR, indice `ina-africa`) |
+| Pages du site (textes et photos modifiables) | Définitions des pages et sections (ordre du site, champs, textes d'origine) : `src/content/page-sections/` (`EDITABLE_PAGES`) ; modèle `src/lib/page-content/` (`resolve.ts` : saisie sinon origine, `validation.ts`, `form.ts`) ; lecture `src/server/data/page-sections.ts` (`getPageContent`) ; admin `/admin/pages` + `src/components/admin/pages/PageSectionEditor.tsx` ; action `src/server/actions/admin/page-sections.ts`. Page branchée : À propos (+ HomeJoin et missions de HomeVision). Ne jamais renommer une clé de page/section/champ (identifiant en base) |
 | Traduction FR / EN | Google Traduction automatique (choix de l'ONG) : `src/lib/translate.ts`, bouton et bandeau `src/components/site/LanguageSwitch.tsx`, adresses Google dans la CSP (`next.config.ts`). Script Google chargé seulement au clic sur « EN » (cookie `googtrans`) ; tout ce qui ne doit pas être traduit porte `translate="no"` |
 | Paiement KKiaPay | `src/server/payments/kkiapay.ts` (modes test/réel), `reconcile.ts`, `src/components/donate/KkiapayCheckout.tsx`, webhook `src/app/api/paiements/notification/route.ts` — mode test : rien n'est enregistré (voir `docs/architecture.md`) |
 

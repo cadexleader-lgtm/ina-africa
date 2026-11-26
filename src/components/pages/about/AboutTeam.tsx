@@ -7,6 +7,7 @@ import { initials } from "@/components/pages/page-helpers";
 import { TeamPhotoButton, TeamPhotoProvider } from "@/components/pages/about/TeamPhotoViewer";
 import { PAGES } from "@/content/fr/pages";
 import { cn } from "@/lib/cn";
+import type { ResolvedSection } from "@/lib/page-content/resolve";
 import { TEAM_GROUPS } from "@/lib/team";
 import type { TeamMember } from "@/lib/types/content";
 
@@ -19,7 +20,7 @@ const T = PAGES.about.team;
  * Sans photo, les initiales remplacent le portrait (aucune image inventée).
  * Un clic sur une photo l'ouvre en grand (TeamPhotoViewer).
  */
-export function AboutTeam({ members, tone }: { members: TeamMember[]; tone: SectionTone }) {
+export function AboutTeam({ s, members, tone }: { s: ResolvedSection; members: TeamMember[]; tone: SectionTone }) {
   if (members.length === 0) return null;
   const groups = TEAM_GROUPS.map((group) => ({
     ...group,
@@ -30,11 +31,11 @@ export function AboutTeam({ members, tone }: { members: TeamMember[]; tone: Sect
     <Section id={T.id} tone={tone} labelledBy={`${T.id}-titre`}>
       <Container>
         <Reveal className="mb-12 max-w-reading">
-          <Eyebrow className="mb-4">{T.label}</Eyebrow>
+          <Eyebrow className="mb-4">{s.line("label")}</Eyebrow>
           <h2 id={`${T.id}-titre`} className="text-h2">
-            {T.title}
+            {s.line("title")}
           </h2>
-          <p className="mt-4 text-lead text-muted">{T.intro}</p>
+          <p className="mt-4 text-lead text-muted">{s.text("intro")}</p>
         </Reveal>
 
         <TeamPhotoProvider members={members}>

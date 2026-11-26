@@ -17,6 +17,7 @@ import {
   LayoutDashboard,
   Mail,
   Settings,
+  PanelsTopLeft,
   ShieldCheck,
   Tags,
   Target,
@@ -45,6 +46,7 @@ const ICONS: Record<AdminNavIcon, LucideIcon> = {
   newsletter: Mail,
   media: BookOpen,
   settings: Settings,
+  pages: PanelsTopLeft,
   accounts: UserCog,
 };
 

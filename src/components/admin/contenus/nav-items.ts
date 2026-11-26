@@ -10,6 +10,7 @@ import { roleAtLeast, type AppRole } from "@/server/auth/roles";
 
 export type AdminNavIcon =
   | "dashboard"
+  | "pages"
   | "articles"
   | "categories"
   | "projects"
@@ -43,6 +44,7 @@ export const ADMIN_NAV: AdminNavGroup[] = [
   {
     label: "Contenus",
     items: [
+      { href: "/admin/pages", label: "Pages du site", icon: "pages", min: "admin" },
       { href: "/admin/articles", label: "Articles", icon: "articles", min: "editor" },
       { href: "/admin/categories", label: "Catégories", icon: "categories", min: "admin" },
       { href: "/admin/projets", label: "Projets", icon: "projects", min: "admin" },

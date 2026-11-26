@@ -5,22 +5,16 @@ import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section, type SectionTone } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/SectionHeading";
-import { splitTerm } from "@/components/pages/page-helpers";
-import { formatAchievementDate } from "@/components/site/AchievementCard";
-import { ABOUT_CONTEXT, ACHIEVEMENTS, AUDIENCES, EXPERIENCE, GOVERNANCE } from "@/content/fr/ina-africa";
-import { FOUNDING_YEAR, PAGES } from "@/content/fr/pages";
-import type { SiteImage } from "@/content/provisional-images";
+import { PAGES } from "@/content/fr/pages";
 import { cn } from "@/lib/cn";
+import type { ResolvedSection } from "@/lib/page-content/resolve";
+
+/*
+ * Sections de la page À propos. Textes et photos : `s` = section modifiable
+ * dans l'administration (Pages du site → À propos, src/content/page-sections/a-propos.ts).
+ */
 
 const T = PAGES.about;
-
-/** Repères chronologiques : la création, puis les actions datées (de la plus ancienne à la plus récente). */
-const TIMELINE = [
-  { when: String(FOUNDING_YEAR), what: "Création de l'ONG INA-AFRICA" },
-  ...ACHIEVEMENTS.filter((item) => item.date)
-    .sort((a, b) => (a.date! < b.date! ? -1 : 1))
-    .map((item) => ({ when: formatAchievementDate(item.date!), what: item.title })),
-];
 
 /** Libellé + titre h2 d'une section de la page À propos. */
 function Heading({ id, label, title, inverse = false }: { id: string; label: string; title: string; inverse?: boolean }) {
@@ -49,17 +43,10 @@ function Ordinal({ value, inverse = false }: { value: number; inverse?: boolean 
 // Historique
 // ---------------------------------------------------------------------------
 
-export function AboutHistory({
-  paragraphs,
-  image,
-  tone,
-}: {
-  paragraphs: string[];
-  /** Illustration provisoire (mention « Photo d'illustration » automatique), ou null. */
-  image: SiteImage | null;
-  tone: SectionTone;
-}) {
-  const [lead, ...rest] = paragraphs;
+export function AboutHistory({ s, tone }: { s: ResolvedSection; tone: SectionTone }) {
+  const [lead, ...rest] = s.paragraphs("text");
+  const image = s.image("image");
+  const timeline = s.items("timeline");
   const id = T.history.id;
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
@@ -80,10 +67,10 @@ export function AboutHistory({
           )}
           <div className={cn(image ? "md:col-span-7" : "grid gap-10 lg:grid-cols-12 lg:gap-16")}>
             <div className={cn(!image && "lg:col-span-4")}>
-              <Heading id={id} label={T.history.label} title={T.history.title} />
+              <Heading id={id} label={s.line("label")} title={s.line("title")} />
               <p className="mt-8 flex items-baseline gap-4">
-                <span className="font-heading text-h1 text-brand">{FOUNDING_YEAR}</span>
-                <span className="text-small font-semibold text-muted">{T.history.yearLabel}</span>
+                <span className="font-heading text-h1 text-brand">{s.line("year")}</span>
+                <span className="text-small font-semibold text-muted">{s.line("yearLabel")}</span>
               </p>
             </div>
             <div className={cn("max-w-measure", image ? "mt-8" : "lg:col-span-8")}>
@@ -93,16 +80,23 @@ export function AboutHistory({
                   {paragraph}
                 </p>
               ))}
-              <h3 className="mt-8 text-h4">Quelques repères</h3>
-              <ol className="mt-4 border-l-2 border-gold/60 pl-6">
-                {TIMELINE.map((item) => (
-                  <li key={item.when + item.what} className="relative pb-4 last:pb-0">
-                    <span aria-hidden="true" className="absolute top-1.5 -left-[1.95rem] size-3 rounded-full border-2 border-white bg-gold" />
-                    <span className="block text-small font-semibold text-brand">{item.when}</span>
-                    <span className="text-body text-ink">{item.what}</span>
-                  </li>
-                ))}
-              </ol>
+              {timeline.length > 0 && (
+                <>
+                  <h3 className="mt-8 text-h4">{s.line("timelineTitle")}</h3>
+                  <ol className="mt-4 border-l-2 border-gold/60 pl-6">
+                    {timeline.map((item) => (
+                      <li key={item.when + item.what} className="relative pb-4 last:pb-0">
+                        <span
+                          aria-hidden="true"
+                          className="absolute top-1.5 -left-[1.95rem] size-3 rounded-full border-2 border-white bg-gold"
+                        />
+                        {item.when && <span className="block text-small font-semibold text-brand">{item.when}</span>}
+                        <span className="text-body text-ink">{item.what}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </>
+              )}
             </div>
           </div>
         </Reveal>
@@ -115,8 +109,11 @@ export function AboutHistory({
 // Vision
 // ---------------------------------------------------------------------------
 
-export function AboutVision({ text, explanation, explanationLead }: { text: string; explanation?: string; explanationLead?: string }) {
+export function AboutVision({ s }: { s: ResolvedSection }) {
   const id = T.vision.id;
+  const text = s.text("statement");
+  const explanationLead = s.line("explanationLead");
+  const explanation = s.text("explanation");
   return (
     <Section id={id} tone="brand" labelledBy={`${id}-titre`} className="relative isolate overflow-hidden">
       <span
@@ -126,12 +123,10 @@ export function AboutVision({ text, explanation, explanationLead }: { text: stri
       <Container>
         <Reveal className="grid gap-8 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-4">
-            <Heading id={id} label={T.vision.label} title={T.vision.title} inverse />
+            <Heading id={id} label={s.line("label")} title={s.line("title")} inverse />
           </div>
           <div className="lg:col-span-8">
-            <p className="max-w-[36ch] border-l-[3px] border-gold pl-6 font-heading text-h3 font-semibold text-white md:pl-8">
-              {text}
-            </p>
+            <p className="max-w-[36ch] border-l-[3px] border-gold pl-6 font-heading text-h3 font-semibold text-white md:pl-8">{text}</p>
             {explanationLead && <p className="mt-6 max-w-measure text-lead font-semibold text-white">{explanationLead}</p>}
             {explanation && (
               <p className={cn("max-w-measure text-muted-inverse", explanationLead ? "mt-3 text-body" : "mt-6 text-lead")}>{explanation}</p>
@@ -147,13 +142,14 @@ export function AboutVision({ text, explanation, explanationLead }: { text: stri
 // Missions (colonnes numérotées)
 // ---------------------------------------------------------------------------
 
-export function AboutMissions({ items, tone }: { items: string[]; tone: SectionTone }) {
+export function AboutMissions({ s, tone }: { s: ResolvedSection; tone: SectionTone }) {
   const id = T.missions.id;
+  const items = s.list("items");
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
       <Container>
         <Reveal className="mb-12 max-w-reading">
-          <Heading id={id} label={T.missions.label} title={T.missions.title} />
+          <Heading id={id} label={s.line("label")} title={s.line("title")} />
         </Reveal>
         <ol className={cn("grid gap-x-10 gap-y-10", items.length >= 3 ? "md:grid-cols-3" : items.length === 2 && "md:grid-cols-2")}>
           {items.map((item, index) => (
@@ -174,15 +170,16 @@ export function AboutMissions({ items, tone }: { items: string[]; tone: SectionT
 // Objectifs (titre fixe à gauche, liste à droite)
 // ---------------------------------------------------------------------------
 
-export function AboutObjectives({ items, tone }: { items: string[]; tone: SectionTone }) {
+export function AboutObjectives({ s, tone }: { s: ResolvedSection; tone: SectionTone }) {
   const id = T.objectives.id;
+  const items = s.list("items");
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
       <Container>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-4">
             <div className="lg:sticky lg:top-[calc(var(--spacing-header)+2rem)]">
-              <Heading id={id} label={T.objectives.label} title={T.objectives.title} />
+              <Heading id={id} label={s.line("label")} title={s.line("title")} />
             </div>
           </Reveal>
           <ul className="divide-y divide-line border-y border-line lg:col-span-8">
@@ -211,18 +208,21 @@ export function AboutObjectives({ items, tone }: { items: string[]; tone: Sectio
 // Valeurs (affichées SEULEMENT si renseignées par l'ONG)
 // ---------------------------------------------------------------------------
 
-export function AboutValues({ lines, tone }: { lines: string[]; tone: SectionTone }) {
+export function AboutValues({ s, tone }: { s: ResolvedSection; tone: SectionTone }) {
   const id = T.values.id;
-  const values = lines.map(splitTerm);
-  const single = values.length === 1 && !values[0].description;
+  const values = s
+    .items("items")
+    .map((item) => ({ term: item.term || item.description || "", description: item.term ? item.description : "" }));
+  if (values.length === 0) return null;
+  const single = values.length === 1 && !values[0]!.description;
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
       <Container>
         <Reveal className="mb-12 max-w-reading">
-          <Heading id={id} label={T.values.label} title={T.values.title} />
+          <Heading id={id} label={s.line("label")} title={s.line("title")} />
         </Reveal>
         {single ? (
-          <p className="max-w-measure text-lead text-ink">{values[0].term}</p>
+          <p className="max-w-measure text-lead text-ink">{values[0]!.term}</p>
         ) : (
           <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
             {values.map((value, index) => (
@@ -242,16 +242,17 @@ export function AboutValues({ lines, tone }: { lines: string[]; tone: SectionTon
 // Approche d'intervention = moyens d'action (étapes numérotées)
 // ---------------------------------------------------------------------------
 
-export function AboutApproach({ items, tone }: { items: string[]; tone: SectionTone }) {
+export function AboutApproach({ s, tone }: { s: ResolvedSection; tone: SectionTone }) {
   const id = T.approach.id;
+  const items = s.list("items");
   const columns =
     items.length >= 5 ? "sm:grid-cols-2 lg:grid-cols-5" : items.length === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : "sm:grid-cols-3";
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
       <Container>
         <Reveal className="mb-12 max-w-reading">
-          <Heading id={id} label={T.approach.label} title={T.approach.title} />
-          <p className="mt-4 text-lead text-muted">{T.approach.intro}</p>
+          <Heading id={id} label={s.line("label")} title={s.line("title")} />
+          <p className="mt-4 text-lead text-muted">{s.text("intro")}</p>
         </Reveal>
         <ol className={cn("grid gap-4", items.length > 1 && columns)}>
           {items.map((item, index) => (
@@ -284,46 +285,53 @@ export function AboutApproach({ items, tone }: { items: string[]; tone: SectionT
 // Contexte et raison d'être (historique, expériences, publics)
 // ---------------------------------------------------------------------------
 
-export function AboutContext({ tone }: { tone: SectionTone }) {
+export function AboutContext({ s, tone }: { s: ResolvedSection; tone: SectionTone }) {
   const id = "raison-d-etre";
+  const audiences = s.items("audiences");
+  const panelItems = s.list("panelItems");
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
       <Container>
         <Reveal className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
-            <Heading id={id} label="Contexte et raison d'être" title="Pourquoi INA-AFRICA existe" />
+            <Heading id={id} label={s.line("label")} title={s.line("title")} />
             <div className="mt-6 space-y-4 text-ink">
-              <p className="text-lead font-semibold text-brand">{ABOUT_CONTEXT.lead}</p>
-              {ABOUT_CONTEXT.paragraphs.map((paragraph) => (
-                <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+              <p className="text-lead font-semibold text-brand">{s.line("lead")}</p>
+              {s.paragraphs("text").map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
               ))}
             </div>
-            <h3 className="mt-8 text-h4">Les publics accompagnés</h3>
-            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-              {AUDIENCES.map((audience) => (
-                <li key={audience.title} className={cn("rounded-card p-4", tone === "ivory" ? "bg-white" : "bg-ivory")}>
-                  <span className="block font-semibold text-brand">{audience.title}</span>
-                  <span className="text-small text-muted">{audience.text}</span>
-                </li>
-              ))}
-            </ul>
+            {audiences.length > 0 && (
+              <>
+                <h3 className="mt-8 text-h4">{s.line("audiencesTitle")}</h3>
+                <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {audiences.map((audience, index) => (
+                    <li key={index} className={cn("rounded-card p-4", tone === "ivory" ? "bg-white" : "bg-ivory")}>
+                      <span className="block font-semibold text-brand">{audience.title}</span>
+                      {audience.text && <span className="text-small text-muted">{audience.text}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </div>
           <div className="lg:col-span-6">
             <div className="rounded-panel bg-brand p-6 text-white sm:p-8">
-              <h3 className="text-h3 text-white">Depuis sa création, INA-AFRICA œuvre pour…</h3>
+              <h3 className="text-h3 text-white">{s.line("panelTitle")}</h3>
               <ul className="mt-6 space-y-3">
-                {EXPERIENCE.fields.map((field) => (
+                {panelItems.map((field) => (
                   <li key={field} className="flex items-start gap-3 text-body">
-                    <span aria-hidden="true" className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-gold text-brand">
+                    <span
+                      aria-hidden="true"
+                      className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-gold text-brand"
+                    >
                       <Check className="size-4" strokeWidth={2.5} />
                     </span>
                     {field}
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 text-small text-muted-inverse">
-                Avec une approche participative et centrée sur l&apos;impact à long terme.
-              </p>
+              <p className="mt-6 text-small text-muted-inverse">{s.line("panelNote")}</p>
             </div>
           </div>
         </Reveal>
@@ -336,35 +344,31 @@ export function AboutContext({ tone }: { tone: SectionTone }) {
 // Gouvernance
 // ---------------------------------------------------------------------------
 
-const GOVERNANCE_ICONS: Record<(typeof GOVERNANCE)[number]["key"], LucideIcon> = {
-  assemblee: Landmark,
-  administration: Gavel,
-  surveillance: ShieldCheck,
-  communication: Megaphone,
-};
+/** Icône de chaque instance, dans l'ordre (une instance ajoutée reprend la première). */
+const GOVERNANCE_ICONS: LucideIcon[] = [Landmark, Gavel, ShieldCheck, Megaphone];
 
-export function AboutGovernance({ tone }: { tone: SectionTone }) {
+export function AboutGovernance({ s, tone }: { s: ResolvedSection; tone: SectionTone }) {
   const id = "gouvernance";
+  const items = s.items("items");
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-titre`}>
       <Container>
         <Reveal className="max-w-reading">
-          <Heading id={id} label="Gouvernance" title="Une organisation structurée" />
-          <p className="mt-4 text-lead text-muted">
-            {/* Texte transmis par l'ONG le 19/11/2026. */}
-            INA-AFRICA s&apos;appuie sur des instances dirigeantes aux rôles clairement définis, garantissant une vision
-            stratégique solide et un contrôle financier indépendant. Cette transparence institutionnelle assure la bonne gestion
-            de chaque ressource mobilisée pour les enfants, les orphelins, les jeunes, les personnes en situation de handicap et
-            les femmes vulnérables sur le terrain.
-          </p>
+          <Heading id={id} label={s.line("label")} title={s.line("title")} />
+          <p className="mt-4 text-lead text-muted">{s.text("intro")}</p>
         </Reveal>
         <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {GOVERNANCE.map((item, index) => {
-            const Icon = GOVERNANCE_ICONS[item.key];
+          {items.map((item, index) => {
+            const Icon = GOVERNANCE_ICONS[index] ?? Landmark;
             return (
-              <li key={item.key} className="flex">
+              <li key={index} className="flex">
                 <Reveal delay={index * 70} className="flex w-full">
-                  <div className={cn("flex w-full flex-col rounded-card p-6", tone === "ivory" ? "bg-white shadow-card" : "border border-line bg-white")}>
+                  <div
+                    className={cn(
+                      "flex w-full flex-col rounded-card p-6",
+                      tone === "ivory" ? "bg-white shadow-card" : "border border-line bg-white",
+                    )}
+                  >
                     <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-brand-50 text-brand-2">
                       <Icon className="size-6" strokeWidth={1.75} />
                     </span>

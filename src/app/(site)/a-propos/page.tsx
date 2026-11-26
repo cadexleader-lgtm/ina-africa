@@ -17,24 +17,30 @@ import { aboutJsonLd } from "@/lib/seo/structured-data";
 import { HomeJoin } from "@/components/home/HomeJoin";
 import { OnThisPage } from "@/components/pages/OnThisPage";
 import { PageHeader } from "@/components/pages/PageHeader";
-import { excerpt, paragraphs } from "@/components/pages/page-helpers";
-import { ABOUT_VISION, HISTORY, MISSIONS, OBJECTIVES, APPROACH, ORGANISATION_INTRO, ORGANISATION_LEAD, VISION } from "@/content/fr/ina-africa";
+import { excerpt } from "@/components/pages/page-helpers";
 import { PAGES } from "@/content/fr/pages";
-import { REAL_PHOTOS } from "@/content/action-photos";
-import { PAGE_BACKDROPS } from "@/content/provisional-images";
+import { ABOUT_PAGE } from "@/content/page-sections/a-propos";
 import { ORG } from "@/content/fr/site";
-import { getSiteSettings, listActionAreas, listTeamMembers, splitLines } from "@/server/data/site";
+import { getPageContent } from "@/server/data/page-sections";
+import { getSiteSettings, listActionAreas, listTeamMembers } from "@/server/data/site";
 
 const T = PAGES.about;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = await getSiteSettings();
-  const description = excerpt(paragraphs(settings.aboutHistory)[0]) ?? T.metaDescription;
+  const content = await getPageContent(ABOUT_PAGE);
+  const description = excerpt(content.section("en-tete").paragraphs("intro")[0]) ?? T.metaDescription;
   return {
     title: T.metaTitle,
     description,
     alternates: { canonical: "/a-propos" },
-    openGraph: { type: "website", locale: "fr_FR", siteName: ORG.name, title: `${T.metaTitle} | ${ORG.name}`, description, url: "/a-propos" },
+    openGraph: {
+      type: "website",
+      locale: "fr_FR",
+      siteName: ORG.name,
+      title: `${T.metaTitle} | ${ORG.name}`,
+      description,
+      url: "/a-propos",
+    },
   };
 }
 
@@ -42,19 +48,20 @@ export async function generateMetadata(): Promise<Metadata> {
  * À propos : page institutionnelle complète, dans l'ordre demandé par l'ONG :
  * introduction, historique, contexte et raison d'être, vision, missions,
  * objectifs, approche, gouvernance, instances et membres, invitation à
- * rejoindre. Textes de l'administration s'ils existent, sinon contenu
- * officiel (src/content/fr/ina-africa.ts). Entièrement prérendue.
+ * rejoindre. Textes et photos modifiables dans l'administration
+ * (Pages du site → À propos), sinon textes d'origine
+ * (src/content/page-sections/a-propos.ts). Entièrement prérendue.
  */
 export default async function AboutPage() {
-  const [settings, areas, team] = await Promise.all([getSiteSettings(), listActionAreas(), listTeamMembers()]);
-
-  const history = paragraphs(settings.aboutHistory);
-  const [creation] = history.length > 0 ? history : HISTORY;
-  const vision = settings.vision?.trim() || VISION;
-  const missions = splitLines(settings.mission);
-  const objectives = splitLines(settings.objectives);
-  const values = splitLines(settings.valuesText);
-  const approach = splitLines(settings.approach);
+  const [settings, content, areas, team] = await Promise.all([
+    getSiteSettings(),
+    getPageContent(ABOUT_PAGE),
+    listActionAreas(),
+    listTeamMembers(),
+  ]);
+  const section = content.section;
+  const header = section("en-tete");
+  const hasValues = section("valeurs").items("items").length > 0;
 
   const sections = [
     { id: T.history.id, label: "Historique" },
@@ -62,7 +69,7 @@ export default async function AboutPage() {
     { id: T.vision.id, label: T.vision.nav },
     { id: T.missions.id, label: T.missions.nav },
     { id: T.objectives.id, label: T.objectives.nav },
-    ...(values.length > 0 ? [{ id: T.values.id, label: T.values.nav }] : []),
+    ...(hasValues ? [{ id: T.values.id, label: T.values.nav }] : []),
     { id: T.approach.id, label: T.approach.nav },
     { id: "gouvernance", label: "Gouvernance" },
     ...(team.length > 0 ? [{ id: T.team.id, label: T.team.nav }] : []),
@@ -72,16 +79,16 @@ export default async function AboutPage() {
   return (
     <>
       <PageHeader
-        backdrop={PAGE_BACKDROPS.about}
+        backdrop={header.image("image") ?? undefined}
         id="a-propos-titre"
-        breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: T.label }]}
-        label={T.label}
-        title={T.title}
+        breadcrumbs={[{ label: PAGES.common.home, href: "/" }, { label: header.line("label") }]}
+        label={header.line("label")}
+        title={header.line("title")}
         intro={
           <>
-            <p className="font-semibold text-brand">{ORGANISATION_LEAD}</p>
-            {ORGANISATION_INTRO.map((paragraph) => (
-              <p key={paragraph.slice(0, 24)} className="mt-4">
+            <p className="font-semibold text-brand">{header.line("lead")}</p>
+            {header.paragraphs("intro").map((paragraph, index) => (
+              <p key={index} className="mt-4">
                 {paragraph}
               </p>
             ))}
@@ -91,21 +98,17 @@ export default async function AboutPage() {
       />
       <OnThisPage items={sections} />
 
-      <AboutHistory
-        paragraphs={[creation]}
-        image={REAL_PHOTOS.kitsGroup}
-        tone="white"
-      />
-      <AboutContext tone="ivory" />
-      <AboutVision text={vision} explanationLead={ABOUT_VISION.lead} explanation={ABOUT_VISION.text} />
-      <AboutMissions items={missions.length > 0 ? missions : MISSIONS} tone="white" />
-      <AboutObjectives items={objectives.length > 0 ? objectives : OBJECTIVES} tone="ivory" />
-      {values.length > 0 && <AboutValues lines={values} tone="white" />}
-      <AboutApproach items={approach.length > 0 ? approach : APPROACH} tone="white" />
-      <AboutGovernance tone="ivory" />
-      <AboutTeam members={team} tone="white" />
+      <AboutHistory s={section("historique")} tone="white" />
+      <AboutContext s={section("raison-d-etre")} tone="ivory" />
+      <AboutVision s={section("vision")} />
+      <AboutMissions s={section("missions")} tone="white" />
+      <AboutObjectives s={section("objectifs")} tone="ivory" />
+      {hasValues && <AboutValues s={section("valeurs")} tone="white" />}
+      <AboutApproach s={section("approche")} tone="white" />
+      <AboutGovernance s={section("gouvernance")} tone="ivory" />
+      <AboutTeam s={section("equipe")} members={team} tone="white" />
       {team.length > 0 && <JsonLd data={aboutJsonLd(team)} />}
-      <HomeJoin tone="ivory" id="rejoindre" />
+      <HomeJoin s={section("rejoindre")} tone="ivory" id="rejoindre" />
     </>
   );
 }

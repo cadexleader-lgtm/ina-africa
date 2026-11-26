@@ -6,7 +6,7 @@ l'ONG, dons en ligne et hors ligne, appels aux dons à partager, blog, formulair
 Diagramme des relations : [`diagrammes/schema.png`](diagrammes/schema.png)
 (source Mermaid : [`diagrammes/schema.mmd`](diagrammes/schema.mmd)).
 
-## 1. Les 17 tables
+## 1. Les 18 tables
 
 | Table | Rôle | Visible des visiteurs |
 |---|---|---|
@@ -19,7 +19,8 @@ Diagramme des relations : [`diagrammes/schema.png`](diagrammes/schema.png)
 | `partners` | partenaires et sponsors (`kind`) | si `is_active` |
 | `team_members` | équipe | si `is_active` |
 | `gallery_items` | galerie : photo ou vidéo YouTube / Facebook | si `is_published` |
-| `site_settings` | une seule ligne : présentation, coordonnées, réseaux, montants suggérés, instructions de don hors ligne | oui |
+| `site_settings` | une seule ligne : présentation, coordonnées, réseaux, montants suggérés, instructions de don hors ligne (les colonnes de présentation de À propos ne sont plus lues : voir `page_sections`) | oui |
+| `page_sections` | textes et photos des pages, section par section (`id` = « page.section », `content` = champs saisis ; champ absent = texte d'origine du code) | oui |
 | `media` | bibliothèque des fichiers envoyés (côté administration) | non |
 | `donation_campaigns` | appels aux dons (une page et un lien à partager chacun) | si `is_active` |
 | `donations` | dons **en ligne et hors ligne** (`channel`) | non |
@@ -129,6 +130,7 @@ Dans `supabase/migrations/`, à appliquer dans l'ordre :
 19. `20261120090000_team_group_communication` — instance « Conseil de communication » (HOUNDO Koffi Zacharie) — appliquée
 20. `20261120100000_eight_pillars` — huit piliers : nouveaux intitulés Éducation / Santé (DSSR), domaine « Environnement et résilience climatique »
 21. `20261120110000_ngo_texts_20_november` — texte du haut de l'accueil, texte « Impact », titre de l'appel aux dons
+22. `20261126100000_page_sections` — table `page_sections` (menu « Pages du site ») — **à coller par l'utilisateur dans le SQL Editor (pas encore appliquée au 26/11/2026)**
 
 Règles pour toute nouvelle migration :
 - ne jamais modifier une migration déjà appliquée : en créer une nouvelle ;

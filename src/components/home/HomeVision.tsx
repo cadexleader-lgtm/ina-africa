@@ -3,17 +3,13 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { MISSION_TITLES, MISSIONS, VISION_EXPLAINED, VISION_LEAD } from "@/content/fr/ina-africa";
-import type { SiteSettings } from "@/lib/types/content";
-import { splitLines } from "@/server/data/site";
 
 /**
  * Section 3 : la vision (statuts, art. 8), ce qu'elle cherche à changer, et
- * les trois missions (art. 9). Textes de l'administration s'ils existent.
+ * les missions (art. 9). Les missions sont celles de la page À propos
+ * (modifiables dans Pages du site → À propos → Nos missions).
  */
-export function HomeVision({ settings }: { settings: SiteSettings }) {
-  const fromSettings = splitLines(settings.mission);
-  const missions = fromSettings.length > 0 ? fromSettings : MISSIONS;
-
+export function HomeVision({ missions }: { missions: string[] }) {
   return (
     <Section tone="brand" labelledBy="accueil-vision">
       <Container>
