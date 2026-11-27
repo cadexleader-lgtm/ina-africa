@@ -91,10 +91,7 @@ export function HeroSlideshow({
   useEffect(() => {
     if (!running) return;
     const current = slides[index];
-    const timer = window.setTimeout(
-      () => setIndex((i) => (i + 1) % slides.length),
-      current ? slideDuration(current, interval) : interval,
-    );
+    const timer = window.setTimeout(() => setIndex((i) => (i + 1) % slides.length), current ? slideDuration(current, interval) : interval);
     return () => window.clearTimeout(timer);
   }, [running, slides, index, interval]);
 
@@ -108,8 +105,8 @@ export function HeroSlideshow({
       onFocusCapture={() => setHovered(true)}
       onBlurCapture={() => setHovered(false)}
     >
-      <div className="lg:grid lg:min-h-[34rem] lg:grid-cols-2 xl:min-h-[38rem]">
-        <div className="px-gutter py-12 sm:py-16 lg:flex lg:flex-col lg:justify-center lg:py-16 lg:pr-12 lg:pl-[max(var(--spacing-gutter),calc(50vw-37.5rem))] xl:pr-16">
+      <div className="lg:grid lg:h-[calc(100svh-var(--spacing-header)-2.5rem)] lg:max-h-[56rem] lg:min-h-[36rem] lg:grid-cols-2">
+        <div className="px-gutter py-12 sm:py-16 lg:flex lg:flex-col lg:justify-center lg:overflow-hidden lg:py-10 lg:pr-12 lg:pl-[max(var(--spacing-gutter),calc(50vw-37.5rem))] xl:pr-16">
           <h1 id="accueil-titre" className="font-heading text-h4 text-link">
             {identity}
           </h1>
@@ -130,7 +127,9 @@ export function HeroSlideshow({
                 )}
               >
                 {slide.kicker && <Eyebrow className="mb-4">{slide.kicker}</Eyebrow>}
-                <p className="font-heading text-h1 text-brand">{slide.title}</p>
+                <p className="font-heading text-h1 text-brand lg:text-[clamp(2rem,1rem+2.2vw,3.1rem)] lg:[@media(max-height:860px)]:text-[2.1rem]">
+                  {slide.title}
+                </p>
                 <span aria-hidden="true" className="mt-5 block h-1 w-20 rounded-full bg-gold" />
                 {slide.lead && <p className="mt-5 max-w-[34rem] text-lead font-semibold text-brand">{slide.lead}</p>}
                 {slide.text && (
@@ -138,7 +137,10 @@ export function HeroSlideshow({
                   <p
                     className={cn(
                       "max-w-[34rem] text-ink",
-                      slide.lead ? "mt-3 line-clamp-4 text-body md:line-clamp-none" : "mt-5 text-lead",
+                      // Le bandeau tient dans l'écran : texte limité à quelques lignes (le texte complet est sur la page À propos).
+                      slide.lead
+                        ? "mt-3 line-clamp-4 text-body lg:line-clamp-3 xl:line-clamp-4 lg:[@media(max-height:860px)]:line-clamp-2"
+                        : "mt-5 text-lead lg:line-clamp-4 lg:[@media(max-height:860px)]:line-clamp-3",
                     )}
                   >
                     {slide.text}
@@ -213,15 +215,11 @@ export function HeroSlideshow({
             aria-hidden="true"
             className={cn(
               "absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t to-transparent",
-              ownPhotos ? "h-3/4 from-black/80 via-black/35 lg:h-full lg:via-black/30" : "h-28 from-black/45",
+              ownPhotos ? "h-3/4 from-black/80 via-black/35" : "h-28 from-black/45",
             )}
           />
           {ownPhotos && (
-            <span aria-hidden="true" className="absolute inset-0 z-10 hidden bg-gradient-to-r from-black/55 via-black/20 to-transparent lg:block" />
-          )}
-          {ownPhotos && (
-            <div className="absolute inset-x-0 bottom-14 z-20 px-6 sm:bottom-16 lg:top-[max(2rem,calc(100svh-27rem))] lg:bottom-auto lg:px-10">
-              {/* Ordinateur : placé dans la partie visible dès l'arrivée (le bandeau est plus haut que l'écran). */}
+            <div className="absolute inset-x-0 bottom-14 z-20 px-6 sm:bottom-16 lg:bottom-20 lg:px-10">
               <div className="grid">
                 {photos.map((photo, i) =>
                   galleryCaptions[i] ? (
@@ -254,7 +252,10 @@ export function HeroSlideshow({
             </div>
           )}
           {ownPhotos && photos.length > 1 && (
-            <div aria-hidden="true" className="absolute bottom-4 left-6 z-20 flex items-center gap-3 font-heading text-small font-semibold text-white lg:left-10">
+            <div
+              aria-hidden="true"
+              className="absolute bottom-4 left-6 z-20 flex items-center gap-3 font-heading text-small font-semibold text-white lg:left-10"
+            >
               <span className="tabular-nums">
                 {String(shownPhoto + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}
               </span>
