@@ -149,8 +149,6 @@ export const HOME_PHOTOS: {
     "ecolieres-jeux",
     "femmes-cuisine",
     "apprenti-technicien",
-    "couturiere-benin",
-    "sport-handicap",
     "fille-velo",
     "femmes-gastronomie",
     "reboisement-natitingou",
